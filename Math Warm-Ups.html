@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Math Warm-Ups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F8FB; --grid:#DFE7F2; --ink:#1C2745; --muted:#55627F;
+  --panel:#FFFFFF; --line:#C9D4E6;
+  --tile:#FFD84D; --tile-edge:#D4A90F; --made:#9FE6D8; --made-edge:#3FAE99; --tile-ink:#1C2745;
+  --pick:#E3427A; --ok:#0B7F70; --warn:#B4233F;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111A2E; --grid:#1B2741; --ink:#EEF2FA; --muted:#A3AFCA;
+    --panel:#18233B; --line:#2E3C5E; --pick:#FF6A9B; --ok:#4FD1BC; --warn:#FF8099; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111A2E; --grid:#1B2741; --ink:#EEF2FA; --muted:#A3AFCA;
+  --panel:#18233B; --line:#2E3C5E; --pick:#FF6A9B; --ok:#4FD1BC; --warn:#FF8099; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100%;font-family:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.wrap{max-width:760px;margin:0 auto;padding:20px 18px 48px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.kicker{margin:0 0 4px;color:var(--muted);font-size:15px;font-weight:600}
+h1{margin:0;font-size:clamp(28px,6vw,40px);font-weight:800;letter-spacing:-0.02em;line-height:1}
+.date{margin:6px 0 0;color:var(--muted);font-size:15px}
+.seg{display:inline-flex;background:var(--panel);border:2px solid var(--ink);border-radius:999px;padding:3px}
+.seg button{font:inherit;font-size:14px;font-weight:600;border:0;background:transparent;color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:18px -18px 0;padding:4px 18px 8px;scrollbar-width:thin}
+.tab{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px;border:2px solid var(--line);background:var(--panel);border-radius:12px;padding:8px 14px}
+.tab[aria-current="page"]{background:var(--tile);border-color:var(--tile-edge);color:var(--tile-ink)}
+.levelbar{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px}
+.leveldesc{margin:0;color:var(--muted);font-size:14px}
+.prompt{max-width:54ch;margin:16px auto 0;text-align:center;color:var(--muted);font-size:16px;line-height:1.5}
+.prompt strong{color:var(--ink)}
+.status{min-height:48px;text-align:center;font-size:16px;line-height:1.4;margin:10px auto 0;max-width:48ch}
+.status.ok{color:var(--ok);font-weight:600}
+.status.warn{color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+.btn{font:inherit;font-size:15px;font-weight:600;padding:10px 16px;border-radius:12px;cursor:pointer;border:2px solid var(--line);background:var(--panel);color:var(--ink)}
+.btn.primary{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.45;cursor:default}
+.newwrap{display:flex;justify-content:center;margin-top:22px}
+[hidden]{display:none !important}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--pick);outline-offset:3px}
+
+.given{display:inline-flex;align-items:center;justify-content:center;min-width:64px;min-height:56px;padding:6px 12px;border-radius:14px;
+  background:var(--tile);color:var(--tile-ink);font-weight:800;font-size:clamp(20px,5vw,26px);box-shadow:0 4px 0 var(--tile-edge);font-variant-numeric:tabular-nums}
+.ans{font:inherit;font-weight:700;font-size:clamp(18px,5vw,24px);width:4.4em;text-align:center;border:2.5px solid var(--ink);border-radius:12px;background:var(--panel);color:var(--ink);padding:8px 6px}
+.ans.wide{width:6em}
+.ans.good{border-color:var(--ok);color:var(--ok)}
+.ans:disabled{opacity:1}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.1;font-size:.82em;margin:0 .08em}
+.frac>span:last-child{border-top:2px solid currentColor;padding-top:2px;margin-top:2px;align-self:stretch;text-align:center}
+sup{font-size:.6em;line-height:0}
+
+.dots{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:16px}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line)}
+.dot.ok{background:var(--ok);border-color:var(--ok)}
+.dot.miss{background:var(--warn);border-color:var(--warn)}
+.dot.cur{border-color:var(--pick);transform:scale(1.3)}
+.count{margin-left:8px;color:var(--muted);font-size:14px}
+.stage{margin-top:12px}
+.note{max-width:440px;margin:4px auto 0;background:var(--panel);border:2px dashed var(--line);border-radius:14px;padding:12px 16px;text-align:center;font-size:18px;line-height:1.6}
+.summary{text-align:center;padding:24px 0}
+.summary .big{font-size:56px;font-weight:800;margin:0}
+.summary p{margin:4px 0;color:var(--muted)}
+
+/* target */
+.target{position:relative;margin:20px auto 4px;width:min(64vw,280px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle closest-side,var(--panel) 0 55%,var(--pick) 55% 59.5%,var(--panel) 59.5% 72%,var(--ink) 72% 74%,var(--panel) 74% 88%,var(--ink) 88% 90%,transparent 90%);
+  display:grid;place-items:center}
+.target .num{font-size:clamp(40px,14vw,72px);font-weight:800;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.target.hit{animation:hit .9s ease-out}
+@keyframes hit{0%{transform:scale(1)}30%{transform:scale(1.08)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:10px auto 0;max-width:480px}
+.tile{font:inherit;font-weight:800;font-size:clamp(24px,7vw,34px);font-variant-numeric:tabular-nums;min-width:clamp(68px,21vw,90px);height:clamp(68px,21vw,90px);padding:0 10px;
+  border-radius:16px;border:0;cursor:pointer;color:var(--tile-ink);background:var(--tile);box-shadow:0 5px 0 var(--tile-edge);transition:transform .12s ease}
+.tile.made{background:var(--made);box-shadow:0 5px 0 var(--made-edge)}
+.tile.sel{outline:4px solid var(--pick);outline-offset:3px;transform:translateY(-3px)}
+.tile.win{outline:4px solid var(--ok);outline-offset:3px}
+.ops{display:flex;justify-content:center;gap:14px;margin-top:24px}
+.op{font:inherit;font-size:30px;font-weight:600;width:62px;height:62px;border-radius:50%;border:2.5px solid var(--ink);background:var(--panel);color:var(--ink);cursor:pointer;line-height:1}
+.op[aria-pressed="true"]{background:var(--pick);border-color:var(--pick);color:#fff}
+.work{margin:22px auto 0;max-width:420px;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 18px}
+.work h2{margin:0 0 6px;font-size:16px;font-weight:600}
+.work ol{margin:0;padding-left:1.4em;font-size:20px;line-height:1.7;font-variant-numeric:tabular-nums}
+.work .empty{margin:0;color:var(--muted);font-size:15px}
+.meta{display:flex;justify-content:space-between;gap:10px;margin-top:10px;color:var(--muted);font-size:14px}
+.solution{border-style:dashed}
+
+/* triangle & diamond */
+.tri,.diamond{position:relative;margin:8px auto 0;width:min(90vw,380px)}
+.tri{aspect-ratio:300/260}
+.diamond{aspect-ratio:1;margin-top:28px;margin-bottom:28px}
+.tri svg,.diamond svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.node{position:absolute;transform:translate(-50%,-50%)}
+.tri .top{left:50%;top:15.4%}.tri .left{left:18.3%;top:82.7%}.tri .right{left:81.7%;top:82.7%}
+.tri .ans{width:4em;font-size:20px}
+.tri-x{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:34px;font-weight:600;color:var(--muted)}
+.diamond .top{left:50%;top:24%}.diamond .bottom{left:50%;top:76%}.diamond .left{left:22%;top:50%}.diamond .right{left:78%;top:50%}
+.diamond .ans{width:3.4em;font-size:20px}
+.diamond .given{min-width:56px;min-height:48px;font-size:22px}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);color:var(--muted);font-size:14px;font-weight:600}
+.dtop{top:-24px}.dbot{bottom:-24px}
+
+/* mystery */
+.cluebox{max-width:460px;margin:16px auto 0;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:12px 18px}
+.clues{margin:0;padding-left:1.5em;font-size:19px;line-height:1.5}
+.clues li{margin:6px 0}
+.clues li.locked{color:var(--muted);font-size:16px}
+.guessrow{display:flex;justify-content:center;gap:10px;margin-top:18px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{padding:4px 10px;border-radius:999px;border:2px solid var(--line);color:var(--muted);text-decoration:line-through;font-weight:600}
+.chip.right{text-decoration:none;border-color:var(--ok);color:var(--ok)}
+
+/* magic */
+.magic{--cell:clamp(64px,19vw,84px);display:grid;grid-template-columns:repeat(3,var(--cell)) auto;gap:8px;justify-content:center;margin-top:18px}
+.mcell{width:var(--cell);height:var(--cell);display:grid;place-items:center;border-radius:14px;border:2px solid var(--line);background:var(--panel)}
+.mcell.given{background:var(--tile);border-color:var(--tile-edge);color:var(--tile-ink);font-weight:800;font-size:clamp(20px,5vw,26px)}
+.mcell .ans{width:100%;height:100%;border:0;border-radius:12px;padding:0;font-size:clamp(17px,4.6vw,22px)}
+.msum{display:grid;place-items:center;min-width:40px;min-height:36px;color:var(--muted);font-weight:600;font-size:16px}
+.msum.ok{color:var(--ok)}.msum.off{color:var(--warn)}
+.diag2{text-align:center;color:var(--muted);font-size:15px;margin:10px 0 0}
+.diag2 .msum{display:inline-grid;min-height:0}
+
+/* crunch */
+.crunch{text-align:center;margin-top:18px}
+.expr{font-size:clamp(26px,7vw,42px);font-weight:600;line-height:1.5;font-variant-numeric:tabular-nums}
+.when{margin:6px 0 0;color:var(--muted);font-size:19px}
+.eqrow{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:18px;font-size:30px;font-weight:600}
+
+@media (prefers-reduced-motion: reduce){.target.hit{animation:none}.tile{transition:none}.dot.cur{transform:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div>
+      <p class="kicker">Math Warm-Ups</p>
+      <h1 id="gameTitle">Target Number</h1>
+      <p class="date" id="dateLine"></p>
+    </div>
+    <div class="seg" role="group" aria-label="Puzzle mode">
+      <button type="button" data-mode="today" aria-pressed="true">Today’s puzzle</button>
+      <button type="button" data-mode="practice" aria-pressed="false">Practice</button>
+    </div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Games"></nav>
+  <div class="levelbar">
+    <div class="seg" role="group" aria-label="Level">
+      <button type="button" data-level="0">Level 1</button>
+      <button type="button" data-level="1">Level 2</button>
+      <button type="button" data-level="2">Level 3</button>
+    </div>
+    <p class="leveldesc" id="levelDesc"></p>
+  </div>
+  <section id="game" aria-live="off"></section>
+  <div class="newwrap"><button type="button" class="btn primary" id="newBtn" hidden>New puzzle</button></div>
+</main>
+<script>
+// PURE START
+const ri=(rng,n)=>Math.floor(rng()*n);
+const rint=(rng,a,b)=>a+ri(rng,b-a+1);
+const nz=(rng,a,b)=>{let v;do{v=rint(rng,a,b);}while(v===0);return v;};
+const pick=(rng,arr)=>arr[ri(rng,arr.length)];
+function shuffle(rng,arr){for(let i=arr.length-1;i>0;i--){const j=ri(rng,i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+
+// ---- formatting ----
+const MINUS='\u2212';
+const fmtN=v=>v<0?MINUS+(-v):String(v);
+const P=v=>v<0?`(${fmtN(v)})`:fmtN(v);
+const V=x=>`<i>${x}</i>`;
+const SUP=e=>e>1?`<sup>${e}</sup>`:'';
+const coefPrefix=p=>p===1?'':p===-1?MINUS:fmtN(p);
+function polyHTML(terms,x){ // terms [[coef,power]]
+  let out='';
+  for(const [c,p] of terms){
+    if(c===0) continue;
+    const abs=Math.abs(c);
+    const body=p>0?`${abs===1?'':abs}${V(x)}${SUP(p)}`:String(abs);
+    out+= out==='' ? (c<0?MINUS:'')+body : (c<0?` ${MINUS} `:' + ')+body;
+  }
+  return out||'0';
+}
+function polySub(terms,xv){
+  let out='';
+  for(const [c,p] of terms){
+    if(c===0) continue;
+    const abs=Math.abs(c);
+    const body=p>0?`${abs===1?'':abs}(${fmtN(xv)})${SUP(p)}`:String(abs);
+    out+= out==='' ? (c<0?MINUS:'')+body : (c<0?` ${MINUS} `:' + ')+body;
+  }
+  return out;
+}
+const binom=(x,k)=>k===0?V(x):`(${V(x)} ${k<0?'+':MINUS} ${Math.abs(k)})`; // (x - k)
+
+// ---- rationals ----
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;};
+const R=(n,d=1)=>{if(d<0){n=-n;d=-d;}const g=gcd(n,d);return {n:n/g,d:d/g};};
+const rAdd=(x,y)=>R(x.n*y.d+y.n*x.d,x.d*y.d);
+const rMul=(x,y)=>R(x.n*y.n,x.d*y.d);
+const rDiv=(x,y)=>R(x.n*y.d,x.d*y.n);
+const rEq=(x,y)=>!!x&&!!y&&x.n===y.n&&x.d===y.d;
+const normIn=s=>String(s).trim().replace(/[\u2212\u2013\u2014]/g,'-').replace(/\s+/g,' ');
+function rParse(s){
+  s=normIn(s); let m;
+  if((m=s.match(/^(-?)(\d+) (\d+)\/(\d+)$/))){const d=+m[4];if(!d)return null;const r=R(+m[2]*d+ +m[3],d);return m[1]?R(-r.n,r.d):r;}
+  if((m=s.match(/^(-?\d+) ?\/ ?(-?\d+)$/))){const d=+m[2];if(!d)return null;return R(+m[1],d);}
+  if((m=s.match(/^(-?)(\d*)(?:\.(\d+))?$/))&&(m[2]||m[3])){
+    const frac=m[3]||'';const n=parseInt((m[2]||'0')+frac,10);const d=10**frac.length;
+    return R(m[1]?-n:n,d);
+  }
+  return null;
+}
+function fracHTML(r){
+  if(r.d===1) return fmtN(r.n);
+  return `${r.n<0?MINUS:''}<span class="frac"><span>${Math.abs(r.n)}</span><span>${r.d}</span></span>`;
+}
+function decHTML(r){return fmtN(Number((r.n/r.d).toFixed(6)));}
+function rPlain(r){return r.d===1?fmtN(r.n):`${r.n<0?MINUS:''}${Math.abs(r.n)}/${r.d}`;}
+
+// ---- monomials ----
+function monoParse(s){
+  s=normIn(s).replace(/\s/g,'').replace(/\*/g,'').replace(/²/g,'^2').replace(/³/g,'^3').replace(/⁴/g,'^4').replace(/⁵/g,'^5').replace(/⁶/g,'^6').toLowerCase();
+  const m=s.match(/^([+-]?)(\d*)(x(?:\^(\d+))?)?$/);
+  if(!m||(!m[2]&&!m[3])) return null;
+  let c=m[2]?parseInt(m[2],10):1; if(m[1]==='-') c=-c;
+  const e=m[3]?(m[4]?parseInt(m[4],10):1):0;
+  return c===0?{c:0,e:0}:{c,e};
+}
+const monoEq=(a,b)=>!!a&&!!b&&a.c===b.c&&(a.c===0||a.e===b.e);
+function monoHTML(m){if(m.e===0)return fmtN(m.c);return `${coefPrefix(m.c)}${V('x')}${SUP(m.e)}`;}
+function monoPlain(m){if(m.e===0)return fmtN(m.c);return `${coefPrefix(m.c)}x${m.e>1?'^'+m.e:''}`;}
+
+// ===================== TARGET NUMBER =====================
+const TARGET_LEVELS=[
+  {count:4,large:[],nLarge:0,min:12,max:60,ops:['+','−','×'],minSteps:2,int:false},
+  {count:6,large:[25,50,75,100],nLarge:2,min:101,max:999,ops:['+','−','×','÷'],minSteps:3,int:false},
+  {count:5,int:true,min:-80,max:80,ops:['+','−','×','÷'],minSteps:3}
+];
+function tApply(a,op,b){
+  if(op==='+')return a+b; if(op==='−')return a-b; if(op==='×')return a*b;
+  if(op==='÷')return (b!==0&&a%b===0)?a/b+0:null; return null;
+}
+function drawTargetNums(rng,L){
+  for(;;){
+    const nums=[];
+    if(L.int){
+      while(nums.length<L.count){const v=nz(rng,-12,12);if(!nums.includes(v))nums.push(v);}
+      if(nums.filter(v=>v<0).length>=2) return shuffle(rng,nums);
+      continue;
+    }
+    const pool=L.large.slice();
+    for(let i=0;i<L.nLarge;i++) nums.push(pool.splice(ri(rng,pool.length),1)[0]);
+    while(nums.length<L.count){const v=1+ri(rng,10);if(nums.filter(x=>x===v).length<2)nums.push(v);}
+    return shuffle(rng,nums);
+  }
+}
+function makeTarget(rng,L){
+  for(let attempt=0;attempt<5000;attempt++){
+    const nums=drawTargetNums(rng,L);
+    let pool=nums.map(v=>({v,steps:[]}));
+    while(pool.length>1){
+      const i=ri(rng,pool.length);let j=ri(rng,pool.length-1);if(j>=i)j++;
+      let A=pool[i],B=pool[j];
+      if(!L.int&&A.v<B.v){const t=A;A=B;B=t;}
+      const a=A.v,b=B.v;
+      const choices=L.ops.filter(op=>{
+        if(L.int){
+          if(op==='×')return Math.abs(a)>1&&Math.abs(b)>1;
+          if(op==='÷')return Math.abs(b)>1&&a%b===0;
+          return tApply(a,op,b)!==0;
+        }
+        return op==='+'||(op==='−'&&a>b)||(op==='×'&&b>1)||(op==='÷'&&b>1&&a%b===0);
+      });
+      if(!choices.length)break;
+      const op=pick(rng,choices);const r=tApply(a,op,b);
+      if(Math.abs(r)>2000)break;
+      const item={v:r,steps:A.steps.concat(B.steps,[{a,op,b,r}])};
+      pool=pool.filter((_,k)=>k!==i&&k!==j);pool.push(item);
+      if(item.steps.length>=L.minSteps&&r>=L.min&&r<=L.max&&!nums.includes(r)&&(!L.int||Math.abs(r)>=10)&&(pool.length===1||rng()<0.45))
+        return {nums,target:r,solution:item.steps};
+    }
+  }
+  return {nums:[2,3,4,5],target:26,solution:[{a:5,op:'×',b:4,r:20},{a:3,op:'×',b:2,r:6},{a:20,op:'+',b:6,r:26}]};
+}
+
+// ===================== FACT TRIANGLES =====================
+function genTriangle(rng,level){
+  const hidden=ri(rng,3); // 0 top,1 left,2 right
+  if(level===0){
+    let a,b;do{a=nz(rng,-12,12);b=nz(rng,-12,12);}while(Math.abs(a)<2||Math.abs(b)<2||(a>0&&b>0&&rng()<0.6));
+    const vals=[R(a*b),R(a),R(b)];
+    return {kind:'r',vals,html:vals.map(fracHTML),hidden,plain:rPlain(vals[hidden])};
+  }
+  if(level===1){
+    if(rng()<0.5){
+      const mk=()=>{for(;;){const q=rint(rng,2,6);const p=nz(rng,-2*q,2*q);const r=R(p,q);if(r.d>1)return r;}};
+      const a=mk(),b=mk();const vals=[rMul(a,b),a,b];
+      return {kind:'r',vals,html:vals.map(fracHTML),hidden,plain:rPlain(vals[hidden])};
+    }
+    let t;do{t=nz(rng,-9,9);}while(Math.abs(t)<2);
+    let k;do{k=nz(rng,-12,12);}while(Math.abs(k)<2);
+    const a=R(t,10),b=R(k);let vals=[rMul(a,b),a,b];
+    if(rng()<0.5)vals=[vals[0],vals[2],vals[1]];
+    return {kind:'r',vals,html:vals.map(decHTML),hidden,plain:decHTML(vals[hidden])};
+  }
+  const mk=()=>{const e=rint(rng,0,3);let c;do{c=nz(rng,-9,9);}while(Math.abs(c)===1&&(e===0||rng()<0.7));return {c,e};};
+  let a,b;do{a=mk();b=mk();}while(a.e+b.e<2);
+  const vals=[{c:a.c*b.c,e:a.e+b.e},a,b];
+  return {kind:'m',vals,html:vals.map(monoHTML),hidden,plain:monoPlain(vals[hidden])};
+}
+
+// ===================== DIAMONDS =====================
+function genDiamond(rng,level){
+  let a,b,hide;
+  if(level===0){do{a=nz(rng,-9,9);b=nz(rng,-9,9);}while(Math.abs(a)<2&&Math.abs(b)<2);hide=['top','bottom'];}
+  else if(level===1){do{a=nz(rng,-12,12);b=nz(rng,-12,12);}while(Math.abs(a*b)<4);hide=['left','right'];}
+  else{
+    const pat=ri(rng,3);
+    do{a=nz(rng,-20,20);b=nz(rng,-20,20);}while(Math.max(Math.abs(a),Math.abs(b))<9||Math.abs(a*b)>300);
+    hide=pat===0?['left','right']:pat===1?['right','top']:['right','bottom'];
+  }
+  return {vals:{left:a,right:b,top:a*b,bottom:a+b},hide};
+}
+
+// ===================== MYSTERY NUMBER =====================
+const isPrime=n=>{n=Math.abs(n);if(n<2)return false;for(let k=2;k*k<=n;k++)if(n%k===0)return false;return true;};
+const nFactors=n=>{let c=0;for(let k=1;k<=n;k++)if(n%k===0)c++;return c;};
+const isSq=n=>n>=0&&Math.round(Math.sqrt(n))**2===n;
+const MYS_DOMAIN=[
+  Array.from({length:100},(_,i)=>i+1),
+  Array.from({length:101},(_,i)=>i-50).filter(v=>v!==0),
+  Array.from({length:201},(_,i)=>i-100)
+];
+const nn=V('n');
+function mysClues(rng,n,level){
+  const c=[];const add=(html,test)=>c.push({html,test});
+  add(n%2===0?'I am even.':'I am odd.',x=>Math.abs(x%2)===Math.abs(n%2));
+  for(const k of [3,4,5,6,7,8,9,11,12]){
+    if(n%k===0) add(`I am a multiple of ${k}.`,x=>x%k===0);
+    else if(rng()<0.3) add(`I am not a multiple of ${k}.`,x=>x%k!==0);
+  }
+  if(level===0){
+    add(isPrime(n)?'I am prime.':'I am not prime.',x=>isPrime(x)===isPrime(n));
+    add(isSq(n)?'I am a perfect square.':'I am not a perfect square.',x=>isSq(x)===isSq(n));
+    if(n>=10&&n<100){
+      const t=Math.floor(n/10),o=n%10,s=t+o;
+      add(`My digits add up to ${s}.`,x=>x>=10&&x<100&&Math.floor(x/10)+x%10===s);
+      add(t>o?'My tens digit is greater than my ones digit.':t<o?'My tens digit is less than my ones digit.':'My two digits are the same.',
+        x=>{if(x<10||x>99)return false;const a=Math.floor(x/10),b=x%10;return t>o?a>b:t<o?a<b:a===b;});
+    }
+    const lo=n-rint(rng,3,30);if(lo>=1)add(`I am greater than ${lo}.`,x=>x>lo);
+    const hi=n+rint(rng,3,30);if(hi<=100)add(`I am less than ${hi}.`,x=>x<hi);
+    const f=nFactors(n);add(`I have exactly ${f} factors.`,x=>nFactors(x)===f);
+    const k=rint(rng,3,9),r=n%k;if(r)add(`When you divide me by ${k}, the remainder is ${r}.`,x=>x%k===r);
+  } else if(level===1){
+    add(n<0?'I am negative.':'I am positive.',x=>(x<0)===(n<0));
+    const t=Math.abs(n)-rint(rng,1,20);if(t>0)add(`My absolute value is greater than ${t}.`,x=>Math.abs(x)>t);
+    const u=Math.abs(n)+rint(rng,1,20);add(`My absolute value is less than ${u}.`,x=>Math.abs(x)<u);
+    const m=-n-rint(rng,1,20);add(`My opposite is greater than ${fmtN(m)}.`,x=>-x>m);
+    const k=rint(rng,5,30);if(n+k!==0)add(`If you add ${k} to me, the result is ${n+k<0?'negative':'positive'}.`,x=>x+k!==0&&((x+k<0)===(n+k<0)));
+    const k2=rint(rng,5,30);if(n-k2!==0)add(`If you subtract ${k2} from me, the result is ${n-k2<0?'negative':'positive'}.`,x=>x-k2!==0&&((x-k2<0)===(n-k2<0)));
+    const sq=n*n+rint(rng,10,300);add(`My square is less than ${sq}.`,x=>x*x<sq);
+    const sq2=n*n-rint(rng,10,300);if(sq2>0)add(`My square is greater than ${sq2}.`,x=>x*x>sq2);
+    add(isPrime(n)?'My absolute value is prime.':'My absolute value is not prime.',x=>isPrime(x)===isPrime(n));
+  } else {
+    add(n<0?`${nn} is negative.`:n>0?`${nn} is positive.`:`${nn} is neither positive nor negative.`,x=>Math.sign(x)===Math.sign(n));
+    for(let t=0;t<3;t++){
+      let a;do{a=nz(rng,-7,7);}while(Math.abs(a)<2);
+      const b=rint(rng,-20,20);const v=a*n+b;
+      const rel=pick(rng,['>','<','≥','≤']);
+      const d=rint(rng,rel==='>'||rel==='<'?1:0,40);
+      const cc=rel==='>'||rel==='≥'?v-d:v+d;
+      const lhs=`${coefPrefix(a)}${nn}${b>0?` + ${b}`:b<0?` ${MINUS} ${-b}`:''}`;
+      const test=rel==='>'?x=>a*x+b>cc:rel==='<'?x=>a*x+b<cc:rel==='≥'?x=>a*x+b>=cc:x=>a*x+b<=cc;
+      add(`${lhs} ${rel} ${fmtN(cc)}`,test);
+    }
+    {
+      const k=n+rint(rng,-15,15);const dist=Math.abs(n-k);
+      const inside=k===0?`|${nn}|`:`|${nn} ${k<0?'+':MINUS} ${Math.abs(k)}|`;
+      if(rng()<0.6||dist===0){const r=dist+rint(rng,0,12);add(`${inside} ≤ ${r}`,x=>Math.abs(x-k)<=r);}
+      else{const r=rint(rng,0,dist-1);add(`${inside} > ${r}`,x=>Math.abs(x-k)>r);}
+    }
+    const m=n*n+rint(rng,1,400);add(`${nn}<sup>2</sup> < ${m}`,x=>x*x<m);
+    const m2=n*n-rint(rng,1,400);if(m2>0)add(`${nn}<sup>2</sup> > ${m2}`,x=>x*x>m2);
+  }
+  return shuffle(rng,c);
+}
+function genMystery(rng,level){
+  const dom=MYS_DOMAIN[level];
+  for(let attempt=0;attempt<3000;attempt++){
+    const n=pick(rng,dom);
+    const pool=mysClues(rng,n,level);
+    let cand=dom.slice();const chosen=[];
+    for(const cl of pool){
+      const next=cand.filter(cl.test);
+      if(next.length===cand.length)continue;
+      if(next.length===1&&chosen.length<2)continue;
+      chosen.push(cl);cand=next;
+      if(cand.length===1)break;
+    }
+    if(cand.length===1&&chosen.length>=3&&chosen.length<=6)return {n,clues:chosen};
+  }
+  return null;
+}
+
+// ===================== MAGIC SQUARES =====================
+const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const LINE_NAMES=['Row 1','Row 2','Row 3','Column 1','Column 2','Column 3','The ↘ diagonal','The ↙ diagonal'];
+const magicGrid=(c,a,b)=>[c+a,c-a-b,c+b,c-a+b,c,c+a-b,c-b,c+a+b,c-a];
+function magicSolvable(known){
+  const k=new Set(known);let ch=true;
+  while(ch){ch=false;for(const L of LINES){const u=L.filter(x=>!k.has(x));if(u.length===1){k.add(u[0]);ch=true;}}}
+  return k.size===9;
+}
+function genMagic(rng,level){
+  let g,den=1;
+  for(;;){
+    let c,a,b;
+    if(level===0){c=rint(rng,6,14);a=nz(rng,-6,6);b=nz(rng,-6,6);}
+    else if(level===1){c=rint(rng,-4,4);a=nz(rng,-7,7);b=nz(rng,-7,7);}
+    else{den=pick(rng,[2,4]);c=rint(rng,-6,6);a=nz(rng,-7,7);b=nz(rng,-7,7);}
+    g=magicGrid(c,a,b);
+    if(new Set(g).size!==9)continue;
+    if(level===0&&Math.min(...g)<1)continue;
+    if(level===1&&g.filter(v=>v<0).length<3)continue;
+    if(level===2&&g.filter(v=>v%den!==0).length<4)continue;
+    break;
+  }
+  const vals=g.map(v=>R(v,den));
+  const S=R(g[0]+g[1]+g[2],den);
+  let known;
+  for(;;){
+    if(level===2){const L=pick(rng,LINES);known=L.slice();let x;do{x=ri(rng,9);}while(known.includes(x));known.push(x);}
+    else{known=shuffle(rng,[0,1,2,3,4,5,6,7,8]).slice(0,level===0?4:3);}
+    if(magicSolvable(known))break;
+  }
+  return {vals,S,known,showSum:level!==2};
+}
+
+// ===================== NUMBER CRUNCH =====================
+const L_=fmtN;
+const CRUNCH=[
+ [
+  r=>{const a=nz(r,-15,15),b=nz(r,-9,9),c=nz(r,-9,9);return{html:`${L_(a)} + ${P(b)} × ${P(c)}`,value:a+b*c};},
+  r=>{const a=nz(r,-15,15),b=nz(r,-9,9),c=nz(r,-9,9);return{html:`${L_(a)} ${MINUS} ${P(b)} × ${P(c)}`,value:a-b*c};},
+  r=>{const a=nz(r,-12,12),b=nz(r,-12,12),c=nz(r,-6,6);return{html:`(${L_(a)} + ${P(b)}) × ${P(c)}`,value:(a+b)*c};},
+  r=>{const a=nz(r,-15,15);let c;do{c=nz(r,-6,6);}while(Math.abs(c)<2);const k=nz(r,-9,9);return{html:`${L_(a)} ${MINUS} ${P(c*k)} ÷ ${P(c)}`,value:a-k};},
+  r=>{const a=nz(r,-6,6),b=nz(r,-9,9),c=nz(r,-9,9),d=nz(r,-12,12);return{html:`${L_(a)} × (${L_(b)} ${MINUS} ${P(c)}) + ${P(d)}`,value:a*(b-c)+d};},
+  r=>{let c;do{c=nz(r,-6,6);}while(Math.abs(c)<2);const q=nz(r,-8,8),b=nz(r,-10,10),a=q*c+b,d=nz(r,-9,9);return{html:`(${L_(a)} ${MINUS} ${P(b)}) ÷ ${P(c)} + ${P(d)}`,value:q+d};}
+ ],
+ [
+  r=>{const a=nz(r,-5,5);let b,c;do{b=rint(r,-6,6);c=rint(r,-6,6);}while(b===c||Math.abs(b-c)>6);return{html:`${L_(a)} × (${L_(b)} ${MINUS} ${P(c)})<sup>2</sup>`,value:a*(b-c)**2};},
+  r=>{const a=rint(r,2,9),b=nz(r,-8,8),c=nz(r,-8,8);return{html:`${MINUS}${a}<sup>2</sup> + ${P(b)} × ${P(c)}`,value:-a*a+b*c};},
+  r=>{const a=rint(r,2,9),b=nz(r,-20,20);return{html:`(${MINUS}${a})<sup>2</sup> ${MINUS} ${P(b)}`,value:a*a-b};},
+  r=>{let d;do{d=nz(r,-4,4);}while(Math.abs(d)<2);const cube=Math.abs(d**3);const divs=[];for(let k=2;k<=cube;k++)if(cube%k===0)divs.push(k);const c=pick(r,divs)*(r()<0.5?-1:1);const b=nz(r,-9,9),a=b+d;return{html:`(${L_(a)} ${MINUS} ${P(b)})<sup>3</sup> ÷ ${P(c)}`,value:d**3/c};},
+  r=>{const a=nz(r,-9,9),b=nz(r,-6,6),c=nz(r,-9,9),d=nz(r,-9,9);return{html:`${a<0?`(${fmtN(a)})`:a}<sup>2</sup> ${MINUS} ${P(b)} × (${L_(c)} + ${P(d)})`,value:a*a-b*(c+d)};},
+  r=>{const a=nz(r,-20,20),b=rint(r,2,5),c=nz(r,-5,5);return{html:`${L_(a)} ${MINUS} ${b}<sup>2</sup> × ${P(c)}`,value:a-b*b*c};}
+ ],
+ [
+  r=>{let a;do{a=nz(r,-4,4);}while(Math.abs(a)===0);const b=nz(r,-9,9),c=nz(r,-12,12),x=nz(r,-5,5);const t=[[a,2],[b,1],[c,0]];return{html:polyHTML(t,'x'),when:`${V('x')} = ${fmtN(x)}`,sub:polySub(t,x),value:a*x*x+b*x+c};},
+  r=>{const b=nz(r,-8,8),x=rint(r,-6,-2);const t=[[-1,2],[b,1]];return{html:polyHTML(t,'x'),when:`${V('x')} = ${fmtN(x)}`,sub:polySub(t,x),value:-x*x+b*x};},
+  r=>{const a=nz(r,-3,3),b=nz(r,-6,6),c=nz(r,-10,10),x=nz(r,-6,6);const tail=c<0?` ${MINUS} ${-c}`:` + ${c}`;return{html:`${coefPrefix(a)}${binom('x',b)}<sup>2</sup>${tail}`,when:`${V('x')} = ${fmtN(x)}`,sub:`${coefPrefix(a)}(${P(x)} ${b<0?'+':MINUS} ${Math.abs(b)})<sup>2</sup>${tail}`,value:a*(x-b)**2+c};},
+  r=>{let p;do{p=nz(r,-6,6);}while(Math.abs(p)<2);const q=rint(r,2,5),av=nz(r,-6,6),bv=nz(r,-5,5);return{html:`${coefPrefix(p)}${V('a')} ${MINUS} ${q}${V('b')}<sup>2</sup>`,when:`${V('a')} = ${fmtN(av)} and ${V('b')} = ${fmtN(bv)}`,sub:`${coefPrefix(p)}(${fmtN(av)}) ${MINUS} ${q}(${fmtN(bv)})<sup>2</sup>`,value:p*av-q*bv*bv};},
+  r=>{let p;do{p=nz(r,-5,5);}while(Math.abs(p)<2);const q=nz(r,-12,12),s=rint(r,1,9),x=nz(r,-6,6);const t=[[p,1],[q,0]];return{html:`|${polyHTML(t,'x')}| ${MINUS} ${s}`,when:`${V('x')} = ${fmtN(x)}`,sub:`|${polySub(t,x)}| ${MINUS} ${s}`,value:Math.abs(p*x+q)-s};},
+  r=>{for(;;){const d=nz(r,-6,6),k=nz(r,-5,5);if((d*k+d)%2)continue;const a=(d*k+d)/2,b=a-d;if(a===0||b===0)continue;
+      return{html:`<span class="frac"><span>${V('a')} + ${V('b')}</span><span>${V('a')} ${MINUS} ${V('b')}</span></span>`,when:`${V('a')} = ${fmtN(a)} and ${V('b')} = ${fmtN(b)}`,
+      sub:`<span class="frac"><span>${P(a)} + ${P(b)}</span><span>${P(a)} ${MINUS} ${P(b)}</span></span>`,value:k};}}
+ ]
+];
+function genCrunchSet(rng,level,n){
+  const t=shuffle(rng,CRUNCH[level].slice());const out=[];
+  for(let i=0;i<n;i++)out.push(t[i%t.length](rng));
+  return out;
+}
+// PURE END
+// ===================== UI =====================
+function h(tag,props,...kids){
+  const e=document.createElement(tag);
+  for(const [k,v] of Object.entries(props||{})){
+    if(v==null||v===false)continue;
+    if(k==='class')e.className=v;
+    else if(k==='html')e.innerHTML=v;
+    else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);
+    else e.setAttribute(k,v===true?'':v);
+  }
+  for(const k of kids.flat()){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(k));}
+  return e;
+}
+const ansInput=(label,extra)=>h('input',{class:'ans'+(extra?' '+extra:''),type:'text',inputmode:'text',autocomplete:'off',autocapitalize:'off',spellcheck:'false','aria-label':label});
+const store={
+  get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+
+// ---------- generic round engine ----------
+function mountRound(root,problems,intro){
+  let i=0;const res=[];
+  const prompt=h('p',{class:'prompt',html:intro});
+  const dots=h('div',{class:'dots'});
+  const stage=h('div',{class:'stage'});
+  const status=h('p',{class:'status','aria-live':'polite'});
+  const extra=h('div',{class:'extra'});
+  const checkB=h('button',{class:'btn primary',type:'button',onclick:()=>check()},'Check');
+  const showB=h('button',{class:'btn',type:'button',onclick:()=>reveal()},'Show answer');
+  const nextB=h('button',{class:'btn primary',type:'button',onclick:()=>next()},'Next');
+  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;load();}},'Do this set again');
+  const controls=h('div',{class:'controls'},checkB,showB,nextB,againB);
+  root.append(prompt,dots,stage,status,extra,controls);
+  stage.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
+  const setS=(t,k)=>{status.textContent=t;status.className='status'+(k?' '+k:'');};
+  const inputs=()=>[...stage.querySelectorAll('input')];
+  function drawDots(){
+    dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot'+(res[k]?' '+res[k]:'')+(k===i?' cur':'')})),
+      h('span',{class:'count'},`${Math.min(i+1,problems.length)} of ${problems.length}`));
+  }
+  function load(){
+    const p=problems[i];
+    stage.replaceChildren(p.view());
+    setS('','');extra.replaceChildren();
+    checkB.hidden=false;showB.hidden=false;nextB.hidden=true;againB.hidden=true;
+    drawDots();
+    const f=inputs()[0];if(f)f.focus({preventScroll:true});
+  }
+  function finish(kind,msg){
+    if(!res[i])res[i]=kind;
+    setS(msg,kind==='ok'?'ok':'');
+    inputs().forEach(x=>x.disabled=true);
+    checkB.hidden=true;showB.hidden=true;nextB.hidden=false;
+    nextB.textContent=i===problems.length-1?'See results':'Next';
+    const a=problems[i].after&&problems[i].after();if(a)extra.replaceChildren(a);
+    drawDots();nextB.focus({preventScroll:true});
+  }
+  function check(){
+    if(!nextB.hidden){next();return;}
+    const ins=inputs();
+    if(ins.some(x=>!x.value.trim())){setS('Fill in every box first.','warn');return;}
+    const r=problems[i].check();
+    if(r.ok){ins.forEach(x=>x.classList.add('good'));finish('ok',r.msg||'Correct!');}
+    else setS(r.msg||'Not quite. Check your work and try again.','warn');
+  }
+  function reveal(){problems[i].reveal();res[i]='miss';finish('miss','Here’s the answer. Compare it with your work.');}
+  function next(){
+    i++;
+    if(i<problems.length){load();return;}
+    const ok=res.filter(x=>x==='ok').length;
+    stage.replaceChildren(h('div',{class:'summary'},h('p',{class:'big'},`${ok} of ${problems.length}`),h('p',{},'solved without showing the answer')));
+    setS('','');extra.replaceChildren();dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot '+(res[k]||'')})));
+    checkB.hidden=showB.hidden=nextB.hidden=true;againB.hidden=false;
+  }
+  load();
+}
+
+// ---------- Target Number ----------
+function mountTarget(root,rng,level,ctx){
+  const L=TARGET_LEVELS[level];
+  const P0=makeTarget(rng,L);
+  const how=L.int
+    ?'Combine the numbers with + − × ÷ to hit the target. Tap a number, an operation, then another number. Results can be negative, and division has to come out even.'
+    :'Combine the numbers with + − × ÷ to hit the target. Tap a number, an operation, then another number. Each number can be used once, and every result must be a positive whole number.';
+  root.innerHTML=`
+    <p class="prompt">${how}</p>
+    <div class="target" id="tg"><span class="num" id="tgNum"></span></div>
+    <p class="status" id="tStatus" aria-live="polite"></p>
+    <div class="tiles" id="tTiles" aria-label="Numbers"></div>
+    <div class="ops" role="group" aria-label="Operations">
+      <button type="button" class="op" data-op="+" aria-label="Add">+</button>
+      <button type="button" class="op" data-op="−" aria-label="Subtract">−</button>
+      <button type="button" class="op" data-op="×" aria-label="Multiply">×</button>
+      <button type="button" class="op" data-op="÷" aria-label="Divide">÷</button>
+    </div>
+    <div class="controls">
+      <button type="button" class="btn" id="tUndo">Undo</button>
+      <button type="button" class="btn" id="tReset">Start over</button>
+      <button type="button" class="btn" id="tSol">Show a solution</button>
+    </div>
+    <section class="work"><h2>Your work</h2><ol id="tSteps"></ol><p class="empty" id="tEmpty">Your steps will appear here.</p>
+      <div class="meta"><span id="tClosest"></span><span id="tTimer">0:00</span></div></section>
+    <section class="work solution" id="tSolBox" hidden><h2>One way to do it</h2><ol id="tSolSteps"></ol><p class="empty">There are often other ways too.</p></section>`;
+  const $=id=>root.querySelector('#'+id);
+  const S={tiles:[],steps:[],history:[],selA:null,op:null,solved:false,closest:null,start:null,elapsed:0,nextId:1};
+  S.tiles=P0.nums.map(v=>({id:S.nextId++,v,made:false}));
+  const initial=S.tiles.map(t=>({...t}));
+  const eq=(a,op,b,r)=>`${fmtN(a)} ${op} ${P(b)} = ${fmtN(r)}`;
+  const saveKey=`wu-target-${ctx.dateKey}-${level}`;
+  const setS=(t,k)=>{const e=$('tStatus');e.textContent=t;e.className='status'+(k?' '+k:'');};
+  function upClosest(){for(const t of S.tiles){if(S.closest===null||Math.abs(t.v-P0.target)<Math.abs(S.closest-P0.target))S.closest=t.v;}}
+  const snap=()=>({tiles:S.tiles.map(t=>({...t})),steps:S.steps.slice(),closest:S.closest});
+  function tileClick(id){
+    if(S.solved)return;
+    if(S.selA===null){S.selA=id;S.op=null;}
+    else if(S.selA===id){S.selA=null;S.op=null;}
+    else if(S.op===null){S.selA=id;}
+    else{combine(S.selA,S.op,id);return;}
+    setS('','');render();
+  }
+  function opClick(op){
+    if(S.solved)return;
+    if(S.selA===null){setS('Tap a number first, then an operation.','warn');return;}
+    S.op=S.op===op?null:op;setS('','');render();
+  }
+  function combine(idA,op,idB){
+    const a=S.tiles.find(t=>t.id===idA).v,b=S.tiles.find(t=>t.id===idB).v;
+    if(!L.int&&op==='−'&&a<=b){setS(a===b?`${a} − ${b} is zero, and zero can’t be used. Try a different pair.`:`${a} − ${b} would be negative. Results must be positive, so try ${b} − ${a}.`,'warn');S.op=null;render();return;}
+    if(op==='÷'&&b===0){setS('You can’t divide by zero.','warn');S.op=null;render();return;}
+    if(op==='÷'&&a%b!==0){setS(`${fmtN(a)} ÷ ${P(b)} isn’t a whole number. Try a different pair.`,'warn');S.op=null;render();return;}
+    const r=tApply(a,op,b);
+    S.history.push(snap());if(S.start===null)S.start=Date.now();
+    const nt={id:S.nextId++,v:r,made:true};
+    S.tiles=S.tiles.map(t=>t.id===idA?nt:t).filter(t=>t.id!==idB);
+    S.steps.push(eq(a,op,b,r));S.op=null;upClosest();
+    if(r===P0.target){
+      S.solved=true;S.selA=null;S.elapsed=Math.round((Date.now()-S.start)/1000);
+      setS(`You hit ${fmtN(r)} in ${S.steps.length} step${S.steps.length===1?'':'s'} (${fmtT(S.elapsed)}).`,'ok');
+      if(ctx.mode==='today')store.set(saveKey,{steps:S.steps.length,secs:S.elapsed});
+      const tg=$('tg');tg.classList.remove('hit');void tg.offsetWidth;tg.classList.add('hit');
+    }else if(S.tiles.length===1){
+      S.selA=null;setS(`No numbers left to combine. Your closest was ${fmtN(S.closest)}, ${Math.abs(S.closest-P0.target)} away. Undo or start over to keep trying.`,'');
+    }else{S.selA=nt.id;setS('','');}
+    render();
+  }
+  function undo(){const hh=S.history.pop();if(!hh)return;S.tiles=hh.tiles;S.steps=hh.steps;S.closest=hh.closest;S.selA=null;S.op=null;S.solved=false;setS('','');render();}
+  function reset(){if(!S.steps.length)return;S.history.push(snap());S.tiles=initial.map(t=>({...t}));S.steps=[];S.selA=null;S.op=null;S.solved=false;setS('Back to the starting numbers. Undo brings your work back.','');render();}
+  function render(){
+    $('tgNum').textContent=fmtN(P0.target);
+    const box=$('tTiles');box.replaceChildren(...S.tiles.map(t=>{
+      const b=h('button',{type:'button',class:'tile'+(t.made?' made':'')+(t.id===S.selA?' sel':'')+(S.solved&&t.v===P0.target?' win':''),'aria-pressed':String(t.id===S.selA),disabled:S.solved},fmtN(t.v));
+      b.addEventListener('click',()=>tileClick(t.id));return b;}));
+    root.querySelectorAll('.op').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.op===S.op));b.disabled=S.solved;});
+    $('tSteps').replaceChildren(...S.steps.map(s=>h('li',{},s)));
+    $('tEmpty').hidden=S.steps.length>0;
+    $('tClosest').textContent=S.solved?'Target hit':`Closest so far: ${fmtN(S.closest)} (${Math.abs(S.closest-P0.target)} away)`;
+    $('tUndo').disabled=!S.history.length;$('tReset').disabled=!S.steps.length;
+    tick();
+  }
+  function tick(){$('tTimer').textContent=fmtT(S.solved?S.elapsed:(S.start?Math.round((Date.now()-S.start)/1000):0));}
+  $('tSolSteps').replaceChildren(...P0.solution.map(s=>h('li',{},eq(s.a,s.op,s.b,s.r))));
+  root.querySelectorAll('.op').forEach(b=>b.addEventListener('click',()=>opClick(b.dataset.op)));
+  $('tUndo').addEventListener('click',undo);$('tReset').addEventListener('click',reset);
+  $('tSol').addEventListener('click',()=>{const el=$('tSolBox');el.hidden=!el.hidden;$('tSol').textContent=el.hidden?'Show a solution':'Hide the solution';});
+  upClosest();
+  if(ctx.mode==='today'){const sv=store.get(saveKey);if(sv)setS(`You already solved today’s puzzle at this level in ${sv.steps} steps (${fmtT(sv.secs)}). Try another level, or play it again.`,'');}
+  render();
+  const timer=setInterval(()=>{if(!S.solved)tick();},1000);
+  return{
+    cleanup:()=>clearInterval(timer),
+    onKey:e=>{const m={'+':'+','-':'−','*':'×','x':'×','/':'÷'};
+      if(m[e.key]){opClick(m[e.key]);e.preventDefault();}
+      else if(e.key==='Backspace'){undo();e.preventDefault();}
+      else if(e.key==='Escape'){S.selA=null;S.op=null;render();}}
+  };
+}
+
+// ---------- Fact Triangles ----------
+function mountTriangles(root,rng,level){
+  const intros=[
+    'The two bottom numbers multiply to make the top number. Find the missing one.',
+    'The two bottom numbers multiply to make the top number. Answer with a fraction like −3/4 or a decimal like 2.5.',
+    'The two bottom monomials multiply to make the top one. Type exponents with ^, like −6x^3.'
+  ];
+  const probs=[];
+  for(let k=0;k<8;k++){
+    const t=genTriangle(rng,level);let inp;
+    probs.push({
+      view(){
+        inp=ansInput('Missing value');
+        const wrap=h('div',{class:'tri'});
+        wrap.innerHTML='<svg viewBox="0 0 300 260" aria-hidden="true"><polygon points="150,40 245,215 55,215"/></svg><span class="tri-x">×</span>';
+        ['top','left','right'].forEach((pos,idx)=>{
+          wrap.append(h('div',{class:'node '+pos},idx===t.hidden?inp:h('span',{class:'given',html:t.html[idx]})));
+        });
+        return wrap;
+      },
+      check(){
+        const want=t.vals[t.hidden];
+        if(t.kind==='m'){const g=monoParse(inp.value);if(!g)return{ok:false,msg:'Type a monomial like 4x^2 or −7x.'};return{ok:monoEq(g,want)};}
+        const g=rParse(inp.value);if(!g)return{ok:false,msg:'Type a number, a fraction like 3/4, or a decimal.'};
+        if(rEq(g,want))return{ok:true};
+        if(rEq(g,R(-want.n,want.d)))return{ok:false,msg:'Close! Check the sign.'};
+        return{ok:false};
+      },
+      reveal(){inp.value=t.plain;}
+    });
+  }
+  mountRound(root,probs,intros[level]);
+}
+
+// ---------- Diamonds ----------
+function mountDiamonds(root,rng,level){
+  const intros=[
+    'The side numbers multiply to make the top and add to make the bottom. Find the top and bottom.',
+    'Find two numbers that multiply to the top and add to the bottom.',
+    'Top is the product, bottom is the sum. Fill in whatever is missing.'
+  ];
+  const probs=[];
+  for(let k=0;k<8;k++){
+    const d=genDiamond(rng,level);const ins={};
+    probs.push({
+      view(){
+        const wrap=h('div',{class:'diamond'});
+        wrap.innerHTML='<svg viewBox="0 0 300 300" aria-hidden="true"><polygon points="150,8 292,150 150,292 8,150"/><line x1="79" y1="79" x2="221" y2="221"/><line x1="221" y1="79" x2="79" y2="221"/></svg><span class="dlab dtop">product</span><span class="dlab dbot">sum</span>';
+        for(const pos of ['top','left','right','bottom']){
+          let content;
+          if(d.hide.includes(pos)){ins[pos]=ansInput(pos==='top'?'Product':pos==='bottom'?'Sum':'Number');content=ins[pos];}
+          else content=h('span',{class:'given'},fmtN(d.vals[pos]));
+          wrap.append(h('div',{class:'node '+pos},content));
+        }
+        return wrap;
+      },
+      check(){
+        const g={};for(const p of d.hide){const r=rParse(ins[p].value);if(!r||r.d!==1)return{ok:false,msg:'Type whole numbers (they can be negative).'};g[p]=r.n;}
+        if(d.hide.includes('left')){
+          const want=[d.vals.left,d.vals.right].sort((x,y)=>x-y).join();const got=[g.left,g.right].sort((x,y)=>x-y).join();
+          if(want===got)return{ok:true};
+          if(g.left*g.right===d.vals.top)return{ok:false,msg:'Those multiply to the top, but check the sum.'};
+          if(g.left+g.right===d.vals.bottom)return{ok:false,msg:'Those add to the bottom, but check the product.'};
+          return{ok:false};
+        }
+        const bad=d.hide.filter(p=>g[p]!==d.vals[p]);
+        if(!bad.length)return{ok:true};
+        return{ok:false,msg:bad.length===2?'Both boxes need another look.':`Check the ${bad[0]==='top'?'product':bad[0]==='bottom'?'sum':'side number'}.`};
+      },
+      reveal(){for(const p of d.hide)ins[p].value=fmtN(d.vals[p]);},
+      after(){
+        const {left:a,right:b,top:p,bottom:s}=d.vals;
+        return h('div',{class:'note',html:`<strong>Algebra connection:</strong> ${polyHTML([[1,2],[s,1],[p,0]],'x')} = ${binom('x',-a)}${binom('x',-b)}`});
+      }
+    });
+  }
+  mountRound(root,probs,intros[level]);
+}
+
+// ---------- Mystery Number ----------
+function mountMystery(root,rng,level){
+  const M=genMystery(rng,level);
+  const intro=['I’m a whole number from 1 to 100. Read the clues and figure out who I am.',
+    'I’m an integer from −50 to 50, and I’m not zero. Read the clues and figure out who I am.',
+    `I’m an integer from −100 to 100. Call me ${V('n')}. Every clue below is true about me.`][level];
+  let shown=1,done=false;const guesses=[];
+  const list=h('ol',{class:'clues'});
+  const status=h('p',{class:'status','aria-live':'polite'});
+  const inp=ansInput('Your guess','wide');
+  const guessB=h('button',{class:'btn primary',type:'button',onclick:()=>guess()},'Guess');
+  const moreB=h('button',{class:'btn',type:'button',onclick:()=>{if(shown<M.clues.length){shown++;draw();}}},'Reveal next clue');
+  const showB=h('button',{class:'btn',type:'button',onclick:()=>{done=true;shown=M.clues.length;setS(`The mystery number is ${fmtN(M.n)}.`,'');draw();}},'Show the number');
+  const chips=h('div',{class:'chips'});
+  const setS=(t,k)=>{status.textContent=t;status.className='status'+(k?' '+k:'');};
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();guess();}});
+  root.append(h('p',{class:'prompt',html:intro}),h('div',{class:'cluebox'},list),
+    h('div',{class:'guessrow'},inp,guessB),status,chips,h('div',{class:'controls'},moreB,showB));
+  function draw(){
+    list.replaceChildren(...M.clues.map((c,k)=>k<shown?h('li',{html:c.html}):h('li',{class:'locked'},'Locked')));
+    moreB.disabled=done||shown>=M.clues.length;inp.disabled=guessB.disabled=done;showB.disabled=done;
+    chips.replaceChildren(...guesses.map(g=>h('span',{class:'chip'+(g===M.n?' right':'')},fmtN(g))));
+  }
+  function guess(){
+    if(done)return;
+    const r=rParse(inp.value);
+    if(!r||r.d!==1){setS('Type a whole number (negatives are fine).','warn');return;}
+    const g=r.n;const dom=MYS_DOMAIN[level];
+    if(!dom.includes(g)){setS(`${fmtN(g)} is outside the range.`,'warn');return;}
+    guesses.push(g);inp.value='';
+    if(g===M.n){done=true;setS(`Yes! The mystery number is ${fmtN(g)}. You used ${shown} of ${M.clues.length} clues and ${guesses.length} guess${guesses.length===1?'':'es'}.`,'ok');draw();return;}
+    const broke=M.clues.slice(0,shown).findIndex(c=>!c.test(g));
+    if(broke>=0)setS(`${fmtN(g)} doesn’t fit clue ${broke+1}.`,'warn');
+    else setS(`${fmtN(g)} fits every clue so far, but it isn’t me. Reveal another clue.`,'');
+    draw();inp.focus({preventScroll:true});
+  }
+  draw();
+}
+
+// ---------- Magic Squares ----------
+function mountMagic(root,rng,level){
+  const M=genMagic(rng,level);
+  const show=r=>level===2?fracHTML(r):fmtN(r.n);
+  const intro=M.showSum
+    ?`Fill in the square so every row, column, and diagonal adds to <strong>${show(M.S)}</strong>.`
+    :'Every row, column, and diagonal adds to the same magic sum. Find it, then fill in the square. Fractions like −3/4 work, and so do decimals.';
+  const ins={};const status=h('p',{class:'status','aria-live':'polite'});
+  const sumEls=LINES.map(()=>h('span',{class:'msum'},'?'));
+  const grid=h('div',{class:'magic'});
+  for(let r=0;r<3;r++){
+    for(let c=0;c<3;c++){
+      const idx=r*3+c;
+      if(M.known.includes(idx))grid.append(h('div',{class:'mcell given',html:show(M.vals[idx])}));
+      else{ins[idx]=ansInput(`Row ${r+1}, column ${c+1}`);ins[idx].addEventListener('input',sums);grid.append(h('div',{class:'mcell'},ins[idx]));}
+    }
+    grid.append(sumEls[r]);
+  }
+  for(let c=0;c<3;c++)grid.append(sumEls[3+c]);
+  grid.append(sumEls[6]);
+  const diag2=h('p',{class:'diag2'},'↙ diagonal: ',sumEls[7]);
+  sumEls[6].prepend('↘ ');
+  const val=i=>M.known.includes(i)?M.vals[i]:rParse(ins[i].value);
+  function sums(){
+    LINES.forEach((L,k)=>{
+      const v=L.map(val);const el=sumEls[k];const pre=k===6?'↘ ':'';
+      if(v.some(x=>!x)){el.innerHTML=pre+'?';el.classList.remove('ok','off');return;}
+      const s=v.reduce(rAdd,R(0));el.innerHTML=pre+fracHTML(s);
+      el.classList.toggle('ok',rEq(s,M.S));el.classList.toggle('off',!rEq(s,M.S));
+    });
+  }
+  const checkB=h('button',{class:'btn primary',type:'button',onclick:check},'Check');
+  const showB=h('button',{class:'btn',type:'button',onclick:()=>{for(const i in ins){ins[i].value=rPlain(M.vals[i]);ins[i].disabled=true;}sums();setS(M.showSum?'Here’s the completed square.':`Here’s the completed square. The magic sum is ${rPlain(M.S)}.`,'');checkB.disabled=showB.disabled=true;}},'Show answer');
+  const setS=(t,k)=>{status.textContent=t;status.className='status'+(k?' '+k:'');};
+  function check(){
+    if(Object.values(ins).some(x=>!x.value.trim())){setS('Fill in every empty box first.','warn');return;}
+    for(const i in ins)if(!rParse(ins[i].value)){setS(`“${ins[i].value}” isn’t a number I can read.`,'warn');return;}
+    for(let k=0;k<8;k++){
+      const s=LINES[k].map(val).reduce(rAdd,R(0));
+      if(!rEq(s,M.S)){setS(M.showSum?`${LINE_NAMES[k]} adds to ${rPlain(s)}, not ${rPlain(M.S)}.`:`${LINE_NAMES[k]} doesn’t match the magic sum.`,'warn');return;}
+    }
+    for(const i in ins){ins[i].disabled=true;ins[i].classList.add('good');}
+    checkB.disabled=showB.disabled=true;
+    setS(M.showSum?'Magic! Every line adds to '+rPlain(M.S)+'.':`Magic! Every line adds to ${rPlain(M.S)}.`,'ok');
+  }
+  grid.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
+  root.append(h('p',{class:'prompt',html:intro}),grid,diag2,status,h('div',{class:'controls'},checkB,showB));
+  sums();
+}
+
+// ---------- Number Crunch ----------
+function mountCrunch(root,rng,level){
+  const intros=['Use the order of operations to find each value.','Watch the exponents: −3² and (−3)² are not the same!','Substitute the values and simplify. Use parentheses when you plug in a negative.'];
+  const set=genCrunchSet(rng,level,6);
+  const probs=set.map(p=>{let inp;return{
+    view(){inp=ansInput('Answer','wide');return h('div',{class:'crunch'},
+      h('div',{class:'expr',html:p.html}),p.when?h('p',{class:'when',html:'when '+p.when}):null,
+      h('div',{class:'eqrow'},h('span',{},'='),inp));},
+    check(){const r=rParse(inp.value);if(!r)return{ok:false,msg:'Type a number.'};
+      if(rEq(r,R(p.value)))return{ok:true};
+      if(rEq(r,R(-p.value)))return{ok:false,msg:'Close! Check your signs.'};return{ok:false};},
+    reveal(){inp.value=fmtN(p.value);},
+    after(){return p.sub?h('div',{class:'note',html:`<strong>Substituted:</strong> ${p.sub} = ${fmtN(p.value)}`}):null;}
+  };});
+  mountRound(root,probs,intros[level]);
+}
+
+// ---------- hub ----------
+const GAMES=[
+  {id:'target',name:'Target Number',mount:mountTarget,levels:['Whole numbers to a 2-digit target','Six numbers to a 3-digit target','Integers, including negatives']},
+  {id:'triangles',name:'Fact Triangles',mount:mountTriangles,levels:['Integers','Fractions and decimals','Monomials']},
+  {id:'diamonds',name:'Diamonds',mount:mountDiamonds,levels:['Find the product and sum','Find the two numbers','Mixed missing pieces, bigger numbers']},
+  {id:'mystery',name:'Mystery Number',mount:mountMystery,levels:['Whole numbers 1 to 100','Integers from −50 to 50','Inequalities and absolute value']},
+  {id:'magic',name:'Magic Squares',mount:mountMagic,levels:['Whole numbers','Integers','Fractions, with a hidden magic sum']},
+  {id:'crunch',name:'Number Crunch',mount:mountCrunch,levels:['Order of operations with integers','Exponents and grouping','Evaluate expressions']}
+];
+(function(){
+  const today=new Date();
+  const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+  const levels=store.get('wu-levels')||{};
+  let mode='today',game=null,handle={};
+  const $=id=>document.getElementById(id);
+  $('tabs').replaceChildren(...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
+  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount(true);}}));
+  document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount(true);}}));
+  $('newBtn').addEventListener('click',()=>mount(true));
+  function mount(){
+    if(handle.cleanup)handle.cleanup();
+    const lv=levels[game.id]??0;
+    const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
+    const root=$('game');root.replaceChildren();
+    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey})||{};
+    $('dateLine').textContent=mode==='today'?today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}):'Practice';
+    $('gameTitle').textContent=game.name;
+    document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.game===game.id)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+    document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
+    document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.level===lv)));
+    $('levelDesc').textContent=game.levels[lv];
+    $('newBtn').hidden=mode!=='practice';
+    document.title=`${game.name}: Math Warm-Ups`;
+  }
+  function route(){
+    const id=location.hash.slice(1);
+    const g=GAMES.find(x=>x.id===id)||GAMES[0];
+    if(game!==g){game=g;mount();}
+  }
+  window.addEventListener('hashchange',route);
+  document.addEventListener('keydown',e=>{
+    if(e.target.closest&&e.target.closest('input'))return;
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    if(handle.onKey)handle.onKey(e);
+  });
+  route();
+})();
+</script>
+</body>
+</html>
