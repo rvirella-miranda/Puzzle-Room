@@ -577,7 +577,8 @@ const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 
 // ---------- generic round engine ----------
 function mountRound(root,problems,intro,ctx){
-  let i=0;const res=[];let t0=Date.now();
+  let i=0;const res=[];let t0=Date.now(),finished=false;
+  if(ctx&&ctx.pending)ctx.pending(()=>{const answered=res.filter(Boolean).length;if(finished||!answered)return null;const ok=res.filter(x=>x==='ok').length;return{result:'partial',score:`${ok}/${problems.length} (unfinished)`,detail:`Stopped after ${answered} of ${problems.length}`,secs:Math.round((Date.now()-t0)/1000)};});
   const prompt=h('p',{class:'prompt',html:intro});
   const dots=h('div',{class:'dots'});
   const stage=h('div',{class:'stage'});
@@ -586,7 +587,7 @@ function mountRound(root,problems,intro,ctx){
   const checkB=h('button',{class:'btn primary',type:'button',onclick:()=>check()},'Check');
   const showB=h('button',{class:'btn',type:'button',onclick:()=>reveal()},'Show answer');
   const nextB=h('button',{class:'btn primary',type:'button',onclick:()=>next()},'Next');
-  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;t0=Date.now();load();}},'Do this set again');
+  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;t0=Date.now();finished=false;load();}},'Do this set again');
   const controls=h('div',{class:'controls'},checkB,showB,nextB,againB);
   root.append(prompt,dots,stage,status,extra,controls);
   stage.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
@@ -627,7 +628,7 @@ function mountRound(root,problems,intro,ctx){
     if(i<problems.length){load();return;}
     const ok=res.filter(x=>x==='ok').length;
     const shownN=res.filter(x=>x==='miss').length;
-    if(ctx&&ctx.report)ctx.report({result:'set',score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
+    finished=true;if(ctx&&ctx.report)ctx.report({result:'set',score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
     stage.replaceChildren(h('div',{class:'summary'},h('p',{class:'big'},`${ok} of ${problems.length}`),h('p',{},'solved without showing the answer')));
     setS('','');extra.replaceChildren();dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot '+(res[k]||'')})));
     checkB.hidden=showB.hidden=nextB.hidden=true;againB.hidden=false;
@@ -726,6 +727,7 @@ function mountTarget(root,rng,level,ctx){
   upClosest();
   if(ctx.mode==='today'){const sv=store.get(saveKey);if(sv)setS(`You already solved today’s puzzle at this level in ${sv.steps} steps (${fmtT(sv.secs)}). Try another level, or play it again.`,'');}
   render();
+if(ctx.pending)ctx.pending(()=>S.solved||!S.history.length?null:{result:'partial',score:'Not finished',detail:`Closest: ${fmtN(S.closest)} (${Math.abs(S.closest-P0.target)} away)`,secs:S.start?Math.round((Date.now()-S.start)/1000):0});
   const timer=setInterval(()=>{if(!S.solved)tick();},1000);
   return{
     cleanup:()=>clearInterval(timer),
@@ -822,6 +824,7 @@ function mountMystery(root,rng,level,ctx){
     'I’m an integer from −50 to 50, and I’m not zero. Read the clues and figure out who I am.',
     `I’m an integer from −100 to 100. Call me ${V('n')}. Every clue below is true about me.`][level];
   let shown=1,done=false;const guesses=[];
+  if(ctx&&ctx.pending)ctx.pending(()=>done||!guesses.length?null:{result:'partial',score:'Not finished',detail:`${shown}/${M.clues.length} clues, ${guesses.length} guesses`,secs:Math.round((Date.now()-t0)/1000)});
   const list=h('ol',{class:'clues'});
   const status=h('p',{class:'status','aria-live':'polite'});
   const inp=ansInput('Your guess','wide');
@@ -902,6 +905,7 @@ function mountMagic(root,rng,level,ctx){
   }
   grid.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
   root.append(h('p',{class:'prompt',html:intro}),grid,diag2,status,h('div',{class:'controls'},checkB,showB));
+  if(ctx&&ctx.pending)ctx.pending(()=>{if(checkB.disabled)return null;const v=Object.values(ins);const filled=v.filter(x=>x.value.trim()).length;return filled?{result:'partial',score:'Not finished',detail:`${filled} of ${v.length} boxes filled`,secs:Math.round((Date.now()-t0)/1000)}:null;});
   sums();
 }
 
@@ -1132,8 +1136,8 @@ async function trkFlush(){
   try{
     while(trkQ.length){
       const rec=trkQ[0];
-      try{await trkFetch(`/submissions/${rec.day}.json`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});}
-      catch(e){return false;}
+      try{await trkFetch(`/submissions/${rec.day}/${rec.id||(rec.ts+'_q')}.json`,{method:'PUT',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});}
+      catch(e){if(!/HTTP (401|403)/.test(e.message))return false;}
       trkQ.shift();store.set('wu-queue',trkQ);
     }
     return true;
@@ -1148,7 +1152,7 @@ function toast(msg,kind){
 async function trkReport(rec){
   if(!TRK.on||!TRK.student)return;
   const now=new Date();
-  trkQ.push({...rec,name:TRK.student.name,period:TRK.student.period,day:dayKey(now),ts:now.getTime()});
+  trkQ.push({...rec,name:TRK.student.name,period:TRK.student.period,day:dayKey(now),ts:now.getTime(),id:now.getTime()+'_'+Math.random().toString(36).slice(2,8)});
   store.set('wu-queue',trkQ);
   toast('Saving…');
   const ok=await trkFlush();
@@ -1300,7 +1304,8 @@ function mountTeacher(root){
   const today=new Date();
   const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
   const levels=store.get('wu-levels')||{};
-  let mode='today',game=null,handle={},view=null;
+  let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null;
+  function flushPending(){const f=pendingFn;pendingFn=null;if(!f||!pendCtx)return;let rec=null;try{rec=f();}catch(e){}if(rec)trkReport({...pendCtx,...rec});}
   const $=id=>document.getElementById(id);
   $('tabs').replaceChildren(...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount(true);}}));
@@ -1311,7 +1316,7 @@ function mountTeacher(root){
     if(view!=='game'||!TRK.on||!TRK.student){w.hidden=true;return;}
     w.hidden=false;
     w.replaceChildren('Playing as ',h('strong',{},TRK.student.name),` (${TRK.student.period})`,
-      h('button',{type:'button',class:'linkbtn',onclick:()=>{TRK.student=null;TRK.skip=false;store.set('wu-student',null);mount();}},'Switch'));
+      h('button',{type:'button',class:'linkbtn',onclick:()=>{flushPending();TRK.student=null;TRK.skip=false;store.set('wu-student',null);mount();}},'Switch'));
   }
   function renderFoot(teacher){
     const a=$('footLink');
@@ -1319,7 +1324,7 @@ function mountTeacher(root){
     else{a.textContent='Teacher view';a.href=location.href.split('#')[0]+'#teacher';a.target='_blank';a.rel='noopener';}
   }
   function mount(){
-    if(handle.cleanup)handle.cleanup();handle={};
+    flushPending();if(handle.cleanup)handle.cleanup();handle={};
     const root=$('game');root.replaceChildren();
     const teacher=view==='teacher';
     renderFoot(teacher);
@@ -1345,8 +1350,10 @@ function mountTeacher(root){
     $('levelBar').hidden=false;
     $('newBtn').hidden=mode!=='practice';
     const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
-    const report=rec=>trkReport({game:game.id,gameName:game.name,level:lv+1,mode,...rec});
-    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report})||{};
+    const base={game:game.id,gameName:game.name,level:lv+1,mode};
+    const report=rec=>trkReport({...base,...rec});
+    const pending=f=>{pendingFn=f;pendCtx=base;};
+    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report,pending})||{};
   }
   function route(){
     const id=location.hash.slice(1);
@@ -1360,6 +1367,7 @@ function mountTeacher(root){
     if(e.metaKey||e.ctrlKey||e.altKey)return;
     if(handle.onKey)handle.onKey(e);
   });
+  window.addEventListener('pagehide',flushPending);
   if(TRK.on)trkFlush();
   route();
 })();
