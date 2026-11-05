@@ -6,30 +6,30 @@
 <title>Math Warm-Ups</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F6F8FB; --grid:#DFE7F2; --ink:#1C2745; --muted:#55627F;
-  --panel:#FFFFFF; --line:#C9D4E6;
-  --tile:#FFD84D; --tile-edge:#D4A90F; --made:#9FE6D8; --made-edge:#3FAE99; --tile-ink:#1C2745;
-  --pick:#E3427A; --ok:#0B7F70; --warn:#B4233F;
+  --paper:#F6EDE7; --grid:#EEE2D8; --ink:#4A2A10; --muted:#7A5A43;
+  --panel:#FFFBF7; --line:#DFCDBD; --olive:#5E6B1E;
+  --tile:#F4DDB0; --tile-edge:#D2B07C; --made:#D3DFB4; --made-edge:#9DB074; --tile-ink:#4A2A10;
+  --pick:#6E7D22; --ok:#5E6B1E; --warn:#A6372A;
   color-scheme:light; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#111A2E; --grid:#1B2741; --ink:#EEF2FA; --muted:#A3AFCA;
-    --panel:#18233B; --line:#2E3C5E; --pick:#FF6A9B; --ok:#4FD1BC; --warn:#FF8099; color-scheme:dark;
+    --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
+    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#111A2E; --grid:#1B2741; --ink:#EEF2FA; --muted:#A3AFCA;
-  --panel:#18233B; --line:#2E3C5E; --pick:#FF6A9B; --ok:#4FD1BC; --warn:#FF8099; color-scheme:dark;
+  --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
+  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{
-  margin:0;min-height:100%;font-family:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  margin:0;min-height:100%;font-family:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
   color:var(--ink);background-color:var(--paper);
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:28px 28px;
@@ -37,7 +37,7 @@ body{
 .wrap{max-width:760px;margin:0 auto;padding:20px 18px 48px}
 header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
 .kicker{margin:0 0 4px;color:var(--muted);font-size:15px;font-weight:600}
-h1{margin:0;font-size:clamp(28px,6vw,40px);font-weight:800;letter-spacing:-0.02em;line-height:1}
+h1{margin:0;font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-size:clamp(32px,7vw,46px);font-weight:400;letter-spacing:.01em;line-height:1;color:var(--olive)}
 .date{margin:6px 0 0;color:var(--muted);font-size:15px}
 .seg{display:inline-flex;background:var(--panel);border:2px solid var(--ink);border-radius:999px;padding:3px}
 .seg button{font:inherit;font-size:14px;font-weight:600;border:0;background:transparent;color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
@@ -86,18 +86,18 @@ sup{font-size:.6em;line-height:0}
 .target{position:relative;margin:20px auto 4px;width:min(64vw,280px);aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle closest-side,var(--panel) 0 55%,var(--pick) 55% 59.5%,var(--panel) 59.5% 72%,var(--ink) 72% 74%,var(--panel) 74% 88%,var(--ink) 88% 90%,transparent 90%);
   display:grid;place-items:center}
-.target .num{font-size:clamp(40px,14vw,72px);font-weight:800;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.target .num{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-size:clamp(40px,14vw,72px);font-weight:400;letter-spacing:.01em;color:var(--olive);padding-top:.12em}
 .target.hit{animation:hit .9s ease-out}
 @keyframes hit{0%{transform:scale(1)}30%{transform:scale(1.08)}60%{transform:scale(.97)}100%{transform:scale(1)}}
 .tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:10px auto 0;max-width:480px}
 .tile{font:inherit;font-weight:800;font-size:clamp(24px,7vw,34px);font-variant-numeric:tabular-nums;min-width:clamp(68px,21vw,90px);height:clamp(68px,21vw,90px);padding:0 10px;
-  border-radius:16px;border:0;cursor:pointer;color:var(--tile-ink);background:var(--tile);box-shadow:0 5px 0 var(--tile-edge);transition:transform .12s ease}
+  border-radius:6px;border:0;cursor:pointer;color:var(--tile-ink);background:var(--tile);box-shadow:0 5px 0 var(--tile-edge);transition:transform .12s ease}
 .tile.made{background:var(--made);box-shadow:0 5px 0 var(--made-edge)}
 .tile.sel{outline:4px solid var(--pick);outline-offset:3px;transform:translateY(-3px)}
 .tile.win{outline:4px solid var(--ok);outline-offset:3px}
 .ops{display:flex;justify-content:center;gap:14px;margin-top:24px}
 .op{font:inherit;font-size:30px;font-weight:600;width:62px;height:62px;border-radius:50%;border:2.5px solid var(--ink);background:var(--panel);color:var(--ink);cursor:pointer;line-height:1}
-.op[aria-pressed="true"]{background:var(--pick);border-color:var(--pick);color:#fff}
+.op[aria-pressed="true"]{background:var(--pick);border-color:var(--pick);color:var(--paper)}
 .work{margin:22px auto 0;max-width:420px;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 18px}
 .work h2{margin:0 0 6px;font-size:16px;font-weight:600}
 .work ol{margin:0;padding-left:1.4em;font-size:20px;line-height:1.7;font-variant-numeric:tabular-nums}
