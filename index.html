@@ -13,18 +13,19 @@
   --panel:#FFFBF7; --line:#DFCDBD; --olive:#5E6B1E;
   --tile:#F4DDB0; --tile-edge:#D2B07C; --made:#D3DFB4; --made-edge:#9DB074; --tile-ink:#4A2A10;
   --pick:#6E7D22; --ok:#5E6B1E; --warn:#A6372A;
+  --s0:#D6A355; --s1:#C27A5B; --s2:#8FA27A; --s3:#A78BB4;
   color-scheme:light; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark;
+    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC;
   }
 }
 :root[data-theme="dark"]{
   --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark;
+  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -146,6 +147,52 @@ sup{font-size:.6em;line-height:0}
 .when{margin:6px 0 0;color:var(--muted);font-size:19px}
 .eqrow{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:18px;font-size:30px;font-weight:600}
 
+/* mobiles */
+.mob{display:flex;justify-content:center;margin-top:8px}
+.mob svg{width:100%;height:auto}
+.mob .str{stroke:var(--muted);stroke-width:1.5}
+.mob .bar{stroke:var(--ink);stroke-width:5;stroke-linecap:round;transition:stroke .2s}
+.mob .bar.ok{stroke:var(--ok)}.mob .bar.off{stroke:var(--warn)}
+.mob .pivot{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.mob .totbox{fill:var(--tile);stroke:var(--tile-edge);stroke-width:2}
+.mob .totbox.ok{stroke:var(--ok);stroke-width:3}.mob .totbox.off{stroke:var(--warn);stroke-width:3}
+.mob .tottxt{font:800 22px "Poppins",system-ui,sans-serif;fill:var(--tile-ink)}
+.shape-inputs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin-top:14px}
+.sh-in{display:flex;align-items:center;gap:6px;font-size:22px;font-weight:600}
+.sh-in .ans{width:3.4em}
+.ico{width:1.4em;height:1.4em;vertical-align:-0.32em}
+.eqctl{display:flex;justify-content:center;margin-top:16px}
+.seg.small button{font-size:13px;padding:6px 12px}
+.eqs{max-width:460px;margin:12px auto 0;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:10px 18px;font-size:19px;line-height:1.8}
+.eqs ol{margin:0;padding-left:1.4em}
+.eqkey{margin:0 0 4px;color:var(--muted);font-size:16px;text-align:center}
+.eqnote{color:var(--muted);font-size:14px}
+.term{white-space:nowrap}
+
+/* tracking */
+.who{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.who strong{color:var(--ink)}
+.linkbtn{background:none;border:0;padding:0;margin-left:10px;color:var(--olive);font:inherit;font-weight:600;text-decoration:underline;cursor:pointer}
+.picker,.panel{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:20px;margin-top:22px}
+.picker{max-width:420px;margin-left:auto;margin-right:auto;text-align:center}
+.panel.narrow{max-width:420px;margin-left:auto;margin-right:auto}
+.picker h2,.panel h2{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-weight:400;color:var(--olive);font-size:26px;letter-spacing:.01em;margin:0 0 6px}
+.muted{color:var(--muted);line-height:1.5}
+.small{font-size:14px}
+.field{display:block;width:100%;font:inherit;font-size:16px;padding:10px 12px;margin-top:10px;border:2px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
+textarea.field{resize:vertical;line-height:1.5}
+.tfilters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 10px}
+.tsum{font-weight:600;margin:16px 0 6px}
+.missing{padding:10px 14px;border-radius:12px;background:var(--paper);font-size:14px;line-height:1.6}
+.tblwrap{overflow-x:auto;margin-top:12px}
+.tbl{border-collapse:collapse;width:100%;font-size:14px}
+.tbl th,.tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{font-weight:600;color:var(--muted)}
+.rrow{display:grid;gap:4px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.toastbar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));pointer-events:none;z-index:20}
+#toast{background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:420px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#toast.warn{background:var(--warn);color:#fff}
+
 @media (prefers-reduced-motion: reduce){.target.hit{animation:none}.tile{transition:none}.dot.cur{transform:none}}
 </style>
 </head>
@@ -156,14 +203,15 @@ sup{font-size:.6em;line-height:0}
       <p class="kicker">Math Warm-Ups</p>
       <h1 id="gameTitle">Target Number</h1>
       <p class="date" id="dateLine"></p>
+      <p class="who" id="who" hidden></p>
     </div>
-    <div class="seg" role="group" aria-label="Puzzle mode">
+    <div class="seg" id="modeSeg" role="group" aria-label="Puzzle mode">
       <button type="button" data-mode="today" aria-pressed="true">Today’s puzzle</button>
       <button type="button" data-mode="practice" aria-pressed="false">Practice</button>
     </div>
   </header>
   <nav class="tabs" id="tabs" aria-label="Games"></nav>
-  <div class="levelbar">
+  <div class="levelbar" id="levelBar">
     <div class="seg" role="group" aria-label="Level">
       <button type="button" data-level="0">Level 1</button>
       <button type="button" data-level="1">Level 2</button>
@@ -174,7 +222,16 @@ sup{font-size:.6em;line-height:0}
   <section id="game" aria-live="off"></section>
   <div class="newwrap"><button type="button" class="btn primary" id="newBtn" hidden>New puzzle</button></div>
 </main>
+<div class="toastbar" aria-live="polite"><span id="toast" hidden></span></div>
 <script>
+// ================== SETUP: CLASS TRACKING ==================
+// Paste two values from Firebase (Project settings > General > Your apps).
+// Leave them blank and the games work without saving anything.
+const TRACKING={
+  apiKey:'',        // the "apiKey" value
+  databaseURL:''    // like https://your-project-default-rtdb.firebaseio.com
+};
+// ============================================================
 // PURE START
 const ri=(rng,n)=>Math.floor(rng()*n);
 const rint=(rng,a,b)=>a+ri(rng,b-a+1);
@@ -515,8 +572,8 @@ const store={
 const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 
 // ---------- generic round engine ----------
-function mountRound(root,problems,intro){
-  let i=0;const res=[];
+function mountRound(root,problems,intro,ctx){
+  let i=0;const res=[];let t0=Date.now();
   const prompt=h('p',{class:'prompt',html:intro});
   const dots=h('div',{class:'dots'});
   const stage=h('div',{class:'stage'});
@@ -525,7 +582,7 @@ function mountRound(root,problems,intro){
   const checkB=h('button',{class:'btn primary',type:'button',onclick:()=>check()},'Check');
   const showB=h('button',{class:'btn',type:'button',onclick:()=>reveal()},'Show answer');
   const nextB=h('button',{class:'btn primary',type:'button',onclick:()=>next()},'Next');
-  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;load();}},'Do this set again');
+  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;t0=Date.now();load();}},'Do this set again');
   const controls=h('div',{class:'controls'},checkB,showB,nextB,againB);
   root.append(prompt,dots,stage,status,extra,controls);
   stage.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
@@ -565,6 +622,8 @@ function mountRound(root,problems,intro){
     i++;
     if(i<problems.length){load();return;}
     const ok=res.filter(x=>x==='ok').length;
+    const shownN=res.filter(x=>x==='miss').length;
+    if(ctx&&ctx.report)ctx.report({result:'set',score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
     stage.replaceChildren(h('div',{class:'summary'},h('p',{class:'big'},`${ok} of ${problems.length}`),h('p',{},'solved without showing the answer')));
     setS('','');extra.replaceChildren();dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot '+(res[k]||'')})));
     checkB.hidden=showB.hidden=nextB.hidden=true;againB.hidden=false;
@@ -634,6 +693,7 @@ function mountTarget(root,rng,level,ctx){
       S.solved=true;S.selA=null;S.elapsed=Math.round((Date.now()-S.start)/1000);
       setS(`You hit ${fmtN(r)} in ${S.steps.length} step${S.steps.length===1?'':'s'} (${fmtT(S.elapsed)}).`,'ok');
       if(ctx.mode==='today')store.set(saveKey,{steps:S.steps.length,secs:S.elapsed});
+      if(ctx.report)ctx.report({result:'solved',score:'Solved',detail:`${S.steps.length} steps${S.peeked?', viewed a solution first':''}`,secs:S.elapsed});
       const tg=$('tg');tg.classList.remove('hit');void tg.offsetWidth;tg.classList.add('hit');
     }else if(S.tiles.length===1){
       S.selA=null;setS(`No numbers left to combine. Your closest was ${fmtN(S.closest)}, ${Math.abs(S.closest-P0.target)} away. Undo or start over to keep trying.`,'');
@@ -658,7 +718,7 @@ function mountTarget(root,rng,level,ctx){
   $('tSolSteps').replaceChildren(...P0.solution.map(s=>h('li',{},eq(s.a,s.op,s.b,s.r))));
   root.querySelectorAll('.op').forEach(b=>b.addEventListener('click',()=>opClick(b.dataset.op)));
   $('tUndo').addEventListener('click',undo);$('tReset').addEventListener('click',reset);
-  $('tSol').addEventListener('click',()=>{const el=$('tSolBox');el.hidden=!el.hidden;$('tSol').textContent=el.hidden?'Show a solution':'Hide the solution';});
+  $('tSol').addEventListener('click',()=>{const el=$('tSolBox');el.hidden=!el.hidden;if(!el.hidden&&!S.solved)S.peeked=true;$('tSol').textContent=el.hidden?'Show a solution':'Hide the solution';});
   upClosest();
   if(ctx.mode==='today'){const sv=store.get(saveKey);if(sv)setS(`You already solved today’s puzzle at this level in ${sv.steps} steps (${fmtT(sv.secs)}). Try another level, or play it again.`,'');}
   render();
@@ -673,7 +733,7 @@ function mountTarget(root,rng,level,ctx){
 }
 
 // ---------- Fact Triangles ----------
-function mountTriangles(root,rng,level){
+function mountTriangles(root,rng,level,ctx){
   const intros=[
     'The two bottom numbers multiply to make the top number. Find the missing one.',
     'The two bottom numbers multiply to make the top number. Answer with a fraction like −3/4 or a decimal like 2.5.',
@@ -703,11 +763,11 @@ function mountTriangles(root,rng,level){
       reveal(){inp.value=t.plain;}
     });
   }
-  mountRound(root,probs,intros[level]);
+  mountRound(root,probs,intros[level],ctx);
 }
 
 // ---------- Diamonds ----------
-function mountDiamonds(root,rng,level){
+function mountDiamonds(root,rng,level,ctx){
   const intros=[
     'The side numbers multiply to make the top and add to make the bottom. Find the top and bottom.',
     'Find two numbers that multiply to the top and add to the bottom.',
@@ -748,12 +808,12 @@ function mountDiamonds(root,rng,level){
       }
     });
   }
-  mountRound(root,probs,intros[level]);
+  mountRound(root,probs,intros[level],ctx);
 }
 
 // ---------- Mystery Number ----------
-function mountMystery(root,rng,level){
-  const M=genMystery(rng,level);
+function mountMystery(root,rng,level,ctx){
+  const M=genMystery(rng,level);const t0=Date.now();const rep=r=>{if(ctx&&ctx.report)ctx.report({...r,secs:Math.round((Date.now()-t0)/1000)});};
   const intro=['I’m a whole number from 1 to 100. Read the clues and figure out who I am.',
     'I’m an integer from −50 to 50, and I’m not zero. Read the clues and figure out who I am.',
     `I’m an integer from −100 to 100. Call me ${V('n')}. Every clue below is true about me.`][level];
@@ -763,7 +823,7 @@ function mountMystery(root,rng,level){
   const inp=ansInput('Your guess','wide');
   const guessB=h('button',{class:'btn primary',type:'button',onclick:()=>guess()},'Guess');
   const moreB=h('button',{class:'btn',type:'button',onclick:()=>{if(shown<M.clues.length){shown++;draw();}}},'Reveal next clue');
-  const showB=h('button',{class:'btn',type:'button',onclick:()=>{done=true;shown=M.clues.length;setS(`The mystery number is ${fmtN(M.n)}.`,'');draw();}},'Show the number');
+  const showB=h('button',{class:'btn',type:'button',onclick:()=>{rep({result:'revealed',score:'Gave up',detail:`${shown}/${M.clues.length} clues, ${guesses.length} guesses`});done=true;shown=M.clues.length;setS(`The mystery number is ${fmtN(M.n)}.`,'');draw();}},'Show the number');
   const chips=h('div',{class:'chips'});
   const setS=(t,k)=>{status.textContent=t;status.className='status'+(k?' '+k:'');};
   inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();guess();}});
@@ -781,7 +841,7 @@ function mountMystery(root,rng,level){
     const g=r.n;const dom=MYS_DOMAIN[level];
     if(!dom.includes(g)){setS(`${fmtN(g)} is outside the range.`,'warn');return;}
     guesses.push(g);inp.value='';
-    if(g===M.n){done=true;setS(`Yes! The mystery number is ${fmtN(g)}. You used ${shown} of ${M.clues.length} clues and ${guesses.length} guess${guesses.length===1?'':'es'}.`,'ok');draw();return;}
+    if(g===M.n){rep({result:'solved',score:'Solved',detail:`${shown}/${M.clues.length} clues, ${guesses.length} guesses`});done=true;setS(`Yes! The mystery number is ${fmtN(g)}. You used ${shown} of ${M.clues.length} clues and ${guesses.length} guess${guesses.length===1?'':'es'}.`,'ok');draw();return;}
     const broke=M.clues.slice(0,shown).findIndex(c=>!c.test(g));
     if(broke>=0)setS(`${fmtN(g)} doesn’t fit clue ${broke+1}.`,'warn');
     else setS(`${fmtN(g)} fits every clue so far, but it isn’t me. Reveal another clue.`,'');
@@ -791,8 +851,8 @@ function mountMystery(root,rng,level){
 }
 
 // ---------- Magic Squares ----------
-function mountMagic(root,rng,level){
-  const M=genMagic(rng,level);
+function mountMagic(root,rng,level,ctx){
+  const M=genMagic(rng,level);const t0=Date.now();const rep=r=>{if(ctx&&ctx.report)ctx.report({...r,secs:Math.round((Date.now()-t0)/1000)});};
   const show=r=>level===2?fracHTML(r):fmtN(r.n);
   const intro=M.showSum
     ?`Fill in the square so every row, column, and diagonal adds to <strong>${show(M.S)}</strong>.`
@@ -822,7 +882,7 @@ function mountMagic(root,rng,level){
     });
   }
   const checkB=h('button',{class:'btn primary',type:'button',onclick:check},'Check');
-  const showB=h('button',{class:'btn',type:'button',onclick:()=>{for(const i in ins){ins[i].value=rPlain(M.vals[i]);ins[i].disabled=true;}sums();setS(M.showSum?'Here’s the completed square.':`Here’s the completed square. The magic sum is ${rPlain(M.S)}.`,'');checkB.disabled=showB.disabled=true;}},'Show answer');
+  const showB=h('button',{class:'btn',type:'button',onclick:()=>{rep({result:'revealed',score:'Answer shown',detail:''});for(const i in ins){ins[i].value=rPlain(M.vals[i]);ins[i].disabled=true;}sums();setS(M.showSum?'Here’s the completed square.':`Here’s the completed square. The magic sum is ${rPlain(M.S)}.`,'');checkB.disabled=showB.disabled=true;}},'Show answer');
   const setS=(t,k)=>{status.textContent=t;status.className='status'+(k?' '+k:'');};
   function check(){
     if(Object.values(ins).some(x=>!x.value.trim())){setS('Fill in every empty box first.','warn');return;}
@@ -833,6 +893,7 @@ function mountMagic(root,rng,level){
     }
     for(const i in ins){ins[i].disabled=true;ins[i].classList.add('good');}
     checkB.disabled=showB.disabled=true;
+    rep({result:'solved',score:'Solved',detail:''});
     setS(M.showSum?'Magic! Every line adds to '+rPlain(M.S)+'.':`Magic! Every line adds to ${rPlain(M.S)}.`,'ok');
   }
   grid.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
@@ -841,7 +902,7 @@ function mountMagic(root,rng,level){
 }
 
 // ---------- Number Crunch ----------
-function mountCrunch(root,rng,level){
+function mountCrunch(root,rng,level,ctx){
   const intros=['Use the order of operations to find each value.','Watch the exponents: −3² and (−3)² are not the same!','Substitute the values and simplify. Use parentheses when you plug in a negative.'];
   const set=genCrunchSet(rng,level,6);
   const probs=set.map(p=>{let inp;return{
@@ -854,7 +915,192 @@ function mountCrunch(root,rng,level){
     reveal(){inp.value=fmtN(p.value);},
     after(){return p.sub?h('div',{class:'note',html:`<strong>Substituted:</strong> ${p.sub} = ${fmtN(p.value)}`}):null;}
   };});
-  mountRound(root,probs,intros[level]);
+  mountRound(root,probs,intros[level],ctx);
+}
+
+// ---------- Balance Mobiles ----------
+const MOB_CFG=[{k:2,maxV:9,bars:[1,2],maxChain:3},{k:3,maxV:12,bars:[2,3],maxChain:3},{k:4,maxV:15,bars:[3,4],maxChain:4}];
+const SHAPE_NAMES=['sun','rainbow','leaf','flower'];
+const LETTERS=['x','y','z','w'];
+function mobRank(rows){
+  const m=rows.map(r=>r.slice());const k=m[0].length;let rank=0;
+  for(let c=0;c<k&&rank<m.length;c++){
+    let p=-1;for(let r=rank;r<m.length;r++)if(Math.abs(m[r][c])>1e-9){p=r;break;}
+    if(p<0)continue;[m[rank],m[p]]=[m[p],m[rank]];
+    for(let r=0;r<m.length;r++)if(r!==rank&&Math.abs(m[r][c])>1e-9){const f=m[r][c]/m[rank][c];for(let cc=c;cc<k;cc++)m[r][cc]-=f*m[rank][cc];}
+    rank++;
+  }
+  return rank;
+}
+function mobCounts(n,k){const a=Array(k).fill(0);(function walk(x){if(x.type==='chain')x.items.forEach(i=>a[i]++);else{walk(x.L);walk(x.R);}})(n);return a;}
+function genMobile(rng,level){
+  const C=MOB_CFG[level];
+  for(let attempt=0;attempt<6000;attempt++){
+    const vals=[];while(vals.length<C.k){const v=rint(rng,1,C.maxV);if(!vals.includes(v))vals.push(v);}
+    const chains=[];
+    (function rec(start,arr,sum){if(arr.length)chains.push({items:arr.slice(),sum});if(arr.length===C.maxChain)return;for(let s=start;s<C.k;s++){arr.push(s);rec(s,arr,sum+vals[s]);arr.pop();}})(0,[],0);
+    let bars=1;
+    const build=(W,depth)=>{
+      const opts=chains.filter(c=>c.sum===W);
+      const canBar=W%2===0&&depth<3&&bars<C.bars[1];
+      if(canBar&&(rng()<0.55||!opts.length)){bars++;const L=build(W/2,depth+1);const R=L&&build(W/2,depth+1);return L&&R?{type:'bar',L,R}:null;}
+      if(!opts.length)return null;
+      return {type:'chain',items:shuffle(rng,pick(rng,opts).items.slice())};
+    };
+    const half=pick(rng,chains).sum;
+    const L=build(half,1),R=L&&build(half,1);
+    if(!L||!R)continue;
+    const root={type:'bar',L,R};
+    if(bars<C.bars[0]||bars>C.bars[1])continue;
+    const total=mobCounts(root,C.k);if(total.some(c=>c===0))continue;
+    const rows=[total];
+    (function walk(x){if(x.type==='bar'){const l=mobCounts(x.L,C.k),r=mobCounts(x.R,C.k);rows.push(l.map((v,i)=>v-r[i]));walk(x.L);walk(x.R);}})(root);
+    if(mobRank(rows)<C.k)continue;
+    return {root,vals,T:half*2,k:C.k};
+  }
+  return null;
+}
+const MOB={SH:34,SGAP:6,CDROP:18,BDROP:16,MGAP:22,TILT:8};
+function mobLayout(n){
+  if(n.type==='chain'){n.le=n.re=MOB.SH/2+2;n.h=MOB.CDROP+n.items.length*(MOB.SH+MOB.SGAP);return;}
+  mobLayout(n.L);mobLayout(n.R);
+  n.arm=Math.max(30,(n.L.re+n.R.le+MOB.MGAP)/2);
+  n.le=n.arm+n.L.le;n.re=n.arm+n.R.re;
+  n.h=MOB.BDROP+Math.max(n.L.h,n.R.h)+n.arm*Math.sin(MOB.TILT*Math.PI/180);
+}
+function shapeSVG(i,cx,cy,s){
+  const c=`var(--s${i})`,r=s/2,f=n=>+n.toFixed(2);
+  if(i===0){
+    let rays='';
+    for(let k=0;k<8;k++){const a=k*Math.PI/4,ca=Math.cos(a),sa=Math.sin(a);rays+=`<line x1="${f(cx+ca*r*0.68)}" y1="${f(cy+sa*r*0.68)}" x2="${f(cx+ca*r*0.95)}" y2="${f(cy+sa*r*0.95)}"/>`;}
+    return `<g stroke="${c}" stroke-width="${f(s*0.08)}" stroke-linecap="round">${rays}</g><circle cx="${cx}" cy="${cy}" r="${f(r*0.5)}" fill="${c}"/>`;
+  }
+  if(i===1){
+    const base=cy+r*0.62,w=f(s*0.14);
+    const arc=(rad,op)=>`<path d="M${f(cx-rad)},${f(base)} A${f(rad)},${f(rad)} 0 0 1 ${f(cx+rad)},${f(base)}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity="${op}"/>`;
+    return arc(r*0.9,1)+arc(r*0.58,0.65)+arc(r*0.26,0.4);
+  }
+  if(i===2){
+    return `<path d="M${cx},${f(cy-r)} C${f(cx+r*0.95)},${f(cy-r*0.45)} ${f(cx+r*0.95)},${f(cy+r*0.45)} ${cx},${f(cy+r)} C${f(cx-r*0.95)},${f(cy+r*0.45)} ${f(cx-r*0.95)},${f(cy-r*0.45)} ${cx},${f(cy-r)} Z" fill="${c}"/>`+
+      `<line x1="${cx}" y1="${f(cy-r*0.65)}" x2="${cx}" y2="${f(cy+r*0.8)}" stroke="var(--paper)" stroke-width="${f(s*0.05)}" stroke-linecap="round" opacity="0.75"/>`;
+  }
+  let petals='';
+  for(let k=0;k<5;k++){const a=-Math.PI/2+k*2*Math.PI/5;petals+=`<circle cx="${f(cx+Math.cos(a)*r*0.52)}" cy="${f(cy+Math.sin(a)*r*0.52)}" r="${f(r*0.42)}" fill="${c}"/>`;}
+  return petals+`<circle cx="${cx}" cy="${cy}" r="${f(r*0.28)}" fill="var(--paper)" stroke="${c}" stroke-width="${f(s*0.05)}"/>`;
+}
+const shapeIcon=i=>`<svg class="ico" viewBox="0 0 20 20" role="img" aria-label="${SHAPE_NAMES[i]}">${shapeSVG(i,10,10,15)}</svg>`;
+function mobMarkup(n,bars){
+  if(n.type==='chain'){
+    const TOPS=[0.95,0.56,1,0.94],last=n.items.length-1;
+    const endY=MOB.CDROP+last*(MOB.SH+MOB.SGAP)+MOB.SH/2-TOPS[n.items[last]]*MOB.SH/2;
+    let s=`<line class="str" x1="0" y1="0" x2="0" y2="${endY}"/>`;
+    n.items.forEach((it,k)=>{
+      const top=MOB.CDROP+k*(MOB.SH+MOB.SGAP);
+      s+=shapeSVG(it,0,top+MOB.SH/2,MOB.SH);
+    });
+    return s;
+  }
+  const id=bars.length;bars.push(n);n.ang=0;
+  return `<line class="str" x1="0" y1="0" x2="0" y2="${MOB.BDROP}"/>`+
+    `<g data-rot="${id}" transform="translate(0,${MOB.BDROP})"><line class="bar" x1="${-n.arm}" y1="0" x2="${n.arm}" y2="0"/><circle class="pivot" r="3.5"/></g>`+
+    `<g data-l="${id}" transform="translate(${-n.arm},${MOB.BDROP})">${mobMarkup(n.L,bars)}</g>`+
+    `<g data-r="${id}" transform="translate(${n.arm},${MOB.BDROP})">${mobMarkup(n.R,bars)}</g>`;
+}
+function termsHTML(counts,letters){
+  const parts=[];
+  counts.forEach((c,i)=>{if(!c)return;const coef=c>1?c:'';parts.push(letters?`${coef}${V(LETTERS[i])}`:`<span class="term">${coef}${shapeIcon(i)}</span>`);});
+  return parts.join(' + ')||'0';
+}
+function mountMobiles(root,rng,level,ctx){
+  const intros=[
+    'Each shape has a whole-number weight, and every bar balances. The number at the top is the weight of the whole mobile. Find each shape’s weight.',
+    'Same rules, three shapes. Type a guess for each shape and watch which way the bars tip.',
+    'Four shapes. Each bar is an equation, so try turning on the equations and solving the system.'
+  ];
+  let eqMode='hide';
+  const probs=[];
+  for(let q=0;q<5;q++){
+    const M=genMobile(rng,level);
+    const ins=[];let bars,svg,eqBox,update;
+    probs.push({
+      view(){
+        bars=[];mobLayout(M.root);
+        const m=20,W=M.root.le+M.root.re+2*m,x0=M.root.le+m,topY=58,H=topY+M.root.h+16;
+        const wrap=h('div',{class:'mob'});
+        wrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="max-width:${Math.min(W*1.25,640)}px" role="img" aria-label="Balance mobile weighing ${M.T}">
+          <line class="str" x1="${x0}" y1="40" x2="${x0}" y2="${topY}"/>
+          <rect class="totbox" x="${x0-34}" y="4" width="68" height="36" rx="10"/>
+          <text class="tottxt" x="${x0}" y="29" text-anchor="middle">${M.T}</text>
+          <g transform="translate(${x0},${topY})">${mobMarkup(M.root,bars)}</g></svg>`;
+        svg=wrap.querySelector('svg');
+        const row=h('div',{class:'shape-inputs'});
+        for(let i=0;i<M.k;i++){
+          ins[i]=ansInput(`Weight of the ${SHAPE_NAMES[i]}`);
+          ins[i].addEventListener('input',()=>update());
+          row.append(h('label',{class:'sh-in'},h('span',{html:shapeIcon(i)}),h('span',{class:'eqs-sign'},'='),ins[i]));
+        }
+        const seg=h('div',{class:'seg small',role:'group','aria-label':'Show equations'});
+        const modes=[['hide','Hide equations'],['shapes','Shapes'],['letters','Letters']];
+        eqBox=h('div',{class:'eqs'});
+        const drawEq=()=>{
+          seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===eqMode)));
+          eqBox.hidden=eqMode==='hide';if(eqMode==='hide')return;
+          const L=eqMode==='letters';
+          const lines=[`${termsHTML(mobCounts(M.root,M.k),L)} = ${M.T}`];
+          bars.forEach(b=>lines.push(`${termsHTML(mobCounts(b.L,M.k),L)} = ${termsHTML(mobCounts(b.R,M.k),L)}`));
+          eqBox.innerHTML=(L?`<p class="eqkey">${[...Array(M.k).keys()].map(i=>`${shapeIcon(i)} = ${V(LETTERS[i])}`).join('&emsp;')}</p>`:'')+
+            `<ol>${lines.map((l,k)=>`<li>${l}${k===0?' <span class="eqnote">(whole mobile)</span>':''}</li>`).join('')}</ol>`;
+        };
+        modes.forEach(([k,lab])=>seg.append(h('button',{type:'button','data-m':k,onclick:()=>{eqMode=k;drawEq();}},lab)));
+        drawEq();
+        const guess=()=>ins.map(x=>{const r=rParse(x.value);return r&&r.d===1?r.n:null;});
+        const weight=(n,g)=>{if(n.type==='chain'){let s=0;for(const i of n.items){if(g[i]==null)return null;s+=g[i];}return s;}const a=weight(n.L,g),b=weight(n.R,g);return a==null||b==null?null:a+b;};
+        let raf=null;
+        const place=()=>{
+          bars.forEach((b,id)=>{
+            const t=b.ang*Math.PI/180,c=Math.cos(t),s=Math.sin(t);
+            svg.querySelector(`[data-rot="${id}"]`).setAttribute('transform',`translate(0,${MOB.BDROP}) rotate(${b.ang})`);
+            svg.querySelector(`[data-l="${id}"]`).setAttribute('transform',`translate(${-b.arm*c},${MOB.BDROP-b.arm*s})`);
+            svg.querySelector(`[data-r="${id}"]`).setAttribute('transform',`translate(${b.arm*c},${MOB.BDROP+b.arm*s})`);
+          });
+        };
+        const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        update=()=>{
+          const g=guess();
+          bars.forEach((b,id)=>{
+            const wl=weight(b.L,g),wr=weight(b.R,g);
+            b.target=wl==null||wr==null||wl===wr?0:(wl>wr?-MOB.TILT:MOB.TILT);
+            const line=svg.querySelector(`[data-rot="${id}"] .bar`);
+            line.classList.toggle('ok',wl!=null&&wr!=null&&wl===wr);
+            line.classList.toggle('off',wl!=null&&wr!=null&&wl!==wr);
+          });
+          const tw=weight(M.root,g);
+          svg.querySelector('.totbox').classList.toggle('ok',tw===M.T);
+          svg.querySelector('.totbox').classList.toggle('off',tw!=null&&tw!==M.T);
+          if(reduce){bars.forEach(b=>b.ang=b.target);place();return;}
+          if(raf)cancelAnimationFrame(raf);
+          const step=()=>{let moving=false;bars.forEach(b=>{const d=b.target-b.ang;if(Math.abs(d)>0.05){b.ang+=d*0.18;moving=true;}else b.ang=b.target;});place();if(moving)raf=requestAnimationFrame(step);};
+          raf=requestAnimationFrame(step);
+        };
+        this._guess=guess;this._weight=weight;
+        return h('div',{},wrap,row,h('div',{class:'eqctl'},seg),eqBox);
+      },
+      check(){
+        const g=this._guess();
+        if(g.some(v=>v==null))return{ok:false,msg:'Each weight should be a whole number.'};
+        if(g.every((v,i)=>v===M.vals[i]))return{ok:true,msg:'Balanced! Every bar is level.'};
+        const tw=this._weight(M.root,g);
+        if(tw!==M.T)return{ok:false,msg:`Your shapes add up to ${fmtN(tw)}, but the whole mobile weighs ${M.T}.`};
+        return{ok:false,msg:'The total works, but at least one bar is tipping. Look for the red bar.'};
+      },
+      reveal(){M.vals.forEach((v,i)=>ins[i].value=v);update();},
+      after(){
+        return h('div',{class:'note',html:`<strong>Algebra connection:</strong> ${M.vals.map((v,i)=>`${V(LETTERS[i])} = ${v}`).join(', ')} solves this system:<br>`+
+          [`${termsHTML(mobCounts(M.root,M.k),true)} = ${M.T}`,...bars.map(b=>`${termsHTML(mobCounts(b.L,M.k),true)} = ${termsHTML(mobCounts(b.R,M.k),true)}`)].join('<br>')});
+      }
+    });
+  }
+  mountRound(root,probs,intros[level],ctx);
 }
 
 // ---------- hub ----------
@@ -864,44 +1110,244 @@ const GAMES=[
   {id:'diamonds',name:'Diamonds',mount:mountDiamonds,levels:['Find the product and sum','Find the two numbers','Mixed missing pieces, bigger numbers']},
   {id:'mystery',name:'Mystery Number',mount:mountMystery,levels:['Whole numbers 1 to 100','Integers from −50 to 50','Inequalities and absolute value']},
   {id:'magic',name:'Magic Squares',mount:mountMagic,levels:['Whole numbers','Integers','Fractions, with a hidden magic sum']},
-  {id:'crunch',name:'Number Crunch',mount:mountCrunch,levels:['Order of operations with integers','Exponents and grouping','Evaluate expressions']}
+  {id:'crunch',name:'Number Crunch',mount:mountCrunch,levels:['Order of operations with integers','Exponents and grouping','Evaluate expressions']},
+  {id:'mobiles',name:'Balance Mobiles',mount:mountMobiles,levels:['Two shapes','Three shapes','Four shapes, systems of equations']}
 ];
+// ===================== CLASS TRACKING =====================
+const TRK={on:!!(TRACKING.apiKey&&TRACKING.databaseURL),student:null,skip:false,roster:null,flushing:false};
+TRK.student=store.get('wu-student');
+const trkBase=()=>TRACKING.databaseURL.trim().replace(/\/+$/,'');
+const pad2=n=>String(n).padStart(2,'0');
+const dayKey=d=>`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+async function trkFetch(path,opts){const r=await fetch(trkBase()+path,opts);if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json();}
+async function trkLoadRoster(){const d=await trkFetch('/roster.json');TRK.roster=(Array.isArray(d)?d:Object.values(d||{})).filter(r=>r&&r.period&&Array.isArray(r.names));return TRK.roster;}
+let trkQ=store.get('wu-queue')||[];
+async function trkFlush(){
+  if(TRK.flushing||!trkQ.length)return !trkQ.length;
+  TRK.flushing=true;
+  try{
+    while(trkQ.length){
+      const rec=trkQ[0];
+      try{await trkFetch(`/submissions/${rec.day}.json`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});}
+      catch(e){return false;}
+      trkQ.shift();store.set('wu-queue',trkQ);
+    }
+    return true;
+  }finally{TRK.flushing=false;store.set('wu-queue',trkQ);}
+}
+let toastTimer=null;
+function toast(msg,kind){
+  const t=document.getElementById('toast');if(!t)return;
+  t.textContent=msg;t.className=kind||'';t.hidden=false;
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>{t.hidden=true;},kind==='warn'?6000:3000);
+}
+async function trkReport(rec){
+  if(!TRK.on||!TRK.student)return;
+  const now=new Date();
+  trkQ.push({...rec,name:TRK.student.name,period:TRK.student.period,day:dayKey(now),ts:now.getTime()});
+  store.set('wu-queue',trkQ);
+  toast('Saving…');
+  const ok=await trkFlush();
+  toast(ok?`Saved for ${TRK.student.name} ✓`:'Couldn’t save yet. It will try again automatically, so keep going.',ok?'':'warn');
+}
+function renderPicker(root,onDone){
+  const card=(...kids)=>h('div',{class:'picker'},...kids);
+  root.replaceChildren(card(h('p',{class:'muted'},'Loading your class list…')));
+  const playAnyway=()=>h('button',{class:'btn',type:'button',onclick:()=>{TRK.skip=true;onDone();}},'Play without saving');
+  trkLoadRoster().then(roster=>{
+    if(!roster.length){root.replaceChildren(card(h('h2',{},'No class lists yet'),h('p',{class:'muted'},'Your teacher hasn’t added class lists yet. You can still play, but your work won’t be saved.'),playAnyway()));return;}
+    const cls=h('select',{class:'field','aria-label':'Your class'},h('option',{value:''},'Choose your class'),...roster.map((r,i)=>h('option',{value:String(i)},r.period)));
+    const nm=h('select',{class:'field','aria-label':'Your name',disabled:true},h('option',{value:''},'Choose your name'));
+    const go=h('button',{class:'btn primary',type:'button',disabled:true,onclick:()=>{
+      const r=roster[+cls.value];TRK.student={period:r.period,name:nm.value};store.set('wu-student',TRK.student);onDone();}},'Start');
+    cls.addEventListener('change',()=>{
+      const r=roster[+cls.value];
+      nm.replaceChildren(h('option',{value:''},'Choose your name'),...(r?r.names.map(n=>h('option',{value:n},n)):[]));
+      nm.disabled=!r;go.disabled=true;
+    });
+    nm.addEventListener('change',()=>{go.disabled=!nm.value;});
+    root.replaceChildren(card(h('h2',{},'Who’s playing?'),h('p',{class:'muted'},'Pick your class and your name so your teacher can see the puzzles you finish.'),cls,nm,h('div',{class:'controls'},go)));
+  }).catch(()=>{
+    root.replaceChildren(card(h('h2',{},'Can’t load the class list'),h('p',{class:'muted'},'Check your internet connection and try again.'),
+      h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:()=>renderPicker(root,onDone)},'Try again'),playAnyway())));
+  });
+}
+
+// ---------- teacher view ----------
+let teachMem=null;
+async function teacherToken(){
+  let t=teachMem||store.get('wu-teacher');if(!t)return null;
+  if(Date.now()<t.exp-60000)return t.idToken;
+  const r=await fetch(`https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(TRACKING.apiKey)}`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`grant_type=refresh_token&refresh_token=${encodeURIComponent(t.refreshToken)}`});
+  if(!r.ok){teachMem=null;store.set('wu-teacher',null);return null;}
+  const j=await r.json();
+  t={...t,idToken:j.id_token,refreshToken:j.refresh_token,exp:Date.now()+(+j.expires_in)*1000};
+  teachMem=t;store.set('wu-teacher',t);return t.idToken;
+}
+async function teacherSignIn(email,password){
+  const r=await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(TRACKING.apiKey)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,returnSecureToken:true})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error((j.error&&j.error.message)||'Sign-in failed');
+  teachMem={idToken:j.idToken,refreshToken:j.refreshToken,exp:Date.now()+(+j.expiresIn)*1000,email:j.email};
+  store.set('wu-teacher',teachMem);
+}
+function friendlyAuth(m){
+  if(/INVALID_LOGIN|INVALID_PASSWORD|EMAIL_NOT_FOUND|INVALID_EMAIL|MISSING_PASSWORD/.test(m))return 'That email or password didn’t work.';
+  if(/TOO_MANY/.test(m))return 'Too many tries. Wait a few minutes and try again.';
+  if(/OPERATION_NOT_ALLOWED/.test(m))return 'Email/Password sign-in isn’t turned on in Firebase Authentication yet.';
+  return 'Sign-in failed: '+m;
+}
+const denied=e=>/HTTP (401|403)/.test(e.message);
+function mountTeacher(root){
+  if(!TRK.on){root.append(h('div',{class:'panel'},h('h2',{},'Tracking isn’t set up yet'),h('p',{class:'muted'},'Add your Firebase Web API Key and database URL to the SETUP section at the top of the code, then reload this page.')));return;}
+  const box=h('div',{});root.append(box);
+  teacherToken().then(t=>t?dash():signIn()).catch(()=>signIn());
+  function signIn(msg){
+    const em=h('input',{class:'field',type:'email',autocomplete:'username',placeholder:'Email','aria-label':'Email'});
+    const pw=h('input',{class:'field',type:'password',autocomplete:'current-password',placeholder:'Password','aria-label':'Password'});
+    const st=h('p',{class:'status warn'},msg||'');
+    const go=async()=>{st.className='status';st.textContent='Signing in…';
+      try{await teacherSignIn(em.value.trim(),pw.value);dash();}catch(e){st.className='status warn';st.textContent=friendlyAuth(e.message);}};
+    pw.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+    box.replaceChildren(h('div',{class:'panel narrow'},h('h2',{},'Teacher sign-in'),
+      h('p',{class:'muted'},'Use the email and password you added in Firebase Authentication.'),em,pw,
+      h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:go},'Sign in')),st));
+  }
+  async function dash(){
+    let roster=[];try{roster=await trkLoadRoster();}catch(e){}
+    let rows=[];
+    const date=h('input',{class:'field',type:'date','aria-label':'Date'});date.value=dayKey(new Date());
+    const cls=h('select',{class:'field','aria-label':'Class'},h('option',{value:''},'All classes'),...roster.map(r=>h('option',{value:r.period},r.period)));
+    const gm=h('select',{class:'field','aria-label':'Game'},h('option',{value:''},'All games'),...GAMES.map(g=>h('option',{value:g.id},g.name)));
+    const st=h('p',{class:'status'});const out=h('div',{});
+    const filtered=()=>rows.filter(r=>(!cls.value||r.period===cls.value)&&(!gm.value||r.game===gm.value));
+    async function load(){
+      st.className='status';st.textContent='Loading…';
+      try{
+        const tok=await teacherToken();if(!tok){signIn('Please sign in again.');return;}
+        const data=await trkFetch(`/submissions/${date.value}.json?auth=${encodeURIComponent(tok)}`);
+        rows=Object.values(data||{}).sort((a,b)=>a.ts-b.ts);st.textContent='';draw();
+      }catch(e){st.className='status warn';st.textContent=denied(e)?'Permission denied. Check that your User UID is in the database rules.':'Couldn’t load records. Check your connection and try again.';}
+    }
+    function draw(){
+      const f=filtered();const people=new Set(f.map(r=>r.period+'|'+r.name));
+      let extra=h('p',{class:'muted small'},'Pick a class to see who hasn’t finished a puzzle yet.');
+      const rc=roster.find(r=>r.period===cls.value);
+      if(rc){const done=new Set(f.map(r=>r.name));const miss=rc.names.filter(n=>!done.has(n));
+        extra=h('div',{class:'missing'},h('strong',{},miss.length?`No entries yet (${miss.length}): `:'Everyone in this class has an entry.'),miss.join(', '));}
+      const head=['Time','Class','Name','Game','Level','Mode','Result','Details','Time spent'];
+      const table=h('div',{class:'tblwrap'},h('table',{class:'tbl'},
+        h('thead',{},h('tr',{},...head.map(t=>h('th',{},t)))),
+        h('tbody',{},...f.map(r=>h('tr',{},
+          h('td',{},new Date(r.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})),h('td',{},r.period),h('td',{},r.name),
+          h('td',{},r.gameName||r.game),h('td',{},String(r.level)),h('td',{},r.mode==='today'?'Today':'Practice'),
+          h('td',{},r.score||''),h('td',{},r.detail||''),h('td',{},r.secs!=null?fmtT(r.secs):''))))));
+      out.replaceChildren(h('p',{class:'tsum'},`${f.length} entr${f.length===1?'y':'ies'} from ${people.size} student${people.size===1?'':'s'}`),extra,
+        f.length?table:h('p',{class:'muted'},'No entries for this selection.'));
+    }
+    function csv(){
+      const esc=v=>{const s=String(v??'');return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s;};
+      const lines=[['Date','Time','Class','Name','Game','Level','Mode','Result','Details','Seconds'].join(','),
+        ...filtered().map(r=>[r.day,new Date(r.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}),r.period,r.name,r.gameName||r.game,r.level,r.mode==='today'?'Today':'Practice',r.score,r.detail||'',r.secs??''].map(esc).join(','))];
+      const a=h('a',{href:URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'})),download:`warm-ups-${date.value}${cls.value?'-'+cls.value:''}.csv`});
+      document.body.append(a);a.click();a.remove();
+    }
+    date.addEventListener('change',load);cls.addEventListener('change',draw);gm.addEventListener('change',draw);
+    box.replaceChildren(h('div',{class:'panel'},
+      h('div',{class:'tfilters'},date,cls,gm),
+      h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:load},'Refresh'),
+        h('button',{class:'btn',type:'button',onclick:csv},'Download CSV'),
+        h('button',{class:'btn',type:'button',onclick:()=>editRoster(roster)},'Edit class lists'),
+        h('button',{class:'btn',type:'button',onclick:()=>{teachMem=null;store.set('wu-teacher',null);signIn();}},'Sign out')),
+      st,out));
+    load();
+  }
+  function editRoster(roster){
+    const list=h('div',{});
+    const addRow=(p,names)=>{
+      const pi=h('input',{class:'field',placeholder:'Class name, like 7M','aria-label':'Class name'});pi.value=p||'';
+      const ta=h('textarea',{class:'field',rows:'8',placeholder:'One student per line','aria-label':'Student names'});ta.value=(names||[]).join('\n');
+      const row=h('div',{class:'rrow'},pi,ta,h('div',{},h('button',{class:'btn',type:'button',onclick:()=>row.remove()},'Remove this class')));
+      list.append(row);
+    };
+    (roster.length?roster:[{}]).forEach(r=>addRow(r.period,r.names));
+    const st=h('p',{class:'status'});
+    const save=async()=>{
+      const data=[...list.querySelectorAll('.rrow')].map(r=>({period:r.querySelector('input').value.trim(),
+        names:[...new Set(r.querySelector('textarea').value.split('\n').map(s=>s.trim()).filter(Boolean))]})).filter(r=>r.period&&r.names.length);
+      st.className='status';st.textContent='Saving…';
+      try{const tok=await teacherToken();if(!tok){signIn('Please sign in again.');return;}
+        await trkFetch(`/roster.json?auth=${encodeURIComponent(tok)}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        st.className='status ok';st.textContent=`Saved ${data.length} class list${data.length===1?'':'s'}.`;
+      }catch(e){st.className='status warn';st.textContent=denied(e)?'Permission denied. Check that your User UID is in the database rules.':'Couldn’t save. Check your connection and try again.';}
+    };
+    box.replaceChildren(h('div',{class:'panel'},h('h2',{},'Class lists'),
+      h('p',{class:'muted'},'Students choose their class, then their name. First name and last initial works well, like “Ana B.”'),list,
+      h('div',{class:'controls'},h('button',{class:'btn',type:'button',onclick:()=>addRow()},'Add a class'),
+        h('button',{class:'btn primary',type:'button',onclick:save},'Save class lists'),
+        h('button',{class:'btn',type:'button',onclick:()=>dash()},'Back to records')),st));
+  }
+}
+
 (function(){
   const today=new Date();
   const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
   const levels=store.get('wu-levels')||{};
-  let mode='today',game=null,handle={};
+  let mode='today',game=null,handle={},view=null;
   const $=id=>document.getElementById(id);
   $('tabs').replaceChildren(...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount(true);}}));
   document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount(true);}}));
   $('newBtn').addEventListener('click',()=>mount(true));
+  function renderWho(){
+    const w=$('who');
+    if(view!=='game'||!TRK.on||!TRK.student){w.hidden=true;return;}
+    w.hidden=false;
+    w.replaceChildren('Playing as ',h('strong',{},TRK.student.name),` (${TRK.student.period})`,
+      h('button',{type:'button',class:'linkbtn',onclick:()=>{TRK.student=null;TRK.skip=false;store.set('wu-student',null);mount();}},'Switch'));
+  }
   function mount(){
-    if(handle.cleanup)handle.cleanup();
-    const lv=levels[game.id]??0;
-    const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
+    if(handle.cleanup)handle.cleanup();handle={};
     const root=$('game');root.replaceChildren();
-    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey})||{};
+    const teacher=view==='teacher';
+    $('modeSeg').hidden=teacher;$('tabs').hidden=teacher;
+    if(teacher){
+      $('levelBar').hidden=true;$('newBtn').hidden=true;
+      $('gameTitle').textContent='Teacher View';$('dateLine').textContent='Class records';
+      document.title='Teacher View: Math Warm-Ups';renderWho();mountTeacher(root);return;
+    }
+    const lv=levels[game.id]??0;
     $('dateLine').textContent=mode==='today'?today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}):'Practice';
     $('gameTitle').textContent=game.name;
+    document.title=`${game.name}: Math Warm-Ups`;
     document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.game===game.id)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
     document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
     document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.level===lv)));
     $('levelDesc').textContent=game.levels[lv];
+    renderWho();
+    if(TRK.on&&!TRK.student&&!TRK.skip){
+      $('levelBar').hidden=true;$('newBtn').hidden=true;$('modeSeg').hidden=true;
+      renderPicker(root,()=>mount());return;
+    }
+    $('levelBar').hidden=false;
     $('newBtn').hidden=mode!=='practice';
-    document.title=`${game.name}: Math Warm-Ups`;
+    const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
+    const report=rec=>trkReport({game:game.id,gameName:game.name,level:lv+1,mode,...rec});
+    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report})||{};
   }
   function route(){
     const id=location.hash.slice(1);
+    if(id==='teacher'){if(view!=='teacher'){view='teacher';mount();}return;}
     const g=GAMES.find(x=>x.id===id)||GAMES[0];
-    if(game!==g){game=g;mount();}
+    if(view!=='game'||game!==g){view='game';game=g;mount();}
   }
   window.addEventListener('hashchange',route);
   document.addEventListener('keydown',e=>{
-    if(e.target.closest&&e.target.closest('input'))return;
+    if(e.target.closest&&e.target.closest('input,select,textarea'))return;
     if(e.metaKey||e.ctrlKey||e.altKey)return;
     if(handle.onKey)handle.onKey(e);
   });
+  if(TRK.on)trkFlush();
   route();
 })();
 </script>
