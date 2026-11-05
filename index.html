@@ -169,6 +169,9 @@ sup{font-size:.6em;line-height:0}
 .eqnote{color:var(--muted);font-size:14px}
 .term{white-space:nowrap}
 
+.foot{display:flex;justify-content:center;margin-top:40px;padding-top:14px;border-top:1px dashed var(--line)}
+.footlink{color:var(--muted);font-size:13px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:8px}
+.footlink:hover{color:var(--ink);background:var(--panel)}
 /* tracking */
 .who{margin:8px 0 0;font-size:14px;color:var(--muted)}
 .who strong{color:var(--ink)}
@@ -221,6 +224,7 @@ textarea.field{resize:vertical;line-height:1.5}
   </div>
   <section id="game" aria-live="off"></section>
   <div class="newwrap"><button type="button" class="btn primary" id="newBtn" hidden>New puzzle</button></div>
+  <footer class="foot"><a id="footLink" class="footlink" href="#teacher">Teacher view</a></footer>
 </main>
 <div class="toastbar" aria-live="polite"><span id="toast" hidden></span></div>
 <script>
@@ -228,8 +232,8 @@ textarea.field{resize:vertical;line-height:1.5}
 // Paste two values from Firebase (Project settings > General > Your apps).
 // Leave them blank and the games work without saving anything.
 const TRACKING={
-  apiKey:'AIzaSyAb8iCZJyZkUL3RSqeWzHmDd9nzaB0GimA',        // the "apiKey" value
-   databaseURL:'https://puzzleroom-745cc-default-rtdb.firebaseio.com'
+   apiKey:'AIzaSyAb8iCZJyZkUL3RSqeWzHmDd9nzaB0GimA',
+  databaseURL:'https://puzzleroom-745cc-default-rtdb.firebaseio.com'
 };
 // ============================================================
 // PURE START
@@ -1200,8 +1204,9 @@ function friendlyAuth(m){
 const denied=e=>/HTTP (401|403)/.test(e.message);
 function mountTeacher(root){
   if(!TRK.on){root.append(h('div',{class:'panel'},h('h2',{},'Tracking isn’t set up yet'),h('p',{class:'muted'},'Add your Firebase Web API Key and database URL to the SETUP section at the top of the code, then reload this page.')));return;}
-  const box=h('div',{});root.append(box);
+  const box=h('div',{});root.append(box);let timer=null;
   teacherToken().then(t=>t?dash():signIn()).catch(()=>signIn());
+  return {cleanup:()=>clearInterval(timer)};
   function signIn(msg){
     const em=h('input',{class:'field',type:'email',autocomplete:'username',placeholder:'Email','aria-label':'Email'});
     const pw=h('input',{class:'field',type:'password',autocomplete:'current-password',placeholder:'Password','aria-label':'Password'});
@@ -1221,8 +1226,8 @@ function mountTeacher(root){
     const gm=h('select',{class:'field','aria-label':'Game'},h('option',{value:''},'All games'),...GAMES.map(g=>h('option',{value:g.id},g.name)));
     const st=h('p',{class:'status'});const out=h('div',{});
     const filtered=()=>rows.filter(r=>(!cls.value||r.period===cls.value)&&(!gm.value||r.game===gm.value));
-    async function load(){
-      st.className='status';st.textContent='Loading…';
+    async function load(quiet){
+      if(!quiet){st.className='status';st.textContent='Loading…';}
       try{
         const tok=await teacherToken();if(!tok){signIn('Please sign in again.');return;}
         const data=await trkFetch(`/submissions/${date.value}.json?auth=${encodeURIComponent(tok)}`);
@@ -1259,8 +1264,10 @@ function mountTeacher(root){
         h('button',{class:'btn',type:'button',onclick:csv},'Download CSV'),
         h('button',{class:'btn',type:'button',onclick:()=>editRoster(roster)},'Edit class lists'),
         h('button',{class:'btn',type:'button',onclick:()=>{teachMem=null;store.set('wu-teacher',null);signIn();}},'Sign out')),
-      st,out));
+      h('p',{class:'muted small'},'Today’s records refresh on their own every 20 seconds.'),st,out));
     load();
+    clearInterval(timer);
+    timer=setInterval(()=>{if(document.hidden||!out.isConnected)return;if(date.value===dayKey(new Date()))load(true);},20000);
   }
   function editRoster(roster){
     const list=h('div',{});
@@ -1306,15 +1313,21 @@ function mountTeacher(root){
     w.replaceChildren('Playing as ',h('strong',{},TRK.student.name),` (${TRK.student.period})`,
       h('button',{type:'button',class:'linkbtn',onclick:()=>{TRK.student=null;TRK.skip=false;store.set('wu-student',null);mount();}},'Switch'));
   }
+  function renderFoot(teacher){
+    const a=$('footLink');
+    if(teacher){a.textContent='← Back to the games';a.href='#'+(game?game.id:GAMES[0].id);a.removeAttribute('target');a.removeAttribute('rel');}
+    else{a.textContent='Teacher view';a.href=location.href.split('#')[0]+'#teacher';a.target='_blank';a.rel='noopener';}
+  }
   function mount(){
     if(handle.cleanup)handle.cleanup();handle={};
     const root=$('game');root.replaceChildren();
     const teacher=view==='teacher';
+    renderFoot(teacher);
     $('modeSeg').hidden=teacher;$('tabs').hidden=teacher;
     if(teacher){
       $('levelBar').hidden=true;$('newBtn').hidden=true;
       $('gameTitle').textContent='Teacher View';$('dateLine').textContent='Class records';
-      document.title='Teacher View: Math Warm-Ups';renderWho();mountTeacher(root);return;
+      document.title='Teacher View: Math Warm-Ups';renderWho();handle=mountTeacher(root)||{};return;
     }
     const lv=levels[game.id]??0;
     $('dateLine').textContent=mode==='today'?today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}):'Practice';
