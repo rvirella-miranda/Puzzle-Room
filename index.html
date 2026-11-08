@@ -172,6 +172,20 @@ sup{font-size:.6em;line-height:0}
 .foot{display:flex;justify-content:center;margin-top:40px;padding-top:14px;border-top:1px dashed var(--line)}
 .footlink{color:var(--muted);font-size:13px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:8px}
 .footlink:hover{color:var(--ink);background:var(--panel)}
+.lb{max-width:460px;margin:30px auto 0;background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:16px 18px}
+.lb-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.lb h2{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-weight:400;color:var(--olive);font-size:24px;letter-spacing:.01em;margin:0;padding-top:.1em}
+.lb-sub{margin:2px 0 0}
+.lb-rows{list-style:none;margin:10px 0 0;padding:0}
+.lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font-size:16px}
+.lb-row:nth-child(odd){background:var(--paper)}
+.lb-row.me{outline:2px solid var(--olive);outline-offset:-2px;font-weight:700}
+.lb-rank{width:2em;text-align:center;font-weight:700;flex:none}
+.lb-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{color:var(--muted);font-size:14px;flex:none}
+.lb-time{font-variant-numeric:tabular-nums;font-weight:700;flex:none}
+.lb-empty{margin:12px 0 4px;text-align:center}
+.lb-note{margin:10px 0 0;text-align:center}
 /* tracking */
 .who{margin:8px 0 0;font-size:14px;color:var(--muted)}
 .who strong{color:var(--ink)}
@@ -223,6 +237,7 @@ textarea.field{resize:vertical;line-height:1.5}
     <p class="leveldesc" id="levelDesc"></p>
   </div>
   <section id="game" aria-live="off"></section>
+  <section id="lb" aria-label="Leaderboard"></section>
   <div class="newwrap"><button type="button" class="btn primary" id="newBtn" hidden>New puzzle</button></div>
   <footer class="foot"><a id="footLink" class="footlink" href="#teacher">Teacher view</a></footer>
 </main>
@@ -232,8 +247,8 @@ textarea.field{resize:vertical;line-height:1.5}
 // Paste two values from Firebase (Project settings > General > Your apps).
 // Leave them blank and the games work without saving anything.
 const TRACKING={
-   apiKey:'AIzaSyAb8iCZJyZkUL3RSqeWzHmDd9nzaB0GimA',
-  databaseURL:'https://puzzleroom-745cc-default-rtdb.firebaseio.com'
+  apiKey:'',        // the "apiKey" value
+  databaseURL:''    // like https://your-project-default-rtdb.firebaseio.com
 };
 // ============================================================
 // PURE START
@@ -628,7 +643,7 @@ function mountRound(root,problems,intro,ctx){
     if(i<problems.length){load();return;}
     const ok=res.filter(x=>x==='ok').length;
     const shownN=res.filter(x=>x==='miss').length;
-    finished=true;if(ctx&&ctx.report)ctx.report({result:'set',score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
+    finished=true;if(ctx&&ctx.report)ctx.report({result:'set',lb:true,correct:ok,total:problems.length,score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
     stage.replaceChildren(h('div',{class:'summary'},h('p',{class:'big'},`${ok} of ${problems.length}`),h('p',{},'solved without showing the answer')));
     setS('','');extra.replaceChildren();dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot '+(res[k]||'')})));
     checkB.hidden=showB.hidden=nextB.hidden=true;againB.hidden=false;
@@ -663,6 +678,7 @@ function mountTarget(root,rng,level,ctx){
       <div class="meta"><span id="tClosest"></span><span id="tTimer">0:00</span></div></section>
     <section class="work solution" id="tSolBox" hidden><h2>One way to do it</h2><ol id="tSolSteps"></ol><p class="empty">There are often other ways too.</p></section>`;
   const $=id=>root.querySelector('#'+id);
+  const tMount=Date.now();
   const S={tiles:[],steps:[],history:[],selA:null,op:null,solved:false,closest:null,start:null,elapsed:0,nextId:1};
   S.tiles=P0.nums.map(v=>({id:S.nextId++,v,made:false}));
   const initial=S.tiles.map(t=>({...t}));
@@ -698,7 +714,7 @@ function mountTarget(root,rng,level,ctx){
       S.solved=true;S.selA=null;S.elapsed=Math.round((Date.now()-S.start)/1000);
       setS(`You hit ${fmtN(r)} in ${S.steps.length} step${S.steps.length===1?'':'s'} (${fmtT(S.elapsed)}).`,'ok');
       if(ctx.mode==='today')store.set(saveKey,{steps:S.steps.length,secs:S.elapsed});
-      if(ctx.report)ctx.report({result:'solved',score:'Solved',detail:`${S.steps.length} steps${S.peeked?', viewed a solution first':''}`,secs:S.elapsed});
+      if(ctx.report)ctx.report({result:'solved',lb:!S.peeked,lbSecs:Math.round((Date.now()-tMount)/1000),score:'Solved',detail:`${S.steps.length} steps${S.peeked?', viewed a solution first':''}`,secs:S.elapsed});
       const tg=$('tg');tg.classList.remove('hit');void tg.offsetWidth;tg.classList.add('hit');
     }else if(S.tiles.length===1){
       S.selA=null;setS(`No numbers left to combine. Your closest was ${fmtN(S.closest)}, ${Math.abs(S.closest-P0.target)} away. Undo or start over to keep trying.`,'');
@@ -723,7 +739,7 @@ function mountTarget(root,rng,level,ctx){
   $('tSolSteps').replaceChildren(...P0.solution.map(s=>h('li',{},eq(s.a,s.op,s.b,s.r))));
   root.querySelectorAll('.op').forEach(b=>b.addEventListener('click',()=>opClick(b.dataset.op)));
   $('tUndo').addEventListener('click',undo);$('tReset').addEventListener('click',reset);
-  $('tSol').addEventListener('click',()=>{const el=$('tSolBox');el.hidden=!el.hidden;if(!el.hidden&&!S.solved)S.peeked=true;$('tSol').textContent=el.hidden?'Show a solution':'Hide the solution';});
+  $('tSol').addEventListener('click',()=>{const el=$('tSolBox');el.hidden=!el.hidden;if(!el.hidden&&!S.solved){S.peeked=true;if(ctx.noLeaderboard)ctx.noLeaderboard();}$('tSol').textContent=el.hidden?'Show a solution':'Hide the solution';});
   upClosest();
   if(ctx.mode==='today'){const sv=store.get(saveKey);if(sv)setS(`You already solved today’s puzzle at this level in ${sv.steps} steps (${fmtT(sv.secs)}). Try another level, or play it again.`,'');}
   render();
@@ -848,7 +864,7 @@ function mountMystery(root,rng,level,ctx){
     const g=r.n;const dom=MYS_DOMAIN[level];
     if(!dom.includes(g)){setS(`${fmtN(g)} is outside the range.`,'warn');return;}
     guesses.push(g);inp.value='';
-    if(g===M.n){rep({result:'solved',score:'Solved',detail:`${shown}/${M.clues.length} clues, ${guesses.length} guesses`});done=true;setS(`Yes! The mystery number is ${fmtN(g)}. You used ${shown} of ${M.clues.length} clues and ${guesses.length} guess${guesses.length===1?'':'es'}.`,'ok');draw();return;}
+    if(g===M.n){rep({result:'solved',lb:true,score:'Solved',detail:`${shown}/${M.clues.length} clues, ${guesses.length} guesses`});done=true;setS(`Yes! The mystery number is ${fmtN(g)}. You used ${shown} of ${M.clues.length} clues and ${guesses.length} guess${guesses.length===1?'':'es'}.`,'ok');draw();return;}
     const broke=M.clues.slice(0,shown).findIndex(c=>!c.test(g));
     if(broke>=0)setS(`${fmtN(g)} doesn’t fit clue ${broke+1}.`,'warn');
     else setS(`${fmtN(g)} fits every clue so far, but it isn’t me. Reveal another clue.`,'');
@@ -900,7 +916,7 @@ function mountMagic(root,rng,level,ctx){
     }
     for(const i in ins){ins[i].disabled=true;ins[i].classList.add('good');}
     checkB.disabled=showB.disabled=true;
-    rep({result:'solved',score:'Solved',detail:''});
+    rep({result:'solved',lb:true,score:'Solved',detail:''});
     setS(M.showSum?'Magic! Every line adds to '+rPlain(M.S)+'.':`Magic! Every line adds to ${rPlain(M.S)}.`,'ok');
   }
   grid.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
@@ -1136,7 +1152,7 @@ async function trkFlush(){
   try{
     while(trkQ.length){
       const rec=trkQ[0];
-      try{await trkFetch(`/submissions/${rec.day}/${rec.id||(rec.ts+'_q')}.json`,{method:'PUT',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});}
+      try{await trkFetch(`${rec._path||`/submissions/${rec.day}/${rec.id||(rec.ts+'_q')}`}.json`,{method:'PUT',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(rec._body||rec)});}
       catch(e){if(!/HTTP (401|403)/.test(e.message))return false;}
       trkQ.shift();store.set('wu-queue',trkQ);
     }
@@ -1149,10 +1165,11 @@ function toast(msg,kind){
   t.textContent=msg;t.className=kind||'';t.hidden=false;
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>{t.hidden=true;},kind==='warn'?6000:3000);
 }
-async function trkReport(rec){
+async function trkReport(rec,extra){
   if(!TRK.on||!TRK.student)return;
   const now=new Date();
   trkQ.push({...rec,name:TRK.student.name,period:TRK.student.period,day:dayKey(now),ts:now.getTime(),id:now.getTime()+'_'+Math.random().toString(36).slice(2,8)});
+  if(extra)trkQ.push(...extra);
   store.set('wu-queue',trkQ);
   toast('Saving…');
   const ok=await trkFlush();
@@ -1179,6 +1196,40 @@ function renderPicker(root,onDone){
     root.replaceChildren(card(h('h2',{},'Can’t load the class list'),h('p',{class:'muted'},'Check your internet connection and try again.'),
       h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:()=>renderPicker(root,onDone)},'Try again'),playAnyway())));
   });
+}
+
+// ---------- leaderboard ----------
+function mountLeaderboard(el,base){
+  const day=dayKey(new Date()),pk=`${base.game}-L${base.level}`;
+  let scope='class',rows=[],loaded=false;
+  const list=h('div',{});const note=h('p',{class:'muted small lb-note'});
+  const seg=h('div',{class:'seg small',role:'group','aria-label':'Leaderboard scope'});
+  [['class','My class'],['all','All classes']].forEach(([k,lab])=>seg.append(h('button',{type:'button','data-s':k,onclick:()=>{scope=k;draw();}},lab)));
+  el.replaceChildren(h('div',{class:'lb'},h('div',{class:'lb-head'},h('h2',{},'Today’s Fastest'),seg),
+    h('p',{class:'muted small lb-sub'},`${base.gameName}, Level ${base.level}`),list,note));
+  const sorted=()=>{const me=TRK.student;return rows.filter(x=>scope==='all'||x.period===me.period)
+    .sort((a,b)=>((b.correct||0)/(b.total||1))-((a.correct||0)/(a.total||1))||a.secs-b.secs);};
+  function draw(announce){
+    seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===scope)));
+    if(!loaded)return;
+    const me=TRK.student,r=sorted();
+    const myIdx=r.findIndex(x=>x.name===me.name&&x.period===me.period);
+    if(!r.length){list.replaceChildren(h('p',{class:'muted lb-empty'},'No finishers yet. Be the first!'));}
+    else list.replaceChildren(h('ol',{class:'lb-rows'},...r.slice(0,10).map((x,i)=>h('li',{class:'lb-row'+(i===myIdx?' me':'')},
+      h('span',{class:'lb-rank'},['🥇','🥈','🥉'][i]||String(i+1)),
+      h('span',{class:'lb-name'},x.name+(scope==='all'?` (${x.period})`:'')),
+      x.total?h('span',{class:'lb-score'},`${x.correct}/${x.total}`):null,
+      h('span',{class:'lb-time'},fmtT(x.secs))))));
+    note.textContent=myIdx>=10?`You’re #${myIdx+1} with ${fmtT(r[myIdx].secs)}. Only your first finish counts.`:'Only your first finish of today’s puzzle counts.';
+    if(announce&&myIdx>=0)toast(myIdx<3?`${['🥇','🥈','🥉'][myIdx]} You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`:`You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`);
+  }
+  async function load(announce){
+    try{const d=await trkFetch(`/leaderboard/${day}/${pk}.json`);rows=Object.values(d||{}).filter(x=>x&&typeof x.secs==='number');loaded=true;draw(announce);}
+    catch(e){if(!loaded)list.replaceChildren(h('p',{class:'muted lb-empty'},'The leaderboard isn’t available right now.'));}
+  }
+  list.replaceChildren(h('p',{class:'muted lb-empty'},'Loading…'));draw();load();
+  const timer=setInterval(()=>{if(!document.hidden&&el.isConnected)load();},30000);
+  return{load,cleanup:()=>clearInterval(timer)};
 }
 
 // ---------- teacher view ----------
@@ -1304,7 +1355,7 @@ function mountTeacher(root){
   const today=new Date();
   const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
   const levels=store.get('wu-levels')||{};
-  let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null;
+  let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null,lbHandle={};
   function flushPending(){const f=pendingFn;pendingFn=null;if(!f||!pendCtx)return;let rec=null;try{rec=f();}catch(e){}if(rec)trkReport({...pendCtx,...rec});}
   const $=id=>document.getElementById(id);
   $('tabs').replaceChildren(...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
@@ -1325,6 +1376,7 @@ function mountTeacher(root){
   }
   function mount(){
     flushPending();if(handle.cleanup)handle.cleanup();handle={};
+    if(lbHandle.cleanup)lbHandle.cleanup();lbHandle={};$('lb').replaceChildren();
     const root=$('game');root.replaceChildren();
     const teacher=view==='teacher';
     renderFoot(teacher);
@@ -1351,9 +1403,23 @@ function mountTeacher(root){
     $('newBtn').hidden=mode!=='practice';
     const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
     const base={game:game.id,gameName:game.name,level:lv+1,mode};
-    const report=rec=>trkReport({...base,...rec});
+    const lbKey=`wu-lbdone-${dayKey(new Date())}-${base.game}-L${base.level}`;
+    const noLeaderboard=()=>store.set(lbKey,true);
+    const report=rec=>{
+      let extra=null;
+      if(mode==='today'&&rec.lb&&TRK.student&&!store.get(lbKey)){
+        const st=TRK.student,sid=(st.period+'__'+st.name).replace(/[.#$\[\]\/]/g,'_');
+        const body={name:st.name,period:st.period,secs:Math.max(1,rec.lbSecs||rec.secs||1)};
+        if(rec.total){body.correct=rec.correct;body.total=rec.total;}
+        extra=[{_path:`/leaderboard/${dayKey(new Date())}/${base.game}-L${base.level}/${sid}`,_body:body}];
+      }
+      if(rec.result==='revealed'||rec.lb)noLeaderboard();
+      const mine=lbHandle;
+      trkReport({...base,...rec},extra).then(()=>{if(extra&&mine.load)mine.load(true);});
+    };
     const pending=f=>{pendingFn=f;pendCtx=base;};
-    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report,pending})||{};
+    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report,pending,noLeaderboard})||{};
+    if(TRK.on&&TRK.student&&mode==='today')lbHandle=mountLeaderboard($('lb'),base)||{};
   }
   function route(){
     const id=location.hash.slice(1);
