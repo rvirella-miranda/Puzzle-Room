@@ -1730,7 +1730,7 @@ function renderCalendar(root){
   let summary=null;
   if(me){const c=t.doors.filter(d=>isDoneF(d.n)).length;
     summary=h('div',{class:'calprog'},c===t.doors.length?`You finished all ${c} doors! 🎉`:`You’ve finished ${c} of ${t.doors.length} doors`,h('div',{class:'bar'},h('span',{style:`width:${Math.round(100*c/t.doors.length)}%`})));}
-  root.replaceChildren(h('div',{class:'advent',html:garlandSVG(t.garland)}),h('p',{class:'prompt'+(prev?' preview-note':'')},msg),summary,grid);
+  root.replaceChildren(h('div',{class:'advent',html:garlandSVG(t.garland)}),h('p',{class:'prompt'+(prev?' preview-note':'')},msg),...(summary?[summary]:[]),grid);
 }
 function doorHeader(d){
   return h('div',{class:`door-head ${d.n%2?'berry':'pine'}`},h('span',{class:'door-head-ico',html:iconSVG(d.icon)}),
@@ -2229,7 +2229,7 @@ function mountTeacher(root){
   const $=id=>document.getElementById(id);
   const calTab=h('a',{class:'tab xmas',href:'#calendar','data-game':'calendar',hidden:true},'🎄 Advent');
   $('tabs').replaceChildren(calTab,...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
-  const updateTab=()=>{calTab.textContent=ADV.theme().tab;calTab.hidden=!(ADV.active()||ADV.preview());};
+  const updateTab=()=>{calTab.textContent=ADV.theme().tab;calTab.hidden=true;};
   if(SOLO)document.querySelector('.kicker').textContent='Holiday Puzzles';
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount();}}));
   document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount();}}));
