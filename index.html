@@ -14,18 +14,19 @@
   --tile:#F4DDB0; --tile-edge:#D2B07C; --made:#D3DFB4; --made-edge:#9DB074; --tile-ink:#4A2A10;
   --pick:#6E7D22; --ok:#5E6B1E; --warn:#A6372A;
   --s0:#D6A355; --s1:#C27A5B; --s2:#8FA27A; --s3:#A78BB4;
+  --berry:#A23E3E; --pine:#4F6B3D; --gold:#C99A3E;
   color-scheme:light; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC;
+    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
   }
 }
 :root[data-theme="dark"]{
   --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC;
+  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -186,6 +187,79 @@ sup{font-size:.6em;line-height:0}
 .lb-time{font-variant-numeric:tabular-nums;font-weight:700;flex:none}
 .lb-empty{margin:12px 0 4px;text-align:center}
 .lb-note{margin:10px 0 0;text-align:center}
+/* advent */
+.xmas-title{color:var(--berry)}
+.tab.xmas{border-color:var(--berry);color:var(--berry)}
+.tab.xmas[aria-current="page"]{background:var(--berry);border-color:var(--berry);color:var(--paper)}
+.garland{display:block;width:100%;height:40px;margin-top:6px}
+.cal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 14px;margin-top:22px;padding-left:6px}
+@media (min-width:600px){.cal{grid-template-columns:repeat(5,1fr)}}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.door{--c:var(--berry);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;aspect-ratio:4/5;padding:14px 8px 10px;
+  border:2.5px solid var(--c);border-radius:14px;background:var(--panel);color:var(--c);text-decoration:none;font:inherit;cursor:pointer;
+  box-shadow:0 4px 0 color-mix(in srgb,var(--c) 35%,transparent);transition:transform .15s ease}
+.door.pine{--c:var(--pine)}
+.door::before{content:"";position:absolute;inset:6px;border:1.5px dashed color-mix(in srgb,var(--c) 45%,transparent);border-radius:9px;pointer-events:none}
+.door.open:hover{transform:translateY(-3px) rotate(-1deg)}
+.door-num{position:absolute;top:-11px;left:-11px;width:34px;height:34px;border-radius:50%;background:var(--c);color:var(--paper);display:grid;place-items:center;
+  font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-size:17px;padding-top:2px}
+.door-ico .ico-xmas{width:54px;height:54px;display:block}
+.door-title{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-size:14px;line-height:1.15;text-align:center;letter-spacing:.02em;padding-top:2px}
+.door.locked{border-style:dashed;box-shadow:none;cursor:default}
+.door.locked .door-ico,.door.locked .door-title{opacity:.35}
+.door-lock{position:absolute;bottom:10px;font-size:12px;font-weight:600;color:var(--muted)}
+.door.locked .door-title{display:none}
+.door-done{position:absolute;top:-10px;right:-8px;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;display:grid;place-items:center;font-size:16px}
+.pips{display:inline-flex;gap:4px;vertical-align:middle}
+.pip{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--line);background:transparent}
+.pip.done{background:var(--ok);border-color:var(--ok)}
+.pip.started{background:var(--gold);border-color:var(--gold)}
+.tbl.prog td,.tbl.prog th{text-align:center}
+.tbl.prog td:first-child,.tbl.prog th:first-child{text-align:left;position:sticky;left:0;background:var(--panel)}
+.door-pips{display:flex;gap:4px;margin-top:2px}
+.door-pips .pip{border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+.door-pips .pip.done{background:var(--c);border-color:var(--c)}
+.calprog{max-width:420px;margin:10px auto 0;text-align:center;font-weight:600}
+.calprog .bar{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px}
+.calprog .bar>span{display:block;height:100%;background:var(--berry);border-radius:999px;transition:width .4s}
+.chk{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;line-height:1.4}
+.chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--olive)}
+.upload{margin-top:12px;padding:12px 14px;border:2px dashed var(--line);border-radius:12px}
+.upload .field{margin-top:6px;background:var(--panel)}
+.preview-note{color:var(--berry);font-weight:600}
+.door-head{--c:var(--berry);display:flex;align-items:center;gap:14px;max-width:560px;margin:14px auto 0;padding:12px 16px;border:2.5px solid var(--c);border-radius:16px;background:var(--panel)}
+.door-head.pine{--c:var(--pine)}
+.door-head-ico{color:var(--c);flex:none}.door-head-ico .ico-xmas{width:52px;height:52px;display:block}
+.door-head h2{margin:0;font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-weight:400;color:var(--c);font-size:24px;letter-spacing:.01em;line-height:1.1;padding-top:.1em}
+.door-head p{margin:2px 0 0}
+.door-kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.backrow{display:flex;justify-content:center;margin-top:14px}
+.locked-card{max-width:420px;margin:22px auto 0;text-align:center}
+.quiz{max-width:540px;margin:16px auto 0;text-align:center}
+.qtext{font-size:20px;line-height:1.6}
+.seq{display:inline-block;margin-top:8px;font-size:26px;font-weight:700;letter-spacing:.02em}
+.qrow{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:22px;font-weight:600}
+.qunit{color:var(--muted);font-size:17px}
+.qtbl{border-collapse:collapse;margin:12px auto 0;font-size:18px}
+.qtbl th,.qtbl td{border:2px solid var(--line);padding:6px 12px;text-align:center}
+.qtbl th{background:var(--paper);font-weight:600}
+.qtext sup .qbox{border-width:1.5px;padding:0 .12em;font-size:1.1em}
+.qbox{display:inline-block;min-width:1.1em;padding:0 .15em;border:2px dashed var(--berry);border-radius:4px;color:var(--berry);font-weight:700;line-height:1.1}
+.erows{max-width:440px;margin:16px auto 0;display:grid;gap:8px}
+.erow{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-size:22px}
+.erow.final{border:2.5px dashed var(--berry)}
+.efin{display:flex;align-items:center;gap:8px;font-weight:700}
+.emo{font-size:28px;line-height:1}
+.enotes{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 14px;margin-top:14px}
+.enote{display:flex;align-items:center;gap:4px;font-weight:600}
+.ans.small{width:3em;font-size:17px;padding:5px 4px}
+.enote-ans{margin:0 8px;white-space:nowrap}
+.adv-rows{display:grid;gap:8px;margin-top:12px}
+.adv-row{display:flex;align-items:center;gap:12px;padding:8px 12px;border:2px solid var(--line);border-radius:12px;background:var(--paper)}
+.adv-row .ico-xmas{width:32px;height:32px;flex:none}
+.adv-row .t{flex:1;min-width:0}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;border:2px solid var(--line);color:var(--muted)}
+.pill.on{border-color:var(--ok);color:var(--ok)}
 /* tracking */
 .who{margin:8px 0 0;font-size:14px;color:var(--muted)}
 .who strong{color:var(--ink)}
@@ -247,8 +321,8 @@ textarea.field{resize:vertical;line-height:1.5}
 // Paste two values from Firebase (Project settings > General > Your apps).
 // Leave them blank and the games work without saving anything.
 const TRACKING={
-       apiKey:'AIzaSyAb8iCZJyZkUL3RSqeWzHmDd9nzaB0GimA',
-     databaseURL:'https://puzzleroom-745cc-default-rtdb.firebaseio.com'
+  apiKey:'AIzaSyAb8iCZJyZkUL3RSqeWzHmDd9nzaB0GimA',
+  databaseURL:'https://puzzleroom-745cc-default-rtdb.firebaseio.com'
 };
 // ============================================================
 // PURE START
@@ -1127,6 +1201,439 @@ function mountMobiles(root,rng,level,ctx){
   mountRound(root,probs,intros[level],ctx);
 }
 
+// ===================== ADVENT: NEW PUZZLE GENERATORS =====================
+const money=v=>'$'+(Number.isInteger(v)?String(v):v.toFixed(2));
+const fracV=(top,bot)=>`<span class="frac"><span>${top}</span><span>${bot}</span></span>`;
+function qRatio(r,lv){
+  const t=ri(r,3);
+  if(lv===0){
+    if(t===0){const a=rint(r,3,12),k=rint(r,2,8);return{html:`An elf wraps ${a*k} presents in ${k} hours. How many presents does the elf wrap each hour?`,ans:R(a),unit:'presents'};}
+    if(t===1){const c=pick(r,[25,30,40,45,50,60,75]),n=rint(r,3,9);return{html:`${n} candy canes cost ${money(c*n/100)} in all. How much does one candy cane cost?`,ans:R(c,100),pre:'$'};}
+    let p,q;do{p=rint(r,2,5);q=rint(r,2,7);}while(p===q||gcd(p,q)!==1);const k=rint(r,2,6);
+    return{html:`The ratio of red ornaments to gold ornaments on a tree is ${p} : ${q}. There are ${p*k} red ornaments. How many gold ornaments are there?`,ans:R(q*k),unit:'gold'};
+  }
+  if(lv===1){
+    if(t===0){const e1=rint(r,2,6),rate=rint(r,3,9),e2=e1+rint(r,2,8);return{html:`${e1} elves can build ${e1*rate} toys in an hour. At the same rate, how many toys can ${e2} elves build in an hour?`,ans:R(e2*rate),unit:'toys'};}
+    if(t===1){const f=rint(r,2,4),q=rint(r,6,12);let g;do{g=rint(r,2,8);}while(g===f);return{html:`A recipe uses ${f} cups of flour for ${f*q} gingerbread cookies. How many cups of flour are needed for ${g*q} cookies?`,ans:R(g),unit:'cups'};}
+    const sc=pick(r,[10,15,20,25]),half=rint(r,6,19);
+    return{html:`On Santa’s map, 1 inch stands for ${sc} miles. Two towns are ${half/2} inches apart on the map. How many miles apart are they?`,ans:R(half*sc,2),unit:'miles'};
+  }
+  if(t===0){const sp=pick(r,[120,150,180,200,240]),h1=pick(r,[1.5,2.5,3.5]),h2=rint(r,2,6);return{html:`Santa’s sleigh travels ${sp*h1} miles in ${h1} hours. At that rate, how far does it travel in ${h2} hours?`,ans:R(sp*h2),unit:'miles'};}
+  let a,b;do{a=rint(r,2,5);b=rint(r,a+1,9);}while(gcd(a,b)!==1);const k=rint(r,3,9);
+  if(t===1)return{html:`In the holiday choir, the ratio of altos to sopranos is ${a} : ${b}. There are ${(a+b)*k} singers in all. How many are sopranos?`,ans:R(b*k),unit:'sopranos'};
+  return{html:`A hot cocoa mix uses cocoa and milk in a ratio of ${a} : ${b}. To make ${(a+b)*k} cups in all, how many cups of cocoa are needed?`,ans:R(a*k),unit:'cups'};
+}
+function qSeq(r,lv){
+  const show=arr=>`<span class="seq">${arr.map(fmtN).join(',&ensp;')},&ensp;…</span>`;
+  const t=ri(r,lv===2?3:2);
+  if(lv===0){
+    if(t===0){const a=rint(r,1,20),d=rint(r,2,9);const s=[0,1,2,3].map(i=>a+i*d);return{html:`What number comes next?<br>${show(s)}`,ans:R(a+4*d)};}
+    const a=rint(r,1,5),m=pick(r,[2,3]);const s=[0,1,2,3].map(i=>a*m**i);return{html:`What number comes next?<br>${show(s)}`,ans:R(a*m**4)};
+  }
+  if(lv===1){
+    if(t===0){const a=rint(r,-10,30);let d;do{d=rint(r,-8,9);}while(Math.abs(d)<2);const s=[0,1,2,3].map(i=>a+i*d);return{html:`What is the 20th term of this sequence?<br>${show(s)}`,ans:R(a+19*d)};}
+    const a=rint(r,1,4)*16,s=[0,1,2,3].map(i=>a/2**i);return{html:`What number comes next?<br>${show(s)}`,ans:R(a,16)};
+  }
+  if(t===0){const a=rint(r,-20,20);let d;do{d=rint(r,-9,9);}while(Math.abs(d)<2);const n=rint(r,15,60),X=a+(n-1)*d;const s=[0,1,2,3].map(i=>a+i*d);return{html:`Which term number has a value of ${fmtN(X)}?<br>${show(s)}`,ans:R(n),pre:'Term'};}
+  if(t===1){const a=rint(r,20,60),d=-rint(r,2,7);const s=[0,1,2,3].map(i=>a+i*d);return{html:`What is the 50th term of this sequence?<br>${show(s)}`,ans:R(a+49*d)};}
+  const c=rint(r,-3,5);const s=[1,2,3,4,5].map(n=>n*n+c);return{html:`What number comes next?<br>${show(s)}`,ans:R(36+c)};
+}
+function qEq(r,lv){
+  const X=V('x');const pre=`${X} =`;
+  if(lv===0){
+    const t=ri(r,4),x=rint(r,1,15);
+    if(t===0){const a=rint(r,2,20);return{html:`${X} + ${a} = ${x+a}`,ans:R(x),pre};}
+    if(t===1){const a=rint(r,2,12);return{html:`${a}${X} = ${a*x}`,ans:R(x),pre};}
+    if(t===2){const a=rint(r,1,x);return{html:`${X} ${MINUS} ${a} = ${x-a}`,ans:R(x),pre};}
+    const a=rint(r,2,6);return{html:`${fracV(X,a)} = ${x}`,ans:R(a*x),pre};
+  }
+  if(lv===1){
+    const t=ri(r,3);
+    if(t===0){const x=nz(r,-10,10);let a;do{a=nz(r,-9,9);}while(Math.abs(a)<2);const b=nz(r,-15,15);return{html:`${polyHTML([[a,1],[b,0]],'x')} = ${fmtN(a*x+b)}`,ans:R(x),pre};}
+    if(t===1){const a=rint(r,2,6),q=nz(r,-8,8),b=nz(r,-12,12);return{html:`${fracV(X,a)} ${b<0?MINUS:'+'} ${Math.abs(b)} = ${fmtN(q+b)}`,ans:R(a*q),pre};}
+    const x=nz(r,-10,10),a=rint(r,2,9),b=nz(r,-15,15);return{html:`${polyHTML([[b,0],[-a,1]],'x')} = ${fmtN(b-a*x)}`,ans:R(x),pre};
+  }
+  const t=ri(r,3),x=nz(r,-10,10);
+  if(t===0){let a,c;do{a=nz(r,-9,9);c=nz(r,-9,9);}while(a===c);const b=nz(r,-15,15),d=a*x+b-c*x;return{html:`${polyHTML([[a,1],[b,0]],'x')} = ${polyHTML([[c,1],[d,0]],'x')}`,ans:R(x),pre};}
+  let a;do{a=nz(r,-6,6);}while(Math.abs(a)<2);const b=nz(r,-9,9);
+  if(t===1)return{html:`${coefPrefix(a)}${binom('x',-b)} = ${fmtN(a*(x+b))}`,ans:R(x),pre};
+  let c;do{c=nz(r,-6,6);}while(a+c===0);const d=a*(x+b)+c*x;
+  return{html:`${coefPrefix(a)}${binom('x',-b)} ${c<0?MINUS:'+'} ${Math.abs(c)===1?'':Math.abs(c)}${X} = ${fmtN(d)}`,ans:R(x),pre};
+}
+function qPct(r,lv){
+  const t=ri(r,3);
+  if(lv===0){
+    if(t===0){const p=pick(r,[10,20,25,50,75]),n=rint(r,1,10)*20;return{html:`What is ${p}% of ${n}?`,ans:R(p*n,100)};}
+    if(t===1){const P=rint(r,2,12)*10,p=pick(r,[10,20,30,50]);return{html:`A ${money(P)} holiday sweater is ${p}% off. How many dollars do you save?`,ans:R(P*p,100),pre:'$'};}
+    const w=pick(r,[20,25,50]),part=rint(r,1,w-1);return{html:`${part} of the ${w} students in class are wearing holiday sweaters. What percent is that?`,ans:R(part*100,w),unit:'%'};
+  }
+  if(lv===1){
+    if(t===0){const P=rint(r,3,15)*10,p=pick(r,[15,20,25,30,40]);return{html:`A ${money(P)} sled is on sale for ${p}% off. What is the sale price?`,ans:R(P*(100-p),100),pre:'$'};}
+    if(t===1){const P=rint(r,10,60),tx=pick(r,[5,6,8,10]);return{html:`A board game costs ${money(P)}. Sales tax is ${tx}%. What is the total cost with tax?`,ans:R(P*(100+tx),100),pre:'$'};}
+    const P=rint(r,4,20)*5,p=pick(r,[20,40,50,60]);return{html:`A tree farm pays ${money(P)} for a wreath and marks the price up ${p}%. What is the selling price?`,ans:R(P*(100+p),100),pre:'$'};
+  }
+  if(t===0){
+    for(;;){const old=pick(r,[20,25,40,50,60,80]),p=pick(r,[10,20,25,30,40,50]),up=r()<0.5,nw=old*(100+(up?p:-p))/100;
+      if(Number.isInteger(nw))return{html:`The price of a sled changed from ${money(old)} to ${money(nw)}. What was the percent ${up?'increase':'decrease'}?`,ans:R(p),unit:'%'};}
+  }
+  if(t===1){const O=rint(r,2,10)*20,p=pick(r,[10,20,25,40]);return{html:`After a ${p}% discount, a pair of skates costs ${money(O*(100-p)/100)}. What was the original price?`,ans:R(O),pre:'$'};}
+  const P=rint(r,2,10)*20;return{html:`A ${money(P)} coat is 20% off. At the register, you get another 10% off the sale price. What do you pay?`,ans:R(P*72,100),pre:'$'};
+}
+function qSlope(r,lv){
+  const tbl=(hx,hy,xs,ys)=>`<table class="qtbl"><tr><th>${hx}</th>${xs.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr><tr><th>${hy}</th>${ys.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr></table>`;
+  const t=ri(r,3);
+  if(lv===0){
+    if(t===0){const k=rint(r,2,9),xs=[2,4,6,8];return{html:`An oven bakes cookies at a steady rate. How many cookies does it bake per minute?${tbl('Minutes','Cookies',xs,xs.map(x=>k*x))}`,ans:R(k),unit:'per min'};}
+    if(t===1){const k=rint(r,3,9),s=rint(r,4,12);return{html:`A sled slides ${k*s} meters in ${s} seconds at a steady speed. How many meters does it slide each second?`,ans:R(k),unit:'m/s'};}
+    const k=rint(r,2,8),b=rint(r,5,30),xs=[0,1,2,3];return{html:`Snow piles up at a steady rate. By how many centimeters does the snow depth grow each hour?${tbl('Hours','Depth (cm)',xs,xs.map(x=>b+k*x))}`,ans:R(k),unit:'cm'};
+  }
+  if(lv===1){
+    if(t<2){let x1,x2;do{x1=rint(r,-8,8);x2=rint(r,-8,8);}while(x1===x2);const y1=rint(r,-9,9),y2=rint(r,-9,9);
+      return{html:`What is the slope of the line through (${fmtN(x1)}, ${fmtN(y1)}) and (${fmtN(x2)}, ${fmtN(y2)})?`,ans:R(y2-y1,x2-x1),hint:'fraction'};}
+    const m=nz(r,-6,6),b=rint(r,-10,10),xs=[-2,0,2,4];return{html:`What is the slope of the line shown in this table?${tbl('x','y',xs,xs.map(x=>m*x+b))}`,ans:R(m)};
+  }
+  const m=nz(r,-5,5);
+  if(t===0){const px=nz(r,-6,6),py=rint(r,-12,12);return{html:`A line has a slope of ${fmtN(m)} and passes through (${fmtN(px)}, ${fmtN(py)}). What is its <i>y</i>-intercept?`,ans:R(py-m*px),pre:`${V('b')} =`};}
+  if(t===1){const x0=nz(r,-8,8),b=-m*x0;return{html:`Where does the line ${V('y')} = ${polyHTML([[m,1],[b,0]],'x')} cross the <i>x</i>-axis? Give the <i>x</i>-coordinate.`,ans:R(x0),pre:`${V('x')} =`};}
+  const x1=rint(r,-5,0),x2=x1+rint(r,1,4),y1=rint(r,-10,10),y2=y1+m*(x2-x1),x3=x2+rint(r,2,6);
+  return{html:`A line passes through (${fmtN(x1)}, ${fmtN(y1)}) and (${fmtN(x2)}, ${fmtN(y2)}). What is <i>y</i> when <i>x</i> = ${fmtN(x3)}?`,ans:R(y1+m*(x3-x1)),pre:`${V('y')} =`};
+}
+function qExp(r,lv){
+  const t=ri(r,3),X=V('x'),Q='<span class="qbox">?</span>';
+  if(lv===0){
+    if(t===0){const a=rint(r,2,5),n=a<=3?rint(r,2,5):rint(r,2,4);return{html:`What is ${a}<sup>${n}</sup>?`,ans:R(a**n)};}
+    if(t===1){const a=rint(r,2,9),b=rint(r,2,4);return{html:`What is ${a}<sup>2</sup> + ${b}<sup>3</sup>?`,ans:R(a*a+b**3)};}
+    const a=rint(r,2,6),b=rint(r,2,3),n=rint(r,2,4);return{html:`What is ${a} × ${b}<sup>${n}</sup>?`,ans:R(a*b**n)};
+  }
+  if(lv===1){
+    const a=rint(r,2,6),k=rint(r,2,7);
+    if(t===0)return{html:`What exponent goes in the box?<br>${X}<sup>${a}</sup> · ${X}<sup>${Q}</sup> = ${X}<sup>${a+k}</sup>`,ans:R(k),pre:'?' +' ='};
+    if(t===1)return{html:`What exponent goes in the box?<br>(${X}<sup>${a}</sup>)<sup>${Q}</sup> = ${X}<sup>${a*k}</sup>`,ans:R(k),pre:'? ='};
+    return{html:`What exponent goes in the box?<br>${X}<sup>${a+k}</sup> ÷ ${X}<sup>${Q}</sup> = ${X}<sup>${a}</sup>`,ans:R(k),pre:'? ='};
+  }
+  if(t===0){const a=rint(r,2,5),n=a<=3?rint(r,1,3):rint(r,1,2);return{html:`What is ${a}<sup>${MINUS}${n}</sup>? You can answer with a fraction.`,ans:R(1,a**n),hint:'fraction'};}
+  if(t===1){let p,q;do{p=rint(r,2,4);q=rint(r,2,4);}while(p*q>=10);const m=rint(r,2,8),n=rint(r,2,8);
+    return{html:`What exponent goes in the box?<br>(${p} × 10<sup>${m}</sup>)(${q} × 10<sup>${n}</sup>) = ${p*q} × 10<sup>${Q}</sup>`,ans:R(m+n),pre:'? ='};}
+  const d1=rint(r,1,9),d2=rint(r,1,9),z=rint(r,2,5);const dec='0.'+'0'.repeat(z)+d1+d2;
+  return{html:`Write ${dec} in scientific notation. What exponent goes in the box?<br>${d1}.${d2} × 10<sup>${Q}</sup>`,ans:R(-(z+1)),pre:'? ='};
+}
+const QUIZ={ratio:qRatio,seq:qSeq,eq:qEq,pct:qPct,slope:qSlope,exp:qExp,
+  mixed:(r,lv,i)=>[qRatio,qSeq,qEq,qPct,qSlope,qExp][i%6](r,lv)};
+function genQuizSet(rng,key,lv,n){
+  const out=[],seen=new Set();
+  for(let i=0,tries=0;out.length<n&&tries<200;tries++){const q=QUIZ[key](rng,lv,i);if(seen.has(q.html))continue;seen.add(q.html);out.push(q);i++;}
+  return out;
+}
+
+const XMAS=['🎄','⭐','🎁','🔔','🧦','🍪','⛄','🦌'];
+function genEmoji(rng,lv,set){
+  for(;;){
+    const S=shuffle(rng,(set||XMAS).slice()).slice(0,4);
+    const s=i=>`<span class="emo">${S[i]}</span>`;
+    const rep=(i,k)=>Array(k).fill(s(i)).join(' + ');
+    if(lv===0){
+      const a=rint(rng,2,10);let b;do{b=rint(rng,1,12);}while(b===a);const k=rint(rng,2,4);
+      const fin=pick(rng,[[`${s(1)} + ${s(1)} + ${s(0)}`,2*b+a],[`${s(1)} + ${s(0)} + ${s(0)}`,b+2*a],[`${rep(1,3)}`,3*b]]);
+      return{rows:[[rep(0,k),k*a],[`${s(0)} + ${s(1)}`,a+b]],fin:fin[0],ans:fin[1],syms:S.slice(0,2),vals:[a,b]};
+    }
+    if(lv===1){
+      const a=rint(rng,1,12),b=rint(rng,1,12),c=rint(rng,1,12);
+      if(new Set([a,b,c]).size<3||b+c-a<=0)continue;
+      const fin=pick(rng,[[`${s(2)} × ${s(1)} ${MINUS} ${s(0)}`,c*b-a],[`${s(0)} + ${s(1)} × ${s(2)}`,a+b*c]]);
+      return{rows:[[rep(0,3),3*a],[`${s(0)} + ${s(1)} + ${s(1)}`,a+2*b],[`${s(1)} + ${s(2)} ${MINUS} ${s(0)}`,b+c-a]],fin:fin[0],ans:fin[1],syms:S.slice(0,3),vals:[a,b,c]};
+    }
+    const b=rint(rng,2,9),a=b+rint(rng,1,9),c=rint(rng,2,12),k=rint(rng,2,6),d=b*k;
+    if(new Set([a,b,c,d]).size<4||2*c-a===0)continue;
+    return{rows:[[`${s(0)} + ${s(1)}`,a+b],[`${s(0)} ${MINUS} ${s(1)}`,a-b],[`2${s(2)} ${MINUS} ${s(0)}`,2*c-a],[`${s(3)} ÷ ${s(1)}`,k]],
+      fin:`${s(2)} × ${s(0)} ${MINUS} ${s(3)}`,ans:c*a-d,syms:S.slice(0,4),vals:[a,b,c,d]};
+  }
+}
+
+// ===================== ADVENT: ICONS, DOORS, CALENDAR =====================
+const ICONS={
+  gift:'<rect x="14" y="27" width="36" height="27" rx="3"/><rect x="10" y="19" width="44" height="9" rx="2"/><path d="M32 19v35"/><path d="M32 19c-6-10-16-9-14-2 1 3 8 3 14 2zM32 19c6-10 16-9 14-2-1 3-8 3-14 2z"/>',
+  wreath:'<circle cx="32" cy="30" r="18"/><circle cx="32" cy="30" r="9"/><path d="M18 20l3 3M44 18l-2 4M50 32h-4M14 32h4M24 45l2-3M42 44l-2-3"/><circle cx="23" cy="15" r="1.8"/><circle cx="45" cy="25" r="1.8"/><circle cx="19" cy="38" r="1.8"/><path d="M32 48l-7 8 7-3 7 3z"/>',
+  star:'<path d="M32 8l7 15 16 2-12 11 3 16-14-8-14 8 3-16L9 25l16-2z"/>',
+  ornament:'<circle cx="32" cy="38" r="17"/><rect x="27" y="15" width="10" height="6" rx="1.5"/><path d="M32 15c0-6 6-8 8-4"/><path d="M15 34c10 6 24 6 34 0M16 44c10 5 22 5 32 0"/>',
+  tree:'<path d="M32 9L18 27h8L14 45h36L38 27h8z"/><path d="M28 45v9h8v-9"/><circle cx="27" cy="34" r="1.6"/><circle cx="37" cy="38" r="1.6"/><circle cx="33" cy="25" r="1.6"/>',
+  mitten:'<path d="M22 50V27c0-12 18-15 20-4l2 11c6-4 11 2 7 6l-7 8v2z"/><path d="M20 50h26v6H20z"/><path d="M28 30l3 3 3-3M30 38l3 3 3-3"/>',
+  bell:'<path d="M20 44c0-17 4-27 12-27s12 10 12 27z"/><path d="M15 44h34"/><circle cx="32" cy="49" r="3.5"/><path d="M28 17c0-5 8-5 8 0"/><path d="M24 33h16"/>',
+  snowflake:'<path d="M32 8v48M11 20l42 24M11 44l42-24"/><path d="M26 12l6 6 6-6M26 52l6-6 6 6M10 27l8-2-2-8M54 37l-8 2 2 8M10 37l8 2-2 8M54 27l-8-2 2-8"/>',
+  gingerbread:'<circle cx="32" cy="16" r="8"/><path d="M26 24h12l10 7-3 5-7-4v9l6 12-5 3-7-10-7 10-5-3 6-12v-9l-7 4-3-5z"/><circle cx="32" cy="31" r="1.4"/><circle cx="32" cy="37" r="1.4"/><path d="M29 18c2 2 4 2 6 0"/>',
+  stocking:'<path d="M24 17h18v20l8 7c5 5 1 13-6 11l-17-7c-7-3-7-11-3-15z"/><rect x="22" y="8" width="22" height="9" rx="2"/><path d="M30 45l3 3M38 49l3 2"/>',
+  mug:'<path d="M14 24h28v21a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8z"/><path d="M42 29h4a6 6 0 0 1 0 12h-4"/><path d="M22 18c-2-3 2-5 0-8M30 18c-2-3 2-5 0-8M38 18c-2-3 2-5 0-8"/>',
+  tag:'<path d="M12 22l14-12h26v44H26L12 42z"/><circle cx="22" cy="32" r="3"/><path d="M34 26h12M34 34h12M34 42h8"/>',
+  candycane:'<path d="M26 56V22c0-14 22-14 22 0v4"/><path d="M23 50l6-3M23 40l6-3M23 30l6-3M27 17l5 3M38 12l1 6M46 17l-5 3"/>',
+  snowman:'<circle cx="32" cy="42" r="13"/><circle cx="32" cy="21" r="9"/><path d="M24 12h16M27 12V5h10v7"/><circle cx="29" cy="20" r="1.2"/><circle cx="35" cy="20" r="1.2"/><circle cx="32" cy="38" r="1.4"/><circle cx="32" cy="45" r="1.4"/><path d="M19 36l-8-5M45 36l8-5"/>',
+  house:'<path d="M12 30L32 13l20 17"/><path d="M17 26v28h30V26"/><path d="M28 54V40h8v14"/><rect x="21" y="32" width="6" height="6"/><rect x="37" y="32" width="6" height="6"/><path d="M40 18v-7h5v11"/>',
+  heart:'<path d="M32 53C15 41 9 31 9 22a11.5 11.5 0 0 1 23-3.5A11.5 11.5 0 0 1 55 22c0 9-6 19-23 31z"/>',
+  envelope:'<rect x="9" y="17" width="46" height="32" rx="3"/><path d="M9 20l23 16 23-16"/><path d="M32 47c-5-3-7-5-7-8a3.5 3.5 0 0 1 7-1 3.5 3.5 0 0 1 7 1c0 3-2 5-7 8z"/>',
+  rose:'<path d="M32 9c-9 0-14 7-12 14s9 10 12 10 10-3 12-10-3-14-12-14z"/><path d="M25 19c4-5 10-5 14 0M27 25c3-3 7-3 10 0"/><path d="M32 33v23"/><path d="M32 47c-6-1-10-5-10-9 6 0 9 4 10 9zM32 43c6-1 10-5 10-9-6 0-9 4-10 9z"/>',
+  chocbox:'<path d="M32 55C13 42 7 31 7 22a12.5 12.5 0 0 1 25-4 12.5 12.5 0 0 1 25 4c0 9-6 20-25 33z"/><circle cx="22" cy="25" r="4"/><circle cx="42" cy="25" r="4"/><circle cx="32" cy="36" r="4"/><circle cx="24" cy="37" r="2"/><circle cx="40" cy="37" r="2"/>',
+  arrowheart:'<path d="M32 50C19 41 14 33 14 26a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 7-5 15-18 24z"/><path d="M8 50L56 14M56 14l-9 1M56 14l-1 9M8 50l2-8M8 50l8-2"/>',
+  bear:'<circle cx="20" cy="18" r="6"/><circle cx="44" cy="18" r="6"/><circle cx="32" cy="32" r="16"/><ellipse cx="32" cy="39" rx="7" ry="5"/><circle cx="26" cy="29" r="1.4"/><circle cx="38" cy="29" r="1.4"/><path d="M30 37h4M32 37v3"/><path d="M32 56c-4-3-6-4-6-7a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 3-2 4-6 7z"/>',
+  cupcake:'<path d="M18 34h28l-4 20H22z"/><path d="M26 34l2 20M38 34l-2 20M32 34v20"/><path d="M15 34c0-8 6-11 11-11 1-7 11-7 12 0 5 0 11 3 11 11z"/><path d="M32 17c-3-2-4-3-4-5a2 2 0 0 1 4-1 2 2 0 0 1 4 1c0 2-1 3-4 5z"/>',
+  balloon:'<path d="M32 42C19 33 14 26 14 19a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 7-5 14-18 23z"/><path d="M32 42l-3 4h6z"/><path d="M32 46c-4 4 4 6 0 10"/>',
+  shamrock:'<circle cx="32" cy="19" r="8.5"/><circle cx="21.5" cy="34" r="8.5"/><circle cx="42.5" cy="34" r="8.5"/><path d="M32 30c1 10 4 18 9 25"/>',
+  candyheart:'<path d="M32 53C15 41 9 31 9 22a11.5 11.5 0 0 1 23-3.5A11.5 11.5 0 0 1 55 22c0 9-6 19-23 31z"/><path d="M22 27h20M25 34h14"/>',
+  fourleaf:'<circle cx="24" cy="22" r="8"/><circle cx="40" cy="22" r="8"/><circle cx="24" cy="38" r="8"/><circle cx="40" cy="38" r="8"/><path d="M32 30c2 10 6 18 12 24"/>',
+  potgold:'<path d="M16 31h32c2 14-4 23-16 23S14 45 16 31z"/><path d="M13 31h38"/><circle cx="23" cy="25" r="5"/><circle cx="32" cy="22" r="5"/><circle cx="41" cy="25" r="5"/><path d="M20 54l-2 4M44 54l2 4"/>',
+  rainbow:'<path d="M8 48a24 24 0 0 1 48 0M16 48a16 16 0 0 1 32 0M24 48a8 8 0 0 1 16 0"/><path d="M6 52h14M44 52h14"/>',
+  horseshoe:'<path d="M18 54V30a14 14 0 0 1 28 0v24h-8V30a6 6 0 0 0-12 0v24z"/><circle cx="22" cy="44" r="1.3"/><circle cx="42" cy="44" r="1.3"/><circle cx="21" cy="34" r="1.3"/><circle cx="43" cy="34" r="1.3"/><circle cx="26" cy="22" r="1.3"/><circle cx="38" cy="22" r="1.3"/>',
+  tophat:'<path d="M8 48c0-4 48-4 48 0s-48 4-48 0z"/><path d="M18 46V14h28v32"/><path d="M18 37h28"/><rect x="27" y="33" width="10" height="8" rx="1"/>',
+  coins:'<ellipse cx="32" cy="50" rx="16" ry="5"/><path d="M16 42v8M48 42v8"/><ellipse cx="32" cy="42" rx="16" ry="5"/><path d="M16 34v8M48 34v8"/><ellipse cx="32" cy="34" rx="16" ry="5"/><ellipse cx="34" cy="20" rx="12" ry="4"/><path d="M22 20v5M46 20v5"/><path d="M22 25c0 2 24 2 24 0"/>',
+  map:'<path d="M10 14l14-4 16 4 14-4v40l-14 4-16-4-14 4z"/><path d="M24 10v40M40 14v40"/><path d="M14 42c6-2 9-10 15-8s10 6 15-2" stroke-dasharray="3 3"/><path d="M44 22l6 6M50 22l-6 6"/>',
+  egg:'<path d="M32 8c10 0 18 16 18 28a18 18 0 0 1-36 0C14 24 22 8 32 8z"/><path d="M15 33l5-4 6 4 6-4 6 4 6-4 5 4"/><circle cx="25" cy="44" r="1.6"/><circle cx="32" cy="46" r="1.6"/><circle cx="39" cy="44" r="1.6"/><path d="M24 20h16"/>',
+  bunny:'<circle cx="32" cy="42" r="13"/><path d="M27 30c-4-9-5-22 0-22s5 12 2 22M37 30c4-9 5-22 0-22s-5 12-2 22"/><circle cx="27" cy="40" r="1.4"/><circle cx="37" cy="40" r="1.4"/><path d="M30 45l2 2 2-2M32 47v2"/>',
+  chick:'<circle cx="32" cy="24" r="10"/><path d="M32 25l5 2-5 2"/><circle cx="29" cy="22" r="1.3"/><path d="M13 38l5 4 5-4 5 4 4-4 4 4 5-4 5 4 5-4v4c0 9-8 15-19 15S13 51 13 42z"/><path d="M22 34c-2-2-2-4 0-6M42 34c2-2 2-4 0-6"/>',
+  lily:'<path d="M22 13l5 6 5-8 5 8 5-6v12c0 8-5 12-10 12s-10-4-10-12z"/><path d="M32 37v19"/><path d="M32 50c-7-1-11-6-11-11 7 1 10 5 11 11zM32 46c6-2 9-6 9-11-6 1-8 5-9 11z"/>',
+  basket:'<path d="M12 32h40l-5 22H17z"/><path d="M18 32c0-18 28-18 28 0"/><path d="M14 40h36M16 47h32"/><ellipse cx="24" cy="29" rx="4" ry="5"/><ellipse cx="38" cy="28" rx="4" ry="5"/>',
+  butterfly:'<path d="M32 22c-8-12-24-10-22 3 2 9 13 10 22 5M32 22c8-12 24-10 22 3-2 9-13 10-22 5"/><path d="M32 30c-8 3-17 9-14 17 4 6 12 0 14-10M32 30c8 3 17 9 14 17-4 6-12 0-14-10"/><path d="M32 18v26"/><path d="M32 18c-2-5-5-8-8-9M32 18c2-5 5-8 8-9"/>'
+};
+const iconSVG=(k,cls)=>`<svg class="${cls||'ico-xmas'}" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]}</svg>`;
+const QUIZ_LEVELS={
+  ratio:['Unit rates and simple ratios','Proportions','Multi-step ratio problems'],
+  seq:['What comes next?','Find the 20th term','Term numbers and patterns'],
+  eq:['One-step equations','Two-step equations','Variables on both sides'],
+  pct:['Percent of a number','Discounts and tax','Percent change'],
+  slope:['Rate of change','Slope','Lines and intercepts'],
+  exp:['Powers','Exponent rules','Negative exponents and scientific notation'],
+  mixed:['Grade 6 review','Grade 7 and 8 review','Algebra 1 review']
+};
+const ADVENT=[
+  {n:1,title:'Present Grid',icon:'gift',game:'magic',blurb:'A magic square is hiding inside this gift.'},
+  {n:2,title:'Wreath Target',icon:'wreath',game:'target',blurb:'Combine the numbers to hit the target.'},
+  {n:3,title:'Picture Equations',icon:'star',emoji:true,blurb:'Each picture stands for a number. Crack the code!'},
+  {n:4,title:'Bauble Triangles',icon:'ornament',game:'triangles',blurb:'Multiply the bottom corners to get the top.'},
+  {n:5,title:'What’s Under the Tree?',icon:'tree',game:'mystery',blurb:'Use the clues to find the mystery number.'},
+  {n:6,title:'Elf Workshop Rates',icon:'mitten',quiz:'ratio',blurb:'Help the elves with rates and ratios.'},
+  {n:7,title:'Jingle Bell Mobiles',icon:'bell',game:'mobiles',blurb:'Balance the mobile to find each weight.'},
+  {n:8,title:'Snowflake Sequences',icon:'snowflake',quiz:'seq',blurb:'Spot the pattern in each sequence.'},
+  {n:9,title:'Gingerbread Diamonds',icon:'gingerbread',game:'diamonds',blurb:'Multiply to the top, add to the bottom.'},
+  {n:10,title:'Stocking Stuffer Equations',icon:'stocking',quiz:'eq',blurb:'Solve each equation for x.'},
+  {n:11,title:'Cocoa Crunch',icon:'mug',game:'crunch',blurb:'Order of operations, with marshmallows.'},
+  {n:12,title:'Holiday Sale',icon:'tag',quiz:'pct',blurb:'Discounts, tax, and percent change.'},
+  {n:13,title:'Candy Cane Slopes',icon:'candycane',quiz:'slope',blurb:'Rates of change and slopes of lines.'},
+  {n:14,title:'Snowman Exponents',icon:'snowman',quiz:'exp',blurb:'Powers, exponent rules, and scientific notation.'},
+  {n:15,title:'North Pole Mixed Bag',icon:'house',quiz:'mixed',blurb:'One of everything for the last day!'}
+];
+// ---- holiday calendar themes (add a new holiday here) ----
+const THEMES={
+  christmas:{id:'christmas',name:'Christmas Advent Calendar',short:'Advent',tab:'🎄 Advent',title:'Advent Calendar',
+    sub:'One bonus puzzle for each school day',garland:'lights',emoji:XMAS,
+    intro:'A new math puzzle hides behind each door. Your teacher opens one each school day.',
+    light:{a:'#A23E3E',b:'#4F6B3D',c:'#C99A3E'},dark:{a:'#E58A85',b:'#A3C08A',c:'#E2B76E'},doors:ADVENT},
+  valentines:{id:'valentines',name:'Valentine’s Day Calendar',short:'Valentine',tab:'💝 Valentine’s',title:'Valentine’s Puzzles',
+    sub:'One sweet puzzle for each school day',garland:'hearts',emoji:['💖','🌹','🍫','💌','🧸','🍓','🎀','🍬'],
+    intro:'A new math puzzle is waiting behind each door. Your teacher opens one each school day.',
+    light:{a:'#AE3449',b:'#A4487A',c:'#C98F45'},dark:{a:'#F0899B',b:'#E79AC4',c:'#E8BE7A'},
+    doors:[
+      {n:1,title:'Sweetheart Squares',icon:'heart',game:'magic',blurb:'Fill in the magic square so every line matches.'},
+      {n:2,title:'Love Letter Equations',icon:'envelope',quiz:'eq',blurb:'Solve each equation for x.'},
+      {n:3,title:'Candy Heart Codes',icon:'candyheart',emoji:true,blurb:'Each picture stands for a number. Crack the code!'},
+      {n:4,title:'Rose Target',icon:'rose',game:'target',blurb:'Combine the numbers to hit the target.'},
+      {n:5,title:'Chocolate Box Mystery',icon:'chocbox',game:'mystery',blurb:'Use the clues to find the mystery number.'},
+      {n:6,title:'Cupid’s Arrow Slopes',icon:'arrowheart',quiz:'slope',blurb:'Rates of change and slopes of lines.'},
+      {n:7,title:'Bear Hug Diamonds',icon:'bear',game:'diamonds',blurb:'Multiply to the top, add to the bottom.'},
+      {n:8,title:'Sweet Shop Sale',icon:'cupcake',quiz:'pct',blurb:'Discounts, tax, and percent change.'},
+      {n:9,title:'Be Mine Mixed Bag',icon:'balloon',quiz:'mixed',blurb:'One of everything for the last day!'}
+    ]},
+  stpatricks:{id:'stpatricks',name:'St. Patrick’s Day Calendar',short:'St. Pat’s',tab:'☘️ St. Patrick’s',title:'Lucky Puzzles',
+    sub:'One lucky puzzle for each school day',garland:'shamrocks',emoji:['☘️','🌈','🪙','🎩','🍀','⭐','💚','🥔'],
+    intro:'A new math puzzle is hiding behind each door. Your teacher opens one each school day.',
+    light:{a:'#2E7547',b:'#9A6F17',c:'#C9A23E'},dark:{a:'#82CF9C',b:'#E3BE6A',c:'#E8CC74'},
+    doors:[
+      {n:1,title:'Pot of Gold Target',icon:'potgold',game:'target',blurb:'Combine the numbers to hit the target.'},
+      {n:2,title:'Shamrock Squares',icon:'shamrock',game:'magic',blurb:'Fill in the magic square so every line matches.'},
+      {n:3,title:'Lucky Codes',icon:'fourleaf',emoji:true,blurb:'Each picture stands for a number. Crack the code!'},
+      {n:4,title:'Rainbow Sequences',icon:'rainbow',quiz:'seq',blurb:'Spot the pattern in each sequence.'},
+      {n:5,title:'Leprechaun’s Mystery',icon:'tophat',game:'mystery',blurb:'Use the clues to find the mystery number.'},
+      {n:6,title:'Horseshoe Triangles',icon:'horseshoe',game:'triangles',blurb:'Multiply the bottom corners to get the top.'},
+      {n:7,title:'Gold Coin Exponents',icon:'coins',quiz:'exp',blurb:'Powers, exponent rules, and scientific notation.'},
+      {n:8,title:'Treasure Map Mixed Bag',icon:'map',quiz:'mixed',blurb:'One of everything for St. Patrick’s Day!'}
+    ]},
+  easter:{id:'easter',name:'Easter Calendar',short:'Easter',tab:'🐣 Easter',title:'Easter Puzzles',
+    sub:'One spring puzzle for each school day',garland:'eggs',emoji:['🐣','🐰','🥚','🌷','🦋','🧺','🌼','🥕'],
+    intro:'A new math puzzle is tucked behind each door. Your teacher opens one each school day.',
+    light:{a:'#6E52A0',b:'#2F7E78',c:'#C9922F'},dark:{a:'#BBA6E4',b:'#88D0C8',c:'#E8C07A'},
+    doors:[
+      {n:1,title:'Egg Hunt Equations',icon:'egg',quiz:'eq',blurb:'Solve each equation for x.'},
+      {n:2,title:'Bunny Hop Sequences',icon:'bunny',quiz:'seq',blurb:'Spot the pattern in each sequence.'},
+      {n:3,title:'Basket Balance',icon:'basket',game:'mobiles',blurb:'Balance the mobile to find each weight.'},
+      {n:4,title:'Chick Codes',icon:'chick',emoji:true,blurb:'Each picture stands for a number. Crack the code!'},
+      {n:5,title:'Spring Garden Ratios',icon:'lily',quiz:'ratio',blurb:'Rates and ratios in the garden.'},
+      {n:6,title:'Butterfly Mixed Bag',icon:'butterfly',quiz:'mixed',blurb:'One of everything before Spring Break!'}
+    ]}
+};
+const studentKey=st=>(st.period+'__'+st.name).replace(/[.#$\[\]\/]/g,'_');
+function progressWrite(themeId,n,lv,rec){
+  const status=(rec.result==='solved'||rec.result==='set')?'done':(rec.result==='revealed'||rec.result==='partial')?'started':null;
+  if(!status||!TRK.on||!TRK.student)return null;
+  const d=ADV.prog['d'+n]||(ADV.prog['d'+n]={}),k='L'+lv,cur=d[k];
+  const frac=rec.total?rec.correct/rec.total:1;
+  if(cur){
+    if(cur.status==='done'&&status!=='done')return null;
+    if(cur.status==='started'&&status==='started')return null;
+    if(cur.status==='done'){const cf=cur.total?cur.correct/cur.total:1;if(frac<cf||(frac===cf&&(rec.secs||0)>=(cur.secs||Infinity)))return null;}
+  }
+  const body={status,score:String(rec.score||''),secs:rec.secs||0,ts:Date.now()};
+  if(rec.total){body.correct=rec.correct;body.total=rec.total;}
+  d[k]=body;
+  return{_path:`/progress/${themeId}/${encodeURIComponent(studentKey(TRK.student))}/d${n}/${k}`,_body:body};
+}
+function parseCSVLine(line){
+  const out=[];let cur='',q=false;
+  for(let i=0;i<line.length;i++){const c=line[i];
+    if(q){if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}else if(c==='"')q=false;else cur+=c;}
+    else if(c==='"')q=true;else if(c===','||c==='\t'){out.push(cur);cur='';}else cur+=c;}
+  out.push(cur);return out.map(s=>s.trim());
+}
+function importRoster(text,fallback){
+  const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).map(l=>l.trim()).filter(l=>l&&l.replace(/[,\t\s"]/g,''));
+  const map=new Map();const add=(c,n)=>{c=(c||'').trim();n=(n||'').trim();if(!c||!n)return;if(!map.has(c))map.set(c,[]);map.get(c).push(n);};
+  let start=0,ci=-1,ni=-1,fi=-1,li=-1;
+  const head=parseCSVLine(lines[0]||'').map(s=>s.toLowerCase());
+  if(head.some(x=>/^(class|period|grade|section|homeroom|name|student|student name|first|first name|last|last name)$/.test(x))){
+    start=1;
+    head.forEach((x,i)=>{
+      if(ci<0&&/class|period|grade|section|homeroom/.test(x))ci=i;
+      else if(fi<0&&/first/.test(x))fi=i;
+      else if(li<0&&/last/.test(x))li=i;
+      else if(ni<0&&/name|student/.test(x))ni=i;});
+  }
+  for(const line of lines.slice(start)){
+    const c=parseCSVLine(line);let name;
+    if(fi>=0){const first=c[fi]||'',last=c[li]||'';name=last?`${first} ${last[0].toUpperCase()}.`:first;}
+    else if(ni>=0)name=c[ni];
+    else name=c.length>=2?c[1]:c[0];
+    const cl=ci>=0?c[ci]:(start===0&&c.length>=2?c[0]:fallback);
+    add(cl,name);
+  }
+  return [...map.entries()];
+}
+function applyTheme(t){
+  let el=document.getElementById('themeVars');
+  if(!el){el=document.createElement('style');el.id='themeVars';document.head.append(el);}
+  const v=c=>`--berry:${c.a};--pine:${c.b};--gold:${c.c};`;
+  el.textContent=`:root{${v(t.light)}}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){${v(t.dark)}}}:root[data-theme="dark"]{${v(t.dark)}}`;
+}
+const ADV={cfg:null,doors:{},loaded:false,
+  preview:()=>!!store.get('wu-teacher'),
+  theme(){return THEMES[this.cfg&&this.cfg.theme]||THEMES.christmas;},
+  active(){return !!(this.cfg&&this.cfg.active);},
+  async load(){
+    try{const d=(await trkFetch('/advent.json'))||{};this.cfg=d.config||{theme:'christmas',active:false};this.doors=d.doors||{};}
+    catch(e){if(!this.cfg)this.cfg={theme:'christmas',active:false};}
+    this.loaded=true;applyTheme(this.theme());return this;
+  },
+  openMap(){return this.doors[this.theme().id]||{};},
+  isOpen(n){return this.preview()||(this.active()&&!!this.openMap()['d'+n]);},
+  done(){return new Set(store.get('wu-cal-done-'+this.theme().id)||[]);},
+  markDone(n){const s=this.done();s.add(n);store.set('wu-cal-done-'+this.theme().id,[...s]);},
+  prog:{},progKey:null,
+  async loadProg(force){
+    const st=TRK.student;if(!TRK.on||!st){this.prog={};this.progKey=null;return this.prog;}
+    const key=this.theme().id+'|'+studentKey(st);
+    if(!force&&this.progKey===key)return this.prog;
+    try{this.prog=(await trkFetch(`/progress/${this.theme().id}/${encodeURIComponent(studentKey(st))}.json`))||{};this.progKey=key;}
+    catch(e){if(this.progKey!==key){this.prog={};}}
+    return this.prog;
+  },
+  lvStatus(n,lv){const d=this.prog['d'+n];const x=d&&d['L'+lv];return x?x.status:null;},
+  doorDone(n){return [1,2,3].some(l=>this.lvStatus(n,l)==='done');}
+};
+function mountQuiz(root,rng,level,ctx,key){
+  const set=genQuizSet(rng,key,level,6);
+  const probs=set.map(q=>{let inp;return{
+    view(){inp=ansInput('Answer','wide');return h('div',{class:'quiz'},h('div',{class:'qtext',html:q.html}),
+      h('div',{class:'qrow'},q.pre?h('span',{html:q.pre}):null,inp,q.unit?h('span',{class:'qunit'},q.unit):null));},
+    check(){const raw=normIn(inp.value).replace(/[$,%]/g,'').replace(/^(x|y|b)\s*=\s*/i,'').trim();const g=rParse(raw);
+      if(!g)return{ok:false,msg:q.hint==='fraction'?'Type a number or a fraction like −3/4.':'Type a number.'};
+      if(rEq(g,q.ans))return{ok:true};
+      if(rEq(g,R(-q.ans.n,q.ans.d)))return{ok:false,msg:'Close! Check the sign.'};
+      return{ok:false};},
+    reveal(){inp.value=(q.pre==='$'&&q.ans.d!==1)?(q.ans.n/q.ans.d).toFixed(2):rPlain(q.ans);}
+  };});
+  mountRound(root,probs,'Work it out, then type your answer. Fractions like 3/4 and decimals both work.',ctx);
+}
+function mountEmoji(root,rng,level,ctx,set){
+  const probs=[];
+  for(let k=0;k<3;k++){
+    const E=genEmoji(rng,level,set);let inp;const notes=[];
+    probs.push({
+      view(){
+        inp=ansInput('Answer');
+        const rows=E.rows.map(([l,rr])=>h('div',{class:'erow'},h('span',{html:l}),h('strong',{},`= ${fmtN(rr)}`)));
+        const fin=h('div',{class:'erow final'},h('span',{html:E.fin}),h('span',{class:'efin'},'= ',inp));
+        const nb=h('div',{class:'enotes'},h('span',{class:'muted small'},'Scratch notes (not graded):'),
+          ...E.syms.map((sy,i)=>{notes[i]=h('input',{class:'ans small',type:'text',inputmode:'numeric',autocomplete:'off','aria-label':`Note for ${sy}`});
+            return h('label',{class:'enote'},h('span',{class:'emo'},sy),' = ',notes[i]);}));
+        return h('div',{},h('div',{class:'erows'},...rows,fin),nb);
+      },
+      check(){const g=rParse(inp.value);if(!g)return{ok:false,msg:'Type a number.'};return{ok:rEq(g,R(E.ans))};},
+      reveal(){inp.value=fmtN(E.ans);E.vals.forEach((v,i)=>{notes[i].value=v;});},
+      after(){return h('div',{class:'note'},'The code: ',...E.syms.map((sy,i)=>h('span',{class:'enote-ans'},h('span',{class:'emo'},sy),` = ${E.vals[i]}`)));}
+    });
+  }
+  mountRound(root,probs,['Each picture stands for a whole number. Use the first lines to work out each one, then solve the last line.',
+    'Each picture stands for a whole number. Watch the order of operations on the last line!',
+    'Each picture stands for a whole number. You may need to use two lines together to crack the code.'][level],ctx);
+}
+const doorCache={};
+function doorGame(n){
+  const t=ADV.theme(),key=`${t.id}-${n}`;
+  if(doorCache[key])return doorCache[key];
+  const d=t.doors.find(x=>x.n===n);if(!d)return null;
+  const base=d.game?GAMES.find(g=>g.id===d.game):null;
+  const g={id:key,name:`${t.short} ${n}: ${d.title}`,advent:d,theme:t,
+    levels:base?base.levels:d.quiz?QUIZ_LEVELS[d.quiz]:['Two pictures','Three pictures and order of operations','Four pictures and systems'],
+    mount:(root,rng,lv,ctx)=>base?base.mount(root,rng,lv,ctx):d.quiz?mountQuiz(root,rng,lv,ctx,d.quiz):mountEmoji(root,rng,lv,ctx,t.emoji)};
+  return doorCache[key]=g;
+}
+function garlandSVG(kind){
+  let path='M0 6',items='';const cols=['var(--berry)','var(--pine)','var(--gold)'];
+  for(let i=0;i<12;i++){
+    const x=i*50,c=cols[i%3];path+=` Q${x+25} 30 ${x+50} 6`;
+    let shape;
+    if(kind==='hearts')shape=`<path d="M0 15c-6-4-8-7-8-10a4 4 0 0 1 8-1.5A4 4 0 0 1 8 5c0 3-2 6-8 10z" fill="${c}"/>`;
+    else if(kind==='shamrocks')shape=`<g fill="${c}"><circle cx="0" cy="4" r="3.6"/><circle cx="-3.6" cy="9" r="3.6"/><circle cx="3.6" cy="9" r="3.6"/></g><path d="M0 9q1 5 3 8" stroke="${c}" stroke-width="1.4" fill="none"/>`;
+    else if(kind==='eggs')shape=`<ellipse cx="0" cy="8" rx="5" ry="6.5" fill="${c}"/><path d="M-5 8l2.5-2 2.5 2 2.5-2 2.5 2" stroke="var(--paper)" stroke-width="1.2" fill="none"/>`;
+    else shape=`<rect x="-2.5" y="-2" width="5" height="4" rx="1" fill="var(--muted)"/><ellipse cx="0" cy="7" rx="4.5" ry="6" fill="${c}"/>`;
+    items+=`<g transform="translate(${x+25},${kind&&kind!=='lights'?18:19})">${shape}</g>`;
+  }
+  return `<svg class="garland" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true"><path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5"/>${items}</svg>`;
+}
+function closedCard(){
+  return h('div',{class:'picker locked-card'},h('h2',{},'The calendar is closed'),h('p',{class:'muted'},'Check back soon for the next set of holiday puzzles!'));
+}
+function renderCalendar(root){
+  const t=ADV.theme(),local=ADV.done(),prev=ADV.preview(),me=!!(TRK.on&&TRK.student&&!prev);
+  const isDoneF=n=>me?ADV.doorDone(n):local.has(n);
+  if(!ADV.active()&&!prev){root.replaceChildren(closedCard());return;}
+  const grid=h('div',{class:'cal'});
+  t.doors.forEach(d=>{
+    const open=ADV.isOpen(d.n),isDone=isDoneF(d.n);
+    const kids=[h('span',{class:'door-num'},String(d.n)),h('span',{class:'door-ico',html:iconSVG(d.icon)}),
+      h('span',{class:'door-title'},open?d.title:'Opens soon'),
+      open&&me?h('span',{class:'door-pips',title:'Levels 1, 2, and 3'},...[1,2,3].map(l=>h('span',{class:'pip '+(ADV.lvStatus(d.n,l)||'')}))):null,
+      isDone?h('span',{class:'door-done',title:'You finished this door'},'★'):null,
+      !open?h('span',{class:'door-lock'},'Locked'):null];
+    const cls=`door ${d.n%2?'berry':'pine'} ${open?'open':'locked'}${isDone?' done':''}`;
+    grid.append(open?h('a',{class:cls,href:`#door-${d.n}`,'aria-label':`Door ${d.n}: ${d.title}${isDone?', finished':''}`},...kids)
+      :h('button',{class:cls,type:'button','aria-label':`Door ${d.n}, locked`,onclick:()=>toast(`Door ${d.n} isn’t open yet. Check back soon!`)},...kids));
+  });
+  const msg=prev?(ADV.active()?'Teacher preview: every door is open for you. Students only see the doors you’ve opened.'
+    :'Teacher preview: the calendar is closed, so students can’t see it right now.'):t.intro;
+  let summary=null;
+  if(me){const c=t.doors.filter(d=>isDoneF(d.n)).length;
+    summary=h('div',{class:'calprog'},c===t.doors.length?`You finished all ${c} doors! 🎉`:`You’ve finished ${c} of ${t.doors.length} doors`,h('div',{class:'bar'},h('span',{style:`width:${Math.round(100*c/t.doors.length)}%`})));}
+  root.replaceChildren(h('div',{class:'advent',html:garlandSVG(t.garland)}),h('p',{class:'prompt'+(prev?' preview-note':'')},msg),summary,grid);
+}
+function doorHeader(d){
+  return h('div',{class:`door-head ${d.n%2?'berry':'pine'}`},h('span',{class:'door-head-ico',html:iconSVG(d.icon)}),
+    h('div',{},h('p',{class:'door-kicker'},`Door ${d.n}`),h('h2',{},d.title),h('p',{class:'muted small'},d.blurb)));
+}
+
 // ---------- hub ----------
 const GAMES=[
   {id:'target',name:'Target Number',mount:mountTarget,levels:['Whole numbers to a 2-digit target','Six numbers to a 3-digit target','Integers, including negatives']},
@@ -1278,7 +1785,7 @@ function mountTeacher(root){
     let rows=[];
     const date=h('input',{class:'field',type:'date','aria-label':'Date'});date.value=dayKey(new Date());
     const cls=h('select',{class:'field','aria-label':'Class'},h('option',{value:''},'All classes'),...roster.map(r=>h('option',{value:r.period},r.period)));
-    const gm=h('select',{class:'field','aria-label':'Game'},h('option',{value:''},'All games'),...GAMES.map(g=>h('option',{value:g.id},g.name)));
+    const gm=h('select',{class:'field','aria-label':'Game'},h('option',{value:''},'All games'),...GAMES.map(g=>h('option',{value:g.id},g.name)),...Object.values(THEMES).flatMap(t=>t.doors.map(d=>h('option',{value:`${t.id}-${d.n}`},`${t.short} ${d.n}: ${d.title}`))));
     const st=h('p',{class:'status'});const out=h('div',{});
     const filtered=()=>rows.filter(r=>(!cls.value||r.period===cls.value)&&(!gm.value||r.game===gm.value));
     async function load(quiet){
@@ -1300,7 +1807,7 @@ function mountTeacher(root){
         h('thead',{},h('tr',{},...head.map(t=>h('th',{},t)))),
         h('tbody',{},...f.map(r=>h('tr',{},
           h('td',{},new Date(r.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})),h('td',{},r.period),h('td',{},r.name),
-          h('td',{},r.gameName||r.game),h('td',{},String(r.level)),h('td',{},r.mode==='today'?'Today':'Practice'),
+          h('td',{},r.gameName||r.game),h('td',{},String(r.level)),h('td',{},({today:'Today',advent:'Advent'}[r.mode]||'Practice')),
           h('td',{},r.score||''),h('td',{},r.detail||''),h('td',{},r.secs!=null?fmtT(r.secs):''))))));
       out.replaceChildren(h('p',{class:'tsum'},`${f.length} entr${f.length===1?'y':'ies'} from ${people.size} student${people.size===1?'':'s'}`),extra,
         f.length?table:h('p',{class:'muted'},'No entries for this selection.'));
@@ -1308,7 +1815,7 @@ function mountTeacher(root){
     function csv(){
       const esc=v=>{const s=String(v??'');return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s;};
       const lines=[['Date','Time','Class','Name','Game','Level','Mode','Result','Details','Seconds'].join(','),
-        ...filtered().map(r=>[r.day,new Date(r.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}),r.period,r.name,r.gameName||r.game,r.level,r.mode==='today'?'Today':'Practice',r.score,r.detail||'',r.secs??''].map(esc).join(','))];
+        ...filtered().map(r=>[r.day,new Date(r.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}),r.period,r.name,r.gameName||r.game,r.level,({today:'Today',advent:'Advent'}[r.mode]||'Practice'),r.score,r.detail||'',r.secs??''].map(esc).join(','))];
       const a=h('a',{href:URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'})),download:`warm-ups-${date.value}${cls.value?'-'+cls.value:''}.csv`});
       document.body.append(a);a.click();a.remove();
     }
@@ -1318,11 +1825,120 @@ function mountTeacher(root){
       h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:load},'Refresh'),
         h('button',{class:'btn',type:'button',onclick:csv},'Download CSV'),
         h('button',{class:'btn',type:'button',onclick:()=>editRoster(roster)},'Edit class lists'),
+        h('button',{class:'btn',type:'button',onclick:()=>editAdvent()},'🎄 Holiday calendar'),
         h('button',{class:'btn',type:'button',onclick:()=>{teachMem=null;store.set('wu-teacher',null);signIn();}},'Sign out')),
       h('p',{class:'muted small'},'Today’s records refresh on their own every 20 seconds.'),st,out));
     load();
     clearInterval(timer);
     timer=setInterval(()=>{if(document.hidden||!out.isConnected)return;if(date.value===dayKey(new Date()))load(true);},20000);
+  }
+  async function editAdvent(){
+    const st=h('p',{class:'status'}),list=h('div',{class:'adv-rows'}),statusLine=h('p',{class:'tsum'});
+    box.replaceChildren(h('div',{class:'panel'},h('p',{class:'muted'},'Loading the calendar…')));
+    await ADV.load();
+    let cfg={theme:'christmas',active:false,...ADV.cfg};const doors=ADV.doors;
+    const tSel=h('select',{class:'field','aria-label':'Holiday theme'},...Object.values(THEMES).map(t=>h('option',{value:t.id},t.name)));
+    tSel.value=THEMES[cfg.theme]?cfg.theme:'christmas';
+    const theme=()=>THEMES[tSel.value];
+    const om=()=>doors[tSel.value]||(doors[tSel.value]={});
+    const put=async(path,val)=>{const tok=await teacherToken();if(!tok){signIn('Please sign in again.');throw new Error('auth');}
+      await trkFetch(`${path}.json?auth=${encodeURIComponent(tok)}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)});};
+    const save=async(fn,okMsg)=>{st.className='status';st.textContent='Saving…';
+      try{await fn();st.className='status ok';st.textContent=okMsg;draw();}
+      catch(e){if(e.message==='auth')return;st.className='status warn';st.textContent=denied(e)?'Permission denied. Check that the advent section is in your database rules.':'Couldn’t save. Check your connection and try again.';}};
+    const setCfg=(c,msg)=>save(async()=>{await put('/advent/config',c);cfg=c;ADV.cfg=c;applyTheme(THEMES[c.theme]);},msg);
+    const nextDoor=()=>{const opened=theme().doors.filter(x=>om()['d'+x.n]).map(x=>x.n);const last=opened.length?Math.max(...opened):0;
+      return cfg.single?theme().doors.find(x=>x.n>last):theme().doors.find(x=>!om()['d'+x.n]);};
+    const setDoor=(n,val)=>save(async()=>{
+      if(val&&cfg.single){await put(`/advent/doors/${tSel.value}`,{['d'+n]:true});doors[tSel.value]={['d'+n]:true};return;}
+      await put(`/advent/doors/${tSel.value}/d${n}`,val?true:null);if(val)om()['d'+n]=true;else delete om()['d'+n];},
+      val?(cfg.single?`Door ${n} is open. Every other door is locked.`:`Door ${n} is open.`):`Door ${n} is locked.`);
+    const singleChk=h('input',{type:'checkbox','aria-label':'Only one door open at a time'});singleChk.checked=!!cfg.single;
+    singleChk.addEventListener('change',()=>{const on=singleChk.checked;
+      save(async()=>{const c={...cfg,theme:tSel.value,single:on};await put('/advent/config',c);cfg=c;ADV.cfg=c;
+        if(on){const opened=theme().doors.filter(x=>om()['d'+x.n]).map(x=>x.n);
+          if(opened.length>1){const keep=Math.max(...opened);await put(`/advent/doors/${tSel.value}`,{['d'+keep]:true});doors[tSel.value]={['d'+keep]:true};}}},
+        on?'One door at a time is on. Opening a door now locks the others.':'One door at a time is off. Opened doors stay open.');});
+    tSel.addEventListener('change',()=>setCfg({...cfg,theme:tSel.value},`Switched to the ${theme().name}.`));
+    const actBtn=h('button',{class:'btn primary',type:'button',onclick:()=>setCfg({...cfg,theme:tSel.value,active:!cfg.active},cfg.active?'The calendar is now closed to students.':'The calendar is now open to students.')});
+    const nextBtn=h('button',{class:'btn',type:'button',onclick:()=>{const d=nextDoor();if(d)setDoor(d.n,true);}});
+    const lockAll=h('button',{class:'btn',type:'button',onclick:()=>{if(confirm('Lock every door on this calendar? Use this when you start the calendar fresh.'))
+      save(async()=>{await put(`/advent/doors/${tSel.value}`,null);doors[tSel.value]={};},'Every door is locked.');}},'Lock all doors');
+    const resetProg=h('button',{class:'btn',type:'button',onclick:()=>{if(confirm(`Erase all student progress for the ${theme().name}? This can’t be undone.`))
+      save(async()=>{await put(`/progress/${tSel.value}`,null);},'Student progress is reset for this calendar.');}},'Reset student progress');
+    const pageURL=location.href.split('#')[0].split('?')[0]+'?view=calendar';
+    const linkBox=h('input',{class:'field',type:'text',readonly:true,'aria-label':'Calendar page link'});linkBox.value=pageURL;
+    linkBox.addEventListener('focus',()=>linkBox.select());
+    function draw(){
+      statusLine.replaceChildren('Students see the calendar as: ',h('span',{class:'pill'+(cfg.active?' on':'')},cfg.active?'Open':'Closed'));
+      actBtn.textContent=cfg.active?'Close the calendar':'Open the calendar to students';
+      const next=nextDoor();
+      nextBtn.disabled=!next;nextBtn.textContent=next?`Open door ${next.n}`:'All doors are open';
+      list.replaceChildren(...theme().doors.map(d=>{const on=!!om()['d'+d.n];
+        return h('div',{class:'adv-row'},h('span',{html:iconSVG(d.icon)}),
+          h('div',{class:'t'},h('strong',{},`Door ${d.n}: ${d.title}`),h('div',{class:'muted small'},d.blurb)),
+          h('span',{class:'pill'+(on?' on':'')},on?'Open':'Locked'),
+          h('button',{class:'btn',type:'button',onclick:()=>setDoor(d.n,!on)},on?'Lock':'Open'));}));
+    }
+    draw();
+    box.replaceChildren(h('div',{class:'panel'},h('h2',{},'Holiday calendar'),
+      h('p',{class:'muted'},'Pick a holiday, open the calendar, then open one door at a time. While you’re signed in on this device, you can preview every door, even when the calendar is closed.'),
+      h('label',{class:'muted small'},'Holiday theme'),tSel,statusLine,
+      h('label',{class:'chk'},singleChk,h('span',{},h('strong',{},'Only one door open at a time'),h('span',{class:'muted small'},' (opening a door locks the others, so students can only play today’s puzzle)'))),
+      h('div',{class:'controls'},actBtn,nextBtn,lockAll),
+      h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:()=>showProgress(tSel.value)},'📊 Student progress'),resetProg),
+      h('div',{class:'controls'},h('a',{class:'btn',href:pageURL+'#calendar',target:'_blank',rel:'noopener'},'Preview the calendar'),
+        h('button',{class:'btn',type:'button',onclick:()=>dash()},'Back to records')),
+      st,list,
+      h('p',{class:'muted small',style:'margin-top:18px'},'Calendar page link (embed this as its own Google Sites page):'),linkBox));
+  }
+  async function showProgress(themeId){
+    const t=THEMES[themeId];
+    box.replaceChildren(h('div',{class:'panel'},h('p',{class:'muted'},'Loading…')));
+    let roster=[];try{roster=await trkLoadRoster();}catch(e){}
+    const cls=h('select',{class:'field','aria-label':'Class'},...roster.map(r=>h('option',{value:r.period},r.period)));
+    const st=h('p',{class:'status'}),out=h('div',{});
+    let data={},rows=[];
+    const lvDone=(dd,l)=>dd&&dd['L'+l]&&dd['L'+l].status==='done';
+    function draw(){
+      const r=roster.find(x=>x.period===cls.value);
+      if(!r){out.replaceChildren(h('p',{class:'muted'},'Add your class lists first.'));return;}
+      rows=r.names.map(name=>{const p=data[studentKey({period:r.period,name})]||{};
+        return{name,p,doors:t.doors.filter(d=>[1,2,3].some(l=>lvDone(p['d'+d.n],l))).length};});
+      const table=h('div',{class:'tblwrap'},h('table',{class:'tbl prog'},
+        h('thead',{},h('tr',{},h('th',{},'Student'),...t.doors.map(d=>h('th',{title:d.title},`Door ${d.n}`)),h('th',{},'Doors done'))),
+        h('tbody',{},...rows.map(rw=>h('tr',{},h('td',{},rw.name),
+          ...t.doors.map(d=>{const dd=rw.p['d'+d.n]||{};
+            const tip=[1,2,3].map(l=>{const x=dd['L'+l];return `Level ${l}: ${x?(x.status==='done'?'finished'+(x.score?` (${x.score})`:''):'started'):'not yet'}`;}).join('\n');
+            return h('td',{title:tip},h('span',{class:'pips'},...[1,2,3].map(l=>h('span',{class:'pip '+((dd['L'+l]||{}).status||'')}))));}),
+          h('td',{},`${rw.doors} of ${t.doors.length}`))))));
+      const finished=rows.filter(x=>x.doors===t.doors.length).length,none=rows.filter(x=>!Object.keys(x.p).length).map(x=>x.name);
+      out.replaceChildren(
+        h('p',{class:'tsum'},`${finished} of ${rows.length} students have finished every door.`),
+        h('div',{class:'missing'},h('strong',{},none.length?`Haven’t started yet (${none.length}): `:'Every student has started.'),none.join(', ')),
+        h('p',{class:'muted small'},'Each door shows three dots for Levels 1, 2, and 3. Green means finished and gold means started. Hover over a door to see scores.'),table);
+    }
+    function csv(){
+      const esc=v=>{const s=String(v??'');return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s;};
+      const lines=[['Student',...t.doors.map(d=>`Door ${d.n}: ${d.title}`),'Doors done'].map(esc).join(','),
+        ...rows.map(rw=>[rw.name,...t.doors.map(d=>{const dd=rw.p['d'+d.n]||{};
+          const done=[1,2,3].filter(l=>lvDone(dd,l)).map(l=>`L${l}`);
+          return done.length?done.join(' '):([1,2,3].some(l=>dd['L'+l])?'started':'');}),rw.doors].map(esc).join(','))];
+      const a=h('a',{href:URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'})),download:`${themeId}-progress-${cls.value}.csv`});
+      document.body.append(a);a.click();a.remove();
+    }
+    async function load(){
+      st.className='status';st.textContent='Loading…';
+      try{const tok=await teacherToken();if(!tok){signIn('Please sign in again.');return;}
+        data=(await trkFetch(`/progress/${themeId}.json?auth=${encodeURIComponent(tok)}`))||{};st.textContent='';draw();
+      }catch(e){st.className='status warn';st.textContent=denied(e)?'Permission denied. Add the progress section to your database rules.':'Couldn’t load progress. Check your connection and try again.';}
+    }
+    cls.addEventListener('change',draw);
+    box.replaceChildren(h('div',{class:'panel'},h('h2',{},'Student progress'),h('p',{class:'muted'},t.name),cls,
+      h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:load},'Refresh'),
+        h('button',{class:'btn',type:'button',onclick:csv},'Download CSV'),
+        h('button',{class:'btn',type:'button',onclick:()=>editAdvent()},'Back to calendar settings')),st,out));
+    load();
   }
   function editRoster(roster){
     const list=h('div',{});
@@ -1334,6 +1950,22 @@ function mountTeacher(root){
     };
     (roster.length?roster:[{}]).forEach(r=>addRow(r.period,r.names));
     const st=h('p',{class:'status'});
+    const fileIn=h('input',{type:'file',accept:'.csv,.txt,.tsv,text/csv,text/plain',class:'field','aria-label':'Class list file'});
+    fileIn.addEventListener('change',async()=>{
+      const f=fileIn.files[0];if(!f)return;
+      const res=importRoster(await f.text(),f.name.replace(/\.[^.]+$/,''));
+      let added=0;const classes=new Set();
+      for(const [cl,names] of res){
+        const rows=[...list.querySelectorAll('.rrow')];
+        let row=rows.find(r=>r.querySelector('input').value.trim().toLowerCase()===cl.toLowerCase());
+        if(!row){const blank=rows.find(r=>!r.querySelector('input').value.trim()&&!r.querySelector('textarea').value.trim());if(blank)blank.remove();addRow(cl,[]);row=list.lastElementChild;}
+        const ta=row.querySelector('textarea');const cur=ta.value.split('\n').map(x=>x.trim()).filter(Boolean);const seen=new Set(cur);
+        names.forEach(n=>{if(!seen.has(n)){seen.add(n);cur.push(n);added++;}});ta.value=cur.join('\n');classes.add(cl);
+      }
+      st.className=added?'status ok':'status warn';
+      st.textContent=added?`Added ${added} name${added===1?'':'s'} to ${classes.size} class${classes.size===1?'':'es'}. Check them below, then click Save class lists.`:'No new names were found in that file.';
+      fileIn.value='';
+    });
     const save=async()=>{
       const data=[...list.querySelectorAll('.rrow')].map(r=>({period:r.querySelector('input').value.trim(),
         names:[...new Set(r.querySelector('textarea').value.split('\n').map(s=>s.trim()).filter(Boolean))]})).filter(r=>r.period&&r.names.length);
@@ -1344,10 +1976,13 @@ function mountTeacher(root){
       }catch(e){st.className='status warn';st.textContent=denied(e)?'Permission denied. Check that your User UID is in the database rules.':'Couldn’t save. Check your connection and try again.';}
     };
     box.replaceChildren(h('div',{class:'panel'},h('h2',{},'Class lists'),
-      h('p',{class:'muted'},'Students choose their class, then their name. First name and last initial works well, like “Ana B.”'),list,
+      h('p',{class:'muted'},'Students choose their class, then their name. First name and last initial works well, like “Ana B.”'),
+      h('div',{class:'upload'},h('strong',{},'Upload a class list'),
+        h('p',{class:'muted small',style:'margin:4px 0 0'},'Use a CSV from Google Sheets or Excel with a Class column and a Name column (or First and Last columns, which become “Ana B.”). One file can hold every grade. A plain list of names goes into a class named after the file.'),fileIn),
+      st,list,
       h('div',{class:'controls'},h('button',{class:'btn',type:'button',onclick:()=>addRow()},'Add a class'),
         h('button',{class:'btn primary',type:'button',onclick:save},'Save class lists'),
-        h('button',{class:'btn',type:'button',onclick:()=>dash()},'Back to records')),st));
+        h('button',{class:'btn',type:'button',onclick:()=>dash()},'Back to records'))));
   }
 }
 
@@ -1355,75 +1990,127 @@ function mountTeacher(root){
   const today=new Date();
   const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
   const levels=store.get('wu-levels')||{};
-  let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null,lbHandle={};
-  function flushPending(){const f=pendingFn;pendingFn=null;if(!f||!pendCtx)return;let rec=null;try{rec=f();}catch(e){}if(rec)trkReport({...pendCtx,...rec});}
+  const SOLO=new URLSearchParams(location.search).get('view')==='calendar';
+  let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null,pendDoor=null,lbHandle={},mountId=0;
+  function flushPending(){const f=pendingFn;pendingFn=null;if(!f||!pendCtx)return;let rec=null;try{rec=f();}catch(e){}if(!rec)return;const extra=[];if(pendDoor){const pw=progressWrite(pendDoor.theme,pendDoor.n,pendDoor.lv,rec);if(pw)extra.push(pw);}trkReport({...pendCtx,...rec},extra);}
   const $=id=>document.getElementById(id);
-  $('tabs').replaceChildren(...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
-  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount(true);}}));
-  document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount(true);}}));
-  $('newBtn').addEventListener('click',()=>mount(true));
+  const calTab=h('a',{class:'tab xmas',href:'#calendar','data-game':'calendar',hidden:true},'🎄 Advent');
+  $('tabs').replaceChildren(calTab,...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
+  const updateTab=()=>{calTab.textContent=ADV.theme().tab;calTab.hidden=!(ADV.active()||ADV.preview());};
+  if(SOLO)document.querySelector('.kicker').textContent='Holiday Puzzles';
+  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount();}}));
+  document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount();}}));
+  $('newBtn').addEventListener('click',()=>mount());
   function renderWho(){
     const w=$('who');
-    if(view!=='game'||!TRK.on||!TRK.student){w.hidden=true;return;}
+    if(view==='teacher'||!TRK.on||!TRK.student){w.hidden=true;return;}
     w.hidden=false;
     w.replaceChildren('Playing as ',h('strong',{},TRK.student.name),` (${TRK.student.period})`,
       h('button',{type:'button',class:'linkbtn',onclick:()=>{flushPending();TRK.student=null;TRK.skip=false;store.set('wu-student',null);mount();}},'Switch'));
   }
   function renderFoot(teacher){
     const a=$('footLink');
-    if(teacher){a.textContent='← Back to the games';a.href='#'+(game?game.id:GAMES[0].id);a.removeAttribute('target');a.removeAttribute('rel');}
+    if(teacher){a.textContent=SOLO?'← Back to the calendar':'← Back to the games';a.href=SOLO?'#calendar':'#'+(game&&!game.advent?game.id:GAMES[0].id);a.removeAttribute('target');a.removeAttribute('rel');}
     else{a.textContent='Teacher view';a.href=location.href.split('#')[0]+'#teacher';a.target='_blank';a.rel='noopener';}
   }
+  const setTab=id=>document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.game===id)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+  const setLevelLabels=door=>document.querySelectorAll('[data-level]').forEach(b=>{const l=+b.dataset.level+1;b.textContent=`Level ${l}${door&&ADV.lvStatus(door.n,l)==='done'?' ✓':''}`;});
+  const needsPicker=()=>TRK.on&&!TRK.student&&!TRK.skip&&!ADV.preview();
   function mount(){
+    const my=++mountId;
     flushPending();if(handle.cleanup)handle.cleanup();handle={};
     if(lbHandle.cleanup)lbHandle.cleanup();lbHandle={};$('lb').replaceChildren();
     const root=$('game');root.replaceChildren();
     const teacher=view==='teacher';
     renderFoot(teacher);
-    $('modeSeg').hidden=teacher;$('tabs').hidden=teacher;
+    $('modeSeg').hidden=teacher||SOLO;$('tabs').hidden=teacher||SOLO;
+    const holidayView=view==='calendar'||view==='loading'||(view==='game'&&!!(game&&game.advent));
+    $('gameTitle').classList.toggle('xmas-title',!teacher&&holidayView);
     if(teacher){
       $('levelBar').hidden=true;$('newBtn').hidden=true;
       $('gameTitle').textContent='Teacher View';$('dateLine').textContent='Class records';
       document.title='Teacher View: Math Warm-Ups';renderWho();handle=mountTeacher(root)||{};return;
     }
+    renderWho();
+    if(view==='loading'){
+      $('levelBar').hidden=true;$('newBtn').hidden=true;$('modeSeg').hidden=true;
+      root.append(h('p',{class:'prompt'},'Opening the calendar…'));return;
+    }
+    if(view==='calendar'){
+      const t=ADV.theme();
+      $('levelBar').hidden=true;$('newBtn').hidden=true;$('modeSeg').hidden=true;
+      $('gameTitle').textContent=t.title;$('dateLine').textContent=t.sub;
+      document.title=`${t.title}: Math Warm-Ups`;setTab('calendar');
+      if(needsPicker()&&(ADV.active()||!ADV.loaded)){renderPicker(root,()=>mount());return;}
+      if(ADV.loaded)renderCalendar(root);else root.append(h('p',{class:'prompt'},'Opening the calendar…'));
+      ADV.load().then(()=>ADV.loadProg(true)).then(()=>{updateTab();if(my!==mountId)return;
+        const t2=ADV.theme();$('gameTitle').textContent=t2.title;$('dateLine').textContent=t2.sub;
+        if(needsPicker()&&ADV.active())renderPicker(root,()=>mount());else renderCalendar(root);});
+      return;
+    }
+    const door=game.advent;
     const lv=levels[game.id]??0;
-    $('dateLine').textContent=mode==='today'?today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}):'Practice';
-    $('gameTitle').textContent=game.name;
-    document.title=`${game.name}: Math Warm-Ups`;
-    document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.game===game.id)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+    const rmode=door?'advent':mode;
+    $('dateLine').textContent=door?game.theme.title:mode==='today'?today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}):'Practice';
+    $('gameTitle').textContent=door?door.title:game.name;
+    document.title=`${door?door.title:game.name}: Math Warm-Ups`;
+    setTab(door?'calendar':game.id);
     document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
     document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.level===lv)));
     $('levelDesc').textContent=game.levels[lv];
-    renderWho();
-    if(TRK.on&&!TRK.student&&!TRK.skip){
+    setLevelLabels(door&&TRK.student?door:null);
+    if(door)$('modeSeg').hidden=true;
+    if(door&&!ADV.isOpen(door.n)){
+      $('levelBar').hidden=true;$('newBtn').hidden=true;
+      if(!ADV.active())root.append(closedCard());
+      else root.append(h('div',{class:'picker locked-card'},h('span',{class:'door-head-ico',style:'color:var(--berry)',html:iconSVG(door.icon)}),
+        h('h2',{},`Door ${door.n} is still locked`),h('p',{class:'muted'},'Your teacher hasn’t opened this door yet. Check back soon!')),
+        h('div',{class:'backrow'},h('a',{class:'btn',href:'#calendar'},'← Back to the calendar')));
+      ADV.load().then(()=>{if(my===mountId&&ADV.isOpen(door.n))mount();});
+      return;
+    }
+    if(needsPicker()){
       $('levelBar').hidden=true;$('newBtn').hidden=true;$('modeSeg').hidden=true;
       renderPicker(root,()=>mount());return;
     }
+    if(door)root.append(h('div',{class:'backrow'},h('a',{class:'btn',href:'#calendar'},'← Back to the calendar')),doorHeader(door));
+    if(door&&TRK.student)ADV.loadProg().then(()=>{if(my===mountId)setLevelLabels(door);});
     $('levelBar').hidden=false;
-    $('newBtn').hidden=mode!=='practice';
-    const seed=mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
-    const base={game:game.id,gameName:game.name,level:lv+1,mode};
+    $('newBtn').hidden=!!door||mode!=='practice';
+    const holder=door?h('div',{}):root;if(door)root.append(holder);
+    const seed=door?hashStr(`${game.theme.id}|${door.n}|${lv}`):mode==='today'?hashStr(`${dateKey}|${game.id}|${lv}`):Math.floor(Math.random()*2**32);
+    const base={game:game.id,gameName:game.name,level:lv+1,mode:rmode};
+    const lbOn=rmode==='today'||rmode==='advent';
     const lbKey=`wu-lbdone-${dayKey(new Date())}-${base.game}-L${base.level}`;
     const noLeaderboard=()=>store.set(lbKey,true);
     const report=rec=>{
-      let extra=null;
-      if(mode==='today'&&rec.lb&&TRK.student&&!store.get(lbKey)){
-        const st=TRK.student,sid=(st.period+'__'+st.name).replace(/[.#$\[\]\/]/g,'_');
+      if(door&&(rec.result==='solved'||rec.result==='set'))ADV.markDone(door.n);
+      const extra=[];let lbPosted=false;
+      if(door&&TRK.student){const pw=progressWrite(game.theme.id,door.n,lv+1,rec);if(pw){extra.push(pw);setLevelLabels(door);}}
+      if(lbOn&&rec.lb&&TRK.student&&!store.get(lbKey)){
+        const st=TRK.student,sid=studentKey(st);
         const body={name:st.name,period:st.period,secs:Math.max(1,rec.lbSecs||rec.secs||1)};
         if(rec.total){body.correct=rec.correct;body.total=rec.total;}
-        extra=[{_path:`/leaderboard/${dayKey(new Date())}/${base.game}-L${base.level}/${sid}`,_body:body}];
+        extra.push({_path:`/leaderboard/${dayKey(new Date())}/${base.game}-L${base.level}/${sid}`,_body:body});lbPosted=true;
       }
       if(rec.result==='revealed'||rec.lb)noLeaderboard();
       const mine=lbHandle;
-      trkReport({...base,...rec},extra).then(()=>{if(extra&&mine.load)mine.load(true);});
+      trkReport({...base,...rec},extra).then(()=>{if(lbPosted&&mine.load)mine.load(true);});
     };
-    const pending=f=>{pendingFn=f;pendCtx=base;};
-    handle=game.mount(root,mulberry32(seed),lv,{mode,dateKey,report,pending,noLeaderboard})||{};
-    if(TRK.on&&TRK.student&&mode==='today')lbHandle=mountLeaderboard($('lb'),base)||{};
+    const pending=f=>{pendingFn=f;pendCtx=base;pendDoor=door?{theme:game.theme.id,n:door.n,lv:lv+1}:null;};
+    handle=game.mount(holder,mulberry32(seed),lv,{mode:rmode,dateKey,report,pending,noLeaderboard})||{};
+    if(TRK.on&&TRK.student&&lbOn)lbHandle=mountLeaderboard($('lb'),base)||{};
   }
   function route(){
     const id=location.hash.slice(1);
     if(id==='teacher'){if(view!=='teacher'){view='teacher';mount();}return;}
+    const dm=id.match(/^(?:door|advent)-(\d+)$/);
+    if(dm){
+      if(!ADV.loaded){view='loading';mount();ADV.load().then(()=>{updateTab();view=null;route();});return;}
+      const g=doorGame(+dm[1]);
+      if(g){if(view!=='game'||game!==g){view='game';game=g;mount();}return;}
+    }
+    if(id==='calendar'||id==='advent'||SOLO){if(view!=='calendar'){view='calendar';mount();}return;}
     const g=GAMES.find(x=>x.id===id)||GAMES[0];
     if(view!=='game'||game!==g){view='game';game=g;mount();}
   }
@@ -1434,7 +2121,7 @@ function mountTeacher(root){
     if(handle.onKey)handle.onKey(e);
   });
   window.addEventListener('pagehide',flushPending);
-  if(TRK.on)trkFlush();
+  if(TRK.on){trkFlush();ADV.load().then(updateTab);}
   route();
 })();
 </script>
