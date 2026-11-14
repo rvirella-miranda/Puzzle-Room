@@ -224,6 +224,8 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .calprog .bar>span{display:block;height:100%;background:var(--berry);border-radius:999px;transition:width .4s}
 .chk{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;line-height:1.4}
 .chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--olive)}
+.dispwrap{margin-top:6px}
+.dispwrap .seg{flex-wrap:wrap}
 .upload{margin-top:12px;padding:12px 14px;border:2px dashed var(--line);border-radius:12px}
 .upload .field{margin-top:6px;background:var(--panel)}
 .preview-note{color:var(--berry);font-weight:600}
@@ -1623,7 +1625,7 @@ function applyTheme(t){
 const ADV={cfg:null,doors:{},loaded:false,
   preview:()=>!!store.get('wu-teacher'),
   theme(){return THEMES[this.cfg&&this.cfg.theme]||THEMES.christmas;},
-  active(){return !!(this.cfg&&this.cfg.active);},
+  active(){const c=this.cfg||{};return c.display?c.display!=='warmups':!!c.active;},
   async load(){
     try{const d=(await trkFetch('/advent.json'))||{};this.cfg=d.config||{theme:'christmas',active:false};this.doors=d.doors||{};}
     catch(e){if(!this.cfg)this.cfg={theme:'christmas',active:false};}
@@ -2093,18 +2095,22 @@ function mountTeacher(root){
           if(opened.length>1){const keep=Math.max(...opened);await put(`/advent/doors/${tSel.value}`,{['d'+keep]:true});doors[tSel.value]={['d'+keep]:true};}}},
         on?'One door at a time is on. Opening a door now locks the others.':'One door at a time is off. Opened doors stay open.');});
     tSel.addEventListener('change',()=>setCfg({...cfg,theme:tSel.value},`Switched to the ${theme().name}.`));
-    const actBtn=h('button',{class:'btn primary',type:'button',onclick:()=>setCfg({...cfg,theme:tSel.value,active:!cfg.active},cfg.active?'The calendar is now closed to students.':'The calendar is now open to students.')});
+    const dispOf=c=>c.display||(c.active?'both':'warmups');
+    const DISP=[['warmups','Warm-ups only'],['calendar','Calendar only'],['both','Both']];
+    const DISP_MSG={warmups:'Students now see only the warm-up games. The calendar is hidden.',calendar:'Students now see only the holiday calendar.',both:'Students now see the holiday calendar and the warm-up games.'};
+    const dispSeg=h('div',{class:'seg',role:'group','aria-label':'What students see'},
+      ...DISP.map(([k,lab])=>h('button',{type:'button','data-d':k,onclick:()=>setCfg({...cfg,theme:tSel.value,display:k,active:k!=='warmups'},DISP_MSG[k])},lab)));
     const nextBtn=h('button',{class:'btn',type:'button',onclick:()=>{const d=nextDoor();if(d)setDoor(d.n,true);}});
     const lockAll=h('button',{class:'btn',type:'button',onclick:()=>{if(confirm('Lock every door on this calendar? Use this when you start the calendar fresh.'))
       save(async()=>{await put(`/advent/doors/${tSel.value}`,null);doors[tSel.value]={};},'Every door is locked.');}},'Lock all doors');
     const resetProg=h('button',{class:'btn',type:'button',onclick:()=>{if(confirm(`Erase all student progress for the ${theme().name}? This can’t be undone.`))
       save(async()=>{await put(`/progress/${tSel.value}`,null);},'Student progress is reset for this calendar.');}},'Reset student progress');
     const pageURL=location.href.split('#')[0].split('?')[0]+'?view=calendar';
-    const linkBox=h('input',{class:'field',type:'text',readonly:true,'aria-label':'Calendar page link'});linkBox.value=pageURL;
+    const linkBox=h('input',{class:'field',type:'text',readonly:true,'aria-label':'Calendar page link'});linkBox.value=location.href.split('#')[0].split('?')[0];
     linkBox.addEventListener('focus',()=>linkBox.select());
     function draw(){
-      statusLine.replaceChildren('Students see the calendar as: ',h('span',{class:'pill'+(cfg.active?' on':'')},cfg.active?'Open':'Closed'));
-      actBtn.textContent=cfg.active?'Close the calendar':'Open the calendar to students';
+      statusLine.replaceChildren('What students see on your site:');
+      dispSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.d===dispOf(cfg))));
       const next=nextDoor();
       nextBtn.disabled=!next;nextBtn.textContent=next?`Open door ${next.n}`:'All doors are open';
       list.replaceChildren(...theme().doors.map(d=>{const on=!!om()['d'+d.n];
@@ -2115,15 +2121,15 @@ function mountTeacher(root){
     }
     draw();
     box.replaceChildren(h('div',{class:'panel'},h('h2',{},'Holiday calendar'),
-      h('p',{class:'muted'},'Pick a holiday, open the calendar, then open one door at a time. While you’re signed in on this device, you can preview every door, even when the calendar is closed.'),
-      h('label',{class:'muted small'},'Holiday theme'),tSel,statusLine,
+      h('p',{class:'muted'},'Pick a holiday, choose what students see, then open one door at a time. While you’re signed in on this device, you can preview every door, even when the calendar is hidden.'),
+      h('label',{class:'muted small'},'Holiday theme'),tSel,statusLine,h('div',{class:'dispwrap'},dispSeg),
       h('label',{class:'chk'},singleChk,h('span',{},h('strong',{},'Only one door open at a time'),h('span',{class:'muted small'},' (opening a door locks the others, so students can only play today’s puzzle)'))),
-      h('div',{class:'controls'},actBtn,nextBtn,lockAll),
+      h('div',{class:'controls'},nextBtn,lockAll),
       h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:()=>showProgress(tSel.value)},'📊 Student progress'),resetProg),
       h('div',{class:'controls'},h('a',{class:'btn',href:pageURL+'#calendar',target:'_blank',rel:'noopener'},'Preview the calendar'),
         h('button',{class:'btn',type:'button',onclick:()=>dash()},'Back to records')),
       st,list,
-      h('p',{class:'muted small',style:'margin-top:18px'},'Calendar page link (embed this as its own Google Sites page):'),linkBox));
+      h('p',{class:'muted small',style:'margin-top:18px'},'Your site link (this one link works for warm-ups, the calendar, or both):'),linkBox));
   }
   async function showProgress(themeId){
     const t=THEMES[themeId];
@@ -2224,13 +2230,14 @@ function mountTeacher(root){
   const dateKey=`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
   const levels=store.get('wu-levels')||{};
   const SOLO=new URLSearchParams(location.search).get('view')==='calendar';
+  const display=()=>SOLO?'calendar':((ADV.cfg&&ADV.cfg.display)||(ADV.active()?'both':'warmups'));
   let mode='today',game=null,handle={},view=null,pendingFn=null,pendCtx=null,pendDoor=null,lbHandle={},mountId=0;
   function flushPending(){const f=pendingFn;pendingFn=null;if(!f||!pendCtx)return;let rec=null;try{rec=f();}catch(e){}if(!rec)return;const extra=[];if(pendDoor){const pw=progressWrite(pendDoor.theme,pendDoor.n,pendDoor.lv,rec);if(pw)extra.push(pw);}trkReport({...pendCtx,...rec},extra);}
   const $=id=>document.getElementById(id);
   const calTab=h('a',{class:'tab xmas',href:'#calendar','data-game':'calendar',hidden:true},'🎄 Advent');
   $('tabs').replaceChildren(calTab,...GAMES.map(g=>h('a',{class:'tab',href:'#'+g.id,'data-game':g.id},g.name)));
-  const updateTab=()=>{calTab.textContent=ADV.theme().tab;calTab.hidden=true;};
-  if(SOLO)document.querySelector('.kicker').textContent='Holiday Puzzles';
+  const updateTab=()=>{calTab.textContent=ADV.theme().tab;calTab.hidden=display()!=='both';setKicker();};
+  const setKicker=()=>{document.querySelector('.kicker').textContent=display()==='calendar'?'Holiday Puzzles':'Math Warm-Ups';};
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(mode!==b.dataset.mode){mode=b.dataset.mode;mount();}}));
   document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const lv=+b.dataset.level;if(levels[game.id]!==lv){levels[game.id]=lv;store.set('wu-levels',levels);mount();}}));
   $('newBtn').addEventListener('click',()=>mount());
@@ -2243,7 +2250,7 @@ function mountTeacher(root){
   }
   function renderFoot(teacher){
     const a=$('footLink');
-    if(teacher){a.textContent=SOLO?'← Back to the calendar':'← Back to the games';a.href=SOLO?'#calendar':'#'+(game&&!game.advent?game.id:GAMES[0].id);a.removeAttribute('target');a.removeAttribute('rel');}
+    if(teacher){a.textContent=display()==='calendar'?'← Back to the calendar':'← Back to the games';a.href=display()==='calendar'?'#calendar':'#'+(game&&!game.advent?game.id:GAMES[0].id);a.removeAttribute('target');a.removeAttribute('rel');}
     else{a.textContent='Teacher view';a.href=location.href.split('#')[0]+'#teacher';a.target='_blank';a.rel='noopener';}
   }
   const setTab=id=>document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.game===id)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
@@ -2256,7 +2263,8 @@ function mountTeacher(root){
     const root=$('game');root.replaceChildren();
     const teacher=view==='teacher';
     renderFoot(teacher);
-    $('modeSeg').hidden=teacher||SOLO;$('tabs').hidden=teacher||SOLO;
+    const calOnly=display()==='calendar';
+    $('modeSeg').hidden=teacher||calOnly;$('tabs').hidden=teacher||calOnly;
     const holidayView=view==='calendar'||view==='loading'||(view==='game'&&!!(game&&game.advent));
     $('gameTitle').classList.toggle('xmas-title',!teacher&&holidayView);
     if(teacher){
@@ -2346,7 +2354,8 @@ function mountTeacher(root){
       const g=doorGame(+dm[1]);
       if(g){if(view!=='game'||game!==g){view='game';game=g;mount();}return;}
     }
-    if(id==='calendar'||id==='advent'||SOLO){if(view!=='calendar'){view='calendar';mount();}return;}
+    const dsp=display(),known=GAMES.find(x=>x.id===id);
+    if(dsp==='calendar'||((id==='calendar'||id==='advent'||!known)&&dsp==='both')){if(view!=='calendar'){view='calendar';mount();}return;}
     const g=GAMES.find(x=>x.id===id)||GAMES[0];
     if(view!=='game'||game!==g){view='game';game=g;mount();}
   }
@@ -2357,8 +2366,12 @@ function mountTeacher(root){
     if(handle.onKey)handle.onKey(e);
   });
   window.addEventListener('pagehide',flushPending);
-  if(TRK.on){trkFlush();ADV.load().then(updateTab);}
-  route();
+  if(TRK.on){
+    trkFlush();$('game').replaceChildren(h('p',{class:'prompt'},'Loading…'));
+    ADV.load().then(()=>{updateTab();route();});
+    setInterval(()=>{if(document.hidden||view==='teacher')return;const before=display();
+      ADV.load().then(()=>{if(display()!==before){updateTab();view=null;game=null;route();}});},60000);
+  }else{updateTab();route();}
 })();
 </script>
 </body>
