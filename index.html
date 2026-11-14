@@ -260,6 +260,82 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .adv-row .t{flex:1;min-width:0}
 .pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;border:2px solid var(--line);color:var(--muted)}
 .pill.on{border-color:var(--ok);color:var(--ok)}
+/* ===== door skins ===== */
+.scene-wrap{max-width:520px;margin:4px auto 0}
+.scene{display:block;width:100%;height:auto}
+.skin-card .quiz,.skin-tags .erows{position:relative;background:var(--panel);border:2.5px solid var(--pine);border-radius:16px;padding:26px 18px 20px;overflow:hidden}
+.skin-card .quiz::before,.skin-tags .erows::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:repeating-linear-gradient(-45deg,var(--berry) 0 10px,var(--paper) 10px 20px)}
+.skin-tags .erows{max-width:460px}
+.skin-tags .erow{border:0;border-radius:6px 14px 14px 6px;padding-left:34px;clip-path:polygon(14px 0,100% 0,100% 100%,14px 100%,0 50%);
+  background:radial-gradient(circle at 17px 50%,var(--panel) 0 4.5px,transparent 5.5px),color-mix(in srgb,var(--pine) 15%,var(--panel))}
+.skin-tags .erow:nth-child(even){background:radial-gradient(circle at 17px 50%,var(--panel) 0 4.5px,transparent 5.5px),color-mix(in srgb,var(--berry) 13%,var(--panel))}
+.skin-tags .erow.final{border:0;background:radial-gradient(circle at 17px 50%,var(--panel) 0 4.5px,transparent 5.5px),color-mix(in srgb,var(--gold) 26%,var(--panel))}
+/* present */
+.skin-present .magic{width:fit-content;margin-left:auto;margin-right:auto;position:relative;margin-top:64px;padding:32px 16px 16px;border-radius:12px;
+  background:linear-gradient(90deg,transparent calc(50% - 10px),var(--gold) calc(50% - 10px) calc(50% + 10px),transparent calc(50% + 10px)),
+    linear-gradient(transparent calc(50% - 10px),var(--gold) calc(50% - 10px) calc(50% + 10px),transparent calc(50% + 10px)),var(--berry);
+  box-shadow:0 6px 0 color-mix(in srgb,var(--berry) 62%,#000)}
+.skin-present .magic::before{content:"";position:absolute;left:-10px;right:-10px;top:-4px;height:24px;border-radius:8px;
+  background:linear-gradient(90deg,transparent calc(50% - 10px),var(--gold) calc(50% - 10px) calc(50% + 10px),transparent calc(50% + 10px)),color-mix(in srgb,var(--berry) 80%,#000);box-shadow:0 3px 6px rgba(0,0,0,.2)}
+.skin-present .mcell{position:relative;z-index:1;border:2px solid color-mix(in srgb,var(--gold) 70%,transparent)}
+.skin-present .mcell.given{background:#FFF3D6;border-color:var(--gold);color:#4A2A10}
+.skin-present .msum{position:relative;z-index:1;color:rgba(255,255,255,.75)}
+.skin-present .msum.ok{color:#fff;text-shadow:0 0 6px rgba(255,255,255,.6)}
+.skin-present .msum.off{color:#FFD7CF}
+.skin-present .bow-svg{position:absolute;top:-62px;left:50%;transform:translateX(-50%);width:136px;height:auto;z-index:2;pointer-events:none}
+/* wreath target */
+.skin-wreath .target{background:none;width:min(74vw,300px)}
+.skin-wreath .wreath-svg{position:absolute;inset:0;width:100%;height:100%}
+.skin-wreath .target .num{position:relative;z-index:1;color:var(--berry)}
+.theme-stpatricks.skin-wreath .target .num{color:var(--gold);margin-top:44%;font-size:clamp(34px,11vw,56px)}
+.skin-wreath .tiles{gap:16px 14px;margin-top:18px}
+.skin-wreath .tile{position:relative;border-radius:50%;width:clamp(64px,19vw,84px);height:clamp(64px,19vw,84px);min-width:0;padding:0;margin-top:10px;color:#fff;
+  font-size:clamp(20px,6vw,28px);background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.45) 0 9%,transparent 10%),var(--berry);box-shadow:0 4px 0 color-mix(in srgb,var(--berry) 60%,#000)}
+.skin-wreath .tile::before{content:"";position:absolute;top:-10px;left:50%;width:16px;height:11px;transform:translateX(-50%);border-radius:3px 3px 1px 1px;background:var(--gold);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.skin-wreath .tile:nth-child(3n+2){background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.45) 0 9%,transparent 10%),var(--pine);box-shadow:0 4px 0 color-mix(in srgb,var(--pine) 60%,#000)}
+.skin-wreath .tile:nth-child(3n){background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.5) 0 9%,transparent 10%),var(--gold);color:#3B2A10;box-shadow:0 4px 0 color-mix(in srgb,var(--gold) 60%,#000)}
+.skin-wreath .tiles .tile.made{background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.6) 0 9%,transparent 10%),var(--paper);color:var(--ink);box-shadow:inset 0 0 0 3px var(--gold),0 4px 0 color-mix(in srgb,var(--gold) 60%,#000)}
+.theme-valentines.skin-wreath .tile,.theme-valentines.skin-wreath .tile:nth-child(n){border-radius:22px;color:#5A2236;background:#F7C6D3;box-shadow:0 4px 0 #D99AAE}
+.theme-valentines.skin-wreath .tile:nth-child(3n+2){background:#E6D3F3;color:#40275A;box-shadow:0 4px 0 #BCA2D4}
+.theme-valentines.skin-wreath .tile:nth-child(3n){background:#CDEBD9;color:#1F4A33;box-shadow:0 4px 0 #98C9AE}
+.theme-valentines.skin-wreath .tile::before{content:"♥";top:5px;left:auto;right:10px;transform:none;width:auto;height:auto;background:none;box-shadow:none;font-size:13px;color:#C0466A}
+.theme-valentines.skin-wreath .tiles .tile.made{background:#fff;color:#5A2236;box-shadow:inset 0 0 0 3px #E07A9A,0 4px 0 #D99AAE}
+.theme-stpatricks.skin-wreath .tile,.theme-stpatricks.skin-wreath .tile:nth-child(n){background:radial-gradient(circle,#F6D98A 0 57%,#E2B44A 58% 100%);color:#5A3E00;box-shadow:0 4px 0 #9A7417,inset 0 0 0 3px #B88A22}
+.theme-stpatricks.skin-wreath .tile::before{display:none}
+.theme-stpatricks.skin-wreath .tiles .tile.made{background:radial-gradient(circle,#DDF2DD 0 57%,#93CD9A 58% 100%);color:#1E4A2A;box-shadow:0 4px 0 #2E7547,inset 0 0 0 3px #2E7547}
+/* bauble triangles */
+.skin-baubles .tri svg{stroke:var(--gold);stroke-width:3.5;stroke-dasharray:1 9}
+.skin-baubles .tri-x{font-size:0;color:var(--gold)}
+.skin-baubles .tri-x::before{content:"★";font-size:32px}
+.skin-baubles .node .given{position:relative;width:clamp(70px,20vw,86px);height:clamp(70px,20vw,86px);min-width:0;padding:0 4px;border-radius:50%;color:#fff;font-size:clamp(16px,4.6vw,21px);
+  background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.45) 0 9%,transparent 10%),var(--berry);box-shadow:0 4px 0 color-mix(in srgb,var(--berry) 60%,#000)}
+.skin-baubles .node .given::before{content:"";position:absolute;top:-9px;left:50%;width:16px;height:10px;transform:translateX(-50%);border-radius:3px 3px 1px 1px;background:var(--gold)}
+.skin-baubles .node.left .given{background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.45) 0 9%,transparent 10%),var(--pine);box-shadow:0 4px 0 color-mix(in srgb,var(--pine) 60%,#000)}
+.skin-baubles .node.right .given{background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.5) 0 9%,transparent 10%),var(--gold);color:#3B2A10;box-shadow:0 4px 0 color-mix(in srgb,var(--gold) 60%,#000)}
+.skin-baubles .node .ans{width:clamp(70px,20vw,86px);height:clamp(70px,20vw,86px);border-radius:50%;border:3px dashed var(--berry);padding:0;font-size:18px}
+.theme-stpatricks.skin-baubles .node .given,.theme-stpatricks.skin-baubles .node.left .given,.theme-stpatricks.skin-baubles .node.right .given{background:radial-gradient(circle,#F6D98A 0 57%,#E2B44A 58% 100%);color:#5A3E00;box-shadow:0 4px 0 #9A7417,inset 0 0 0 3px #B88A22}
+.theme-stpatricks.skin-baubles .node .given::before{display:none}
+.theme-stpatricks.skin-baubles .tri svg{stroke:#8A6A3A;stroke-width:7;stroke-dasharray:none}
+.theme-stpatricks.skin-baubles .tri-x::before{content:"☘";color:var(--berry)}
+.theme-stpatricks.skin-baubles .node .ans{border-color:var(--gold)}
+/* under the tree */
+.mystery-art{display:block;width:min(100%,300px);height:auto;margin:12px auto 0}
+.skin-tree .cluebox{border:2.5px solid var(--pine);margin-top:4px;background:repeating-linear-gradient(var(--panel) 0 33px,color-mix(in srgb,var(--line) 75%,transparent) 33px 34px)}
+/* gingerbread */
+.skin-cookie{--cookie:#C9894B;--icing:#FFF7EC}
+.skin-cookie .diamond svg polygon:not(.icing){fill:var(--cookie);stroke:#9A6331;stroke-width:5}
+.skin-cookie .diamond svg line{stroke:var(--icing);stroke-width:6;stroke-dasharray:10 7}
+.skin-cookie .diamond svg .icing{fill:none;stroke:var(--icing);stroke-width:5;stroke-dasharray:1 11;stroke-linecap:round}
+.skin-cookie .diamond .given{border-radius:50%;width:62px;height:62px;min-width:0;padding:0;font-size:18px;color:#fff;background:var(--berry);box-shadow:0 3px 0 color-mix(in srgb,var(--berry) 60%,#000),inset 0 0 0 3px rgba(255,255,255,.35)}
+.skin-cookie .diamond .node.right .given,.skin-cookie .diamond .node.bottom .given{background:var(--pine);box-shadow:0 3px 0 color-mix(in srgb,var(--pine) 60%,#000),inset 0 0 0 3px rgba(255,255,255,.35)}
+.skin-cookie .diamond .ans{width:68px;height:68px;border-radius:50%;background:var(--icing);color:#4A2A10;border:3px dashed var(--berry);padding:0;font-size:19px}
+.skin-cookie .dlab{color:#9A6331}
+/* cocoa mug */
+.skin-mug .crunch{position:relative;width:min(470px,calc(100% - 56px));margin:84px auto 0;transform:translateX(-14px);padding:30px 16px 26px;background:var(--panel);
+  border:4px solid var(--berry);border-radius:12px 12px 46px 46px;box-shadow:0 6px 0 color-mix(in srgb,var(--berry) 60%,#000)}
+.skin-mug .crunch::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;border-radius:6px 6px 0 0;background:repeating-linear-gradient(90deg,var(--berry) 0 14px,var(--paper) 14px 28px)}
+.skin-mug .crunch::after{content:"";position:absolute;right:-42px;top:34px;width:34px;height:64px;border:8px solid var(--berry);border-left:0;border-radius:0 34px 34px 0}
+.skin-mug .steam-svg{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:200px;height:auto}
 /* tracking */
 .who{margin:8px 0 0;font-size:14px;color:var(--muted)}
 .who strong{color:var(--ink)}
@@ -1067,6 +1143,7 @@ function mobLayout(n){
   n.h=MOB.BDROP+Math.max(n.L.h,n.R.h)+n.arm*Math.sin(MOB.TILT*Math.PI/180);
 }
 function shapeSVG(i,cx,cy,s){
+  if(SHAPE_SKIN)return SHAPE_SKIN.draw(i,cx,cy,s);
   const c=`var(--s${i})`,r=s/2,f=n=>+n.toFixed(2);
   if(i===0){
     let rays='';
@@ -1089,7 +1166,7 @@ function shapeSVG(i,cx,cy,s){
 const shapeIcon=i=>`<svg class="ico" viewBox="0 0 20 20" role="img" aria-label="${SHAPE_NAMES[i]}">${shapeSVG(i,10,10,15)}</svg>`;
 function mobMarkup(n,bars){
   if(n.type==='chain'){
-    const TOPS=[0.95,0.56,1,0.94],last=n.items.length-1;
+    const TOPS=SHAPE_SKIN?SHAPE_SKIN.tops:[0.95,0.56,1,0.94],last=n.items.length-1;
     const endY=MOB.CDROP+last*(MOB.SH+MOB.SGAP)+MOB.SH/2-TOPS[n.items[last]]*MOB.SH/2;
     let s=`<line class="str" x1="0" y1="0" x2="0" y2="${endY}"/>`;
     n.items.forEach((it,k)=>{
@@ -1204,24 +1281,47 @@ function mountMobiles(root,rng,level,ctx){
 // ===================== ADVENT: NEW PUZZLE GENERATORS =====================
 const money=v=>'$'+(Number.isInteger(v)?String(v):v.toFixed(2));
 const fracV=(top,bot)=>`<span class="frac"><span>${top}</span><span>${bot}</span></span>`;
+const VOCABS={
+  christmas:{worker:'An elf',workerNoun:'elf',workers:'elves',wrap:'wraps',wrapBase:'wrap',items:'presents',candy:'candy canes',candyOne:'candy cane',
+    rA:'red ornaments',rB:'gold ornaments',rWhere:'on a tree',rUnit:'gold',build:'build',product:'toys',cookie:'gingerbread cookies',mapOwner:'Santa’s map',
+    vehicle:'Santa’s sleigh',r2A:'altos',r2B:'sopranos',r2Where:'In the holiday choir',r2Total:'singers',mix:'A hot cocoa mix uses cocoa and milk',mixA:'cocoa',
+    saveItem:'holiday sweater',wearing:'wearing holiday sweaters',saleItem:'sled',markup:'A tree farm pays {P} for a wreath',changeItem:'sled',discItem:'pair of skates',coat:'winter coat',
+    mover:'A sled slides',grow:{intro:'Snow piles up at a steady rate.',q:'By how many centimeters does the snow get deeper each hour?',x:'Hours',y:'Depth (cm)',unit:'cm'}},
+  valentines:{worker:'A baker',workerNoun:'baker',workers:'bakers',wrap:'frosts',wrapBase:'frost',items:'heart cookies',candy:'chocolate hearts',candyOne:'chocolate heart',
+    rA:'red roses',rB:'pink roses',rWhere:'in a bouquet',rUnit:'pink',build:'decorate',product:'cupcakes',cookie:'sugar cookies',mapOwner:'Cupid’s map',
+    vehicle:'A train full of valentines',r2A:'red cards',r2B:'pink cards',r2Where:'In the class valentine box',r2Total:'cards',mix:'A pink lemonade recipe uses lemon juice and water',mixA:'lemon juice',
+    saveItem:'box of chocolates',wearing:'wearing red or pink',saleItem:'teddy bear',markup:'A flower shop pays {P} for a bouquet',changeItem:'rose bouquet',discItem:'heart necklace',coat:'cozy sweater',
+    mover:'A paper airplane valentine glides',grow:{intro:'A tall mug fills with hot chocolate at a steady rate.',q:'By how many centimeters does the hot chocolate rise each second?',x:'Seconds',y:'Depth (cm)',unit:'cm'}},
+  stpatricks:{worker:'A leprechaun',workerNoun:'leprechaun',workers:'leprechauns',wrap:'hides',wrapBase:'hide',items:'gold coins',candy:'shamrock cookies',candyOne:'shamrock cookie',
+    rA:'green hats',rB:'gold hats',rWhere:'in the parade',rUnit:'gold',build:'make',product:'pairs of shoes',cookie:'soda bread muffins',mapOwner:'the leprechaun’s treasure map',
+    vehicle:'A rainbow train',r2A:'fiddlers',r2B:'drummers',r2Where:'In the parade band',r2Total:'musicians',mix:'A green smoothie uses spinach and juice',mixA:'spinach',
+    saveItem:'green T-shirt',wearing:'wearing green',saleItem:'leprechaun hat',markup:'A party store pays {P} for a shamrock banner',changeItem:'parade ticket',discItem:'pair of green sneakers',coat:'green hoodie',
+    mover:'A leprechaun runs',grow:{intro:'A clover plant grows at a steady rate.',q:'By how many centimeters does the clover grow each day?',x:'Days',y:'Height (cm)',unit:'cm'}},
+  easter:{worker:'The Easter Bunny',workerNoun:'Easter Bunny',workers:'bunnies',wrap:'paints',wrapBase:'paint',items:'eggs',candy:'marshmallow chicks',candyOne:'marshmallow chick',
+    rA:'purple eggs',rB:'yellow eggs',rWhere:'in a basket',rUnit:'yellow',build:'fill',product:'baskets',cookie:'hot cross buns',mapOwner:'the egg hunt map',
+    vehicle:'A spring train',r2A:'chocolate eggs',r2B:'candy eggs',r2Where:'At the egg hunt',r2Total:'eggs',mix:'A spring punch uses juice and sparkling water',mixA:'juice',
+    saveItem:'Easter basket',wearing:'wearing pastel colors',saleItem:'kite',markup:'A garden shop pays {P} for a flower pot',changeItem:'chocolate bunny',discItem:'spring jacket',coat:'rain jacket',
+    mover:'A bunny hops',grow:{intro:'A tulip grows at a steady rate.',q:'By how many centimeters does the tulip grow each day?',x:'Days',y:'Height (cm)',unit:'cm'}}
+};
+let VOC=VOCABS.christmas;
 function qRatio(r,lv){
-  const t=ri(r,3);
+  const W=VOC,t=ri(r,3);
   if(lv===0){
-    if(t===0){const a=rint(r,3,12),k=rint(r,2,8);return{html:`An elf wraps ${a*k} presents in ${k} hours. How many presents does the elf wrap each hour?`,ans:R(a),unit:'presents'};}
-    if(t===1){const c=pick(r,[25,30,40,45,50,60,75]),n=rint(r,3,9);return{html:`${n} candy canes cost ${money(c*n/100)} in all. How much does one candy cane cost?`,ans:R(c,100),pre:'$'};}
+    if(t===0){const a=rint(r,3,12),k=rint(r,2,8);return{html:`${W.worker} ${W.wrap} ${a*k} ${W.items} in ${k} hours. How many ${W.items} does the ${W.workerNoun} ${W.wrapBase} each hour?`,ans:R(a),unit:W.items};}
+    if(t===1){const c=pick(r,[25,30,40,45,50,60,75]),n=rint(r,3,9);return{html:`${n} ${W.candy} cost ${money(c*n/100)} in all. How much does one ${W.candyOne} cost?`,ans:R(c,100),pre:'$'};}
     let p,q;do{p=rint(r,2,5);q=rint(r,2,7);}while(p===q||gcd(p,q)!==1);const k=rint(r,2,6);
-    return{html:`The ratio of red ornaments to gold ornaments on a tree is ${p} : ${q}. There are ${p*k} red ornaments. How many gold ornaments are there?`,ans:R(q*k),unit:'gold'};
+    return{html:`The ratio of ${W.rA} to ${W.rB} ${W.rWhere} is ${p} : ${q}. There are ${p*k} ${W.rA}. How many ${W.rB} are there?`,ans:R(q*k),unit:W.rUnit};
   }
   if(lv===1){
-    if(t===0){const e1=rint(r,2,6),rate=rint(r,3,9),e2=e1+rint(r,2,8);return{html:`${e1} elves can build ${e1*rate} toys in an hour. At the same rate, how many toys can ${e2} elves build in an hour?`,ans:R(e2*rate),unit:'toys'};}
-    if(t===1){const f=rint(r,2,4),q=rint(r,6,12);let g;do{g=rint(r,2,8);}while(g===f);return{html:`A recipe uses ${f} cups of flour for ${f*q} gingerbread cookies. How many cups of flour are needed for ${g*q} cookies?`,ans:R(g),unit:'cups'};}
+    if(t===0){const e1=rint(r,2,6),rate=rint(r,3,9),e2=e1+rint(r,2,8);return{html:`${e1} ${W.workers} can ${W.build} ${e1*rate} ${W.product} in an hour. At the same rate, how many ${W.product} can ${e2} ${W.workers} ${W.build} in an hour?`,ans:R(e2*rate),unit:W.product};}
+    if(t===1){const f=rint(r,2,4),q=rint(r,6,12);let g;do{g=rint(r,2,8);}while(g===f);return{html:`A recipe uses ${f} cups of flour for ${f*q} ${W.cookie}. How many cups of flour are needed for ${g*q} ${W.cookie}?`,ans:R(g),unit:'cups'};}
     const sc=pick(r,[10,15,20,25]),half=rint(r,6,19);
-    return{html:`On Santa’s map, 1 inch stands for ${sc} miles. Two towns are ${half/2} inches apart on the map. How many miles apart are they?`,ans:R(half*sc,2),unit:'miles'};
+    return{html:`On ${W.mapOwner}, 1 inch stands for ${sc} miles. Two places are ${half/2} inches apart on the map. How many miles apart are they?`,ans:R(half*sc,2),unit:'miles'};
   }
-  if(t===0){const sp=pick(r,[120,150,180,200,240]),h1=pick(r,[1.5,2.5,3.5]),h2=rint(r,2,6);return{html:`Santa’s sleigh travels ${sp*h1} miles in ${h1} hours. At that rate, how far does it travel in ${h2} hours?`,ans:R(sp*h2),unit:'miles'};}
+  if(t===0){const sp=pick(r,[120,150,180,200,240]),h1=pick(r,[1.5,2.5,3.5]),h2=rint(r,2,6);return{html:`${W.vehicle} travels ${sp*h1} miles in ${h1} hours. At that rate, how far does it travel in ${h2} hours?`,ans:R(sp*h2),unit:'miles'};}
   let a,b;do{a=rint(r,2,5);b=rint(r,a+1,9);}while(gcd(a,b)!==1);const k=rint(r,3,9);
-  if(t===1)return{html:`In the holiday choir, the ratio of altos to sopranos is ${a} : ${b}. There are ${(a+b)*k} singers in all. How many are sopranos?`,ans:R(b*k),unit:'sopranos'};
-  return{html:`A hot cocoa mix uses cocoa and milk in a ratio of ${a} : ${b}. To make ${(a+b)*k} cups in all, how many cups of cocoa are needed?`,ans:R(a*k),unit:'cups'};
+  if(t===1)return{html:`${W.r2Where}, the ratio of ${W.r2A} to ${W.r2B} is ${a} : ${b}. There are ${(a+b)*k} ${W.r2Total} in all. How many are ${W.r2B}?`,ans:R(b*k),unit:W.r2B};
+  return{html:`${W.mix} in a ratio of ${a} : ${b}. To make ${(a+b)*k} cups in all, how many cups of ${W.mixA} are needed?`,ans:R(a*k),unit:'cups'};
 }
 function qSeq(r,lv){
   const show=arr=>`<span class="seq">${arr.map(fmtN).join(',&ensp;')},&ensp;…</span>`;
@@ -1261,31 +1361,31 @@ function qEq(r,lv){
   return{html:`${coefPrefix(a)}${binom('x',-b)} ${c<0?MINUS:'+'} ${Math.abs(c)===1?'':Math.abs(c)}${X} = ${fmtN(d)}`,ans:R(x),pre};
 }
 function qPct(r,lv){
-  const t=ri(r,3);
+  const W=VOC,t=ri(r,3);
   if(lv===0){
     if(t===0){const p=pick(r,[10,20,25,50,75]),n=rint(r,1,10)*20;return{html:`What is ${p}% of ${n}?`,ans:R(p*n,100)};}
-    if(t===1){const P=rint(r,2,12)*10,p=pick(r,[10,20,30,50]);return{html:`A ${money(P)} holiday sweater is ${p}% off. How many dollars do you save?`,ans:R(P*p,100),pre:'$'};}
-    const w=pick(r,[20,25,50]),part=rint(r,1,w-1);return{html:`${part} of the ${w} students in class are wearing holiday sweaters. What percent is that?`,ans:R(part*100,w),unit:'%'};
+    if(t===1){const P=rint(r,2,12)*10,p=pick(r,[10,20,30,50]);return{html:`A ${money(P)} ${W.saveItem} is ${p}% off. How many dollars do you save?`,ans:R(P*p,100),pre:'$'};}
+    const w=pick(r,[20,25,50]),part=rint(r,1,w-1);return{html:`${part} of the ${w} students in class are ${W.wearing}. What percent is that?`,ans:R(part*100,w),unit:'%'};
   }
   if(lv===1){
-    if(t===0){const P=rint(r,3,15)*10,p=pick(r,[15,20,25,30,40]);return{html:`A ${money(P)} sled is on sale for ${p}% off. What is the sale price?`,ans:R(P*(100-p),100),pre:'$'};}
+    if(t===0){const P=rint(r,3,15)*10,p=pick(r,[15,20,25,30,40]);return{html:`A ${money(P)} ${W.saleItem} is on sale for ${p}% off. What is the sale price?`,ans:R(P*(100-p),100),pre:'$'};}
     if(t===1){const P=rint(r,10,60),tx=pick(r,[5,6,8,10]);return{html:`A board game costs ${money(P)}. Sales tax is ${tx}%. What is the total cost with tax?`,ans:R(P*(100+tx),100),pre:'$'};}
-    const P=rint(r,4,20)*5,p=pick(r,[20,40,50,60]);return{html:`A tree farm pays ${money(P)} for a wreath and marks the price up ${p}%. What is the selling price?`,ans:R(P*(100+p),100),pre:'$'};
+    const P=rint(r,4,20)*5,p=pick(r,[20,40,50,60]);return{html:`${W.markup.replace('{P}',money(P))} and marks the price up ${p}%. What is the selling price?`,ans:R(P*(100+p),100),pre:'$'};
   }
   if(t===0){
     for(;;){const old=pick(r,[20,25,40,50,60,80]),p=pick(r,[10,20,25,30,40,50]),up=r()<0.5,nw=old*(100+(up?p:-p))/100;
-      if(Number.isInteger(nw))return{html:`The price of a sled changed from ${money(old)} to ${money(nw)}. What was the percent ${up?'increase':'decrease'}?`,ans:R(p),unit:'%'};}
+      if(Number.isInteger(nw))return{html:`The price of a ${W.changeItem} changed from ${money(old)} to ${money(nw)}. What was the percent ${up?'increase':'decrease'}?`,ans:R(p),unit:'%'};}
   }
-  if(t===1){const O=rint(r,2,10)*20,p=pick(r,[10,20,25,40]);return{html:`After a ${p}% discount, a pair of skates costs ${money(O*(100-p)/100)}. What was the original price?`,ans:R(O),pre:'$'};}
-  const P=rint(r,2,10)*20;return{html:`A ${money(P)} coat is 20% off. At the register, you get another 10% off the sale price. What do you pay?`,ans:R(P*72,100),pre:'$'};
+  if(t===1){const O=rint(r,2,10)*20,p=pick(r,[10,20,25,40]);return{html:`After a ${p}% discount, a ${W.discItem} costs ${money(O*(100-p)/100)}. What was the original price?`,ans:R(O),pre:'$'};}
+  const P=rint(r,2,10)*20;return{html:`A ${money(P)} ${W.coat} is 20% off. At the register, you get another 10% off the sale price. What do you pay?`,ans:R(P*72,100),pre:'$'};
 }
 function qSlope(r,lv){
-  const tbl=(hx,hy,xs,ys)=>`<table class="qtbl"><tr><th>${hx}</th>${xs.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr><tr><th>${hy}</th>${ys.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr></table>`;
+  const W=VOC,tbl=(hx,hy,xs,ys)=>`<table class="qtbl"><tr><th>${hx}</th>${xs.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr><tr><th>${hy}</th>${ys.map(v=>`<td>${fmtN(v)}</td>`).join('')}</tr></table>`;
   const t=ri(r,3);
   if(lv===0){
     if(t===0){const k=rint(r,2,9),xs=[2,4,6,8];return{html:`An oven bakes cookies at a steady rate. How many cookies does it bake per minute?${tbl('Minutes','Cookies',xs,xs.map(x=>k*x))}`,ans:R(k),unit:'per min'};}
-    if(t===1){const k=rint(r,3,9),s=rint(r,4,12);return{html:`A sled slides ${k*s} meters in ${s} seconds at a steady speed. How many meters does it slide each second?`,ans:R(k),unit:'m/s'};}
-    const k=rint(r,2,8),b=rint(r,5,30),xs=[0,1,2,3];return{html:`Snow piles up at a steady rate. By how many centimeters does the snow depth grow each hour?${tbl('Hours','Depth (cm)',xs,xs.map(x=>b+k*x))}`,ans:R(k),unit:'cm'};
+    if(t===1){const k=rint(r,3,9),s=rint(r,4,12);return{html:`${W.mover} ${k*s} meters in ${s} seconds at a steady speed. How many meters does it go each second?`,ans:R(k),unit:'m/s'};}
+    const k=rint(r,2,8),b=rint(r,5,30),xs=[0,1,2,3];return{html:`${W.grow.intro} ${W.grow.q}${tbl(W.grow.x,W.grow.y,xs,xs.map(x=>b+k*x))}`,ans:R(k),unit:W.grow.unit};
   }
   if(lv===1){
     if(t<2){let x1,x2;do{x1=rint(r,-8,8);x2=rint(r,-8,8);}while(x1===x2);const y1=rint(r,-9,9),y2=rint(r,-9,9);
@@ -1388,7 +1488,10 @@ const ICONS={
   chick:'<circle cx="32" cy="24" r="10"/><path d="M32 25l5 2-5 2"/><circle cx="29" cy="22" r="1.3"/><path d="M13 38l5 4 5-4 5 4 4-4 4 4 5-4 5 4 5-4v4c0 9-8 15-19 15S13 51 13 42z"/><path d="M22 34c-2-2-2-4 0-6M42 34c2-2 2-4 0-6"/>',
   lily:'<path d="M22 13l5 6 5-8 5 8 5-6v12c0 8-5 12-10 12s-10-4-10-12z"/><path d="M32 37v19"/><path d="M32 50c-7-1-11-6-11-11 7 1 10 5 11 11zM32 46c6-2 9-6 9-11-6 1-8 5-9 11z"/>',
   basket:'<path d="M12 32h40l-5 22H17z"/><path d="M18 32c0-18 28-18 28 0"/><path d="M14 40h36M16 47h32"/><ellipse cx="24" cy="29" rx="4" ry="5"/><ellipse cx="38" cy="28" rx="4" ry="5"/>',
-  butterfly:'<path d="M32 22c-8-12-24-10-22 3 2 9 13 10 22 5M32 22c8-12 24-10 22 3-2 9-13 10-22 5"/><path d="M32 30c-8 3-17 9-14 17 4 6 12 0 14-10M32 30c8 3 17 9 14 17-4 6-12 0-14-10"/><path d="M32 18v26"/><path d="M32 18c-2-5-5-8-8-9M32 18c2-5 5-8 8-9"/>'
+  butterfly:'<path d="M32 22c-8-12-24-10-22 3 2 9 13 10 22 5M32 22c8-12 24-10 22 3-2 9-13 10-22 5"/><path d="M32 30c-8 3-17 9-14 17 4 6 12 0 14-10M32 30c8 3 17 9 14 17-4 6-12 0-14-10"/><path d="M32 18v26"/><path d="M32 18c-2-5-5-8-8-9M32 18c2-5 5-8 8-9"/>',
+  elf:'<path d="M18 30C22 14 36 6 52 9c-7 3-11 7-13 13"/><circle cx="53" cy="9" r="3.5"/><path d="M15 30h34"/><circle cx="32" cy="41" r="11"/><path d="M21 39l-7-5 4 10M43 39l7-5-4 10"/><circle cx="28" cy="40" r="1.3"/><circle cx="36" cy="40" r="1.3"/><path d="M28 46c2 2 6 2 8 0"/><path d="M23 52l-4 9h26l-4-9"/>',
+  sled:'<path d="M8 42h38c6 0 9-5 9-10"/><path d="M8 50h42c6 0 9-4 9-8"/><path d="M18 42v8M40 42v8"/><rect x="14" y="30" width="28" height="12" rx="2"/>',
+  sign:'<path d="M32 8v48"/><path d="M12 14h28l7 6-7 6H12z"/><path d="M52 30H24l-7 6 7 6h28z"/><path d="M22 56h20"/>'
 };
 const iconSVG=(k,cls)=>`<svg class="${cls||'ico-xmas'}" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]}</svg>`;
 const QUIZ_LEVELS={
@@ -1585,7 +1688,7 @@ function doorGame(n){
   if(doorCache[key])return doorCache[key];
   const d=t.doors.find(x=>x.n===n);if(!d)return null;
   const base=d.game?GAMES.find(g=>g.id===d.game):null;
-  const g={id:key,name:`${t.short} ${n}: ${d.title}`,advent:d,theme:t,
+  const g={id:key,name:`${t.short} ${n}: ${d.title}`,advent:d,theme:t,skin:(DOOR_SKINS[t.id]||{})[n]||null,
     levels:base?base.levels:d.quiz?QUIZ_LEVELS[d.quiz]:['Two pictures','Three pictures and order of operations','Four pictures and systems'],
     mount:(root,rng,lv,ctx)=>base?base.mount(root,rng,lv,ctx):d.quiz?mountQuiz(root,rng,lv,ctx,d.quiz):mountEmoji(root,rng,lv,ctx,t.emoji)};
   return doorCache[key]=g;
@@ -1632,6 +1735,136 @@ function renderCalendar(root){
 function doorHeader(d){
   return h('div',{class:`door-head ${d.n%2?'berry':'pine'}`},h('span',{class:'door-head-ico',html:iconSVG(d.icon)}),
     h('div',{},h('p',{class:'door-kicker'},`Door ${d.n}`),h('h2',{},d.title),h('p',{class:'muted small'},d.blurb)));
+}
+
+// ===================== DOOR SKINS (themed looks for each calendar door) =====================
+let SHAPE_SKIN=null;
+const DEFAULT_SHAPE_NAMES=SHAPE_NAMES.slice();
+const loop=(y)=>`<circle cx="32" cy="${y}" r="3.2" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
+const SHAPE_SETS={
+  christmas:{names:['bell','ornament','tree','snowflake'],tops:[0.83,0.83,0.9,0.83],parts:[
+    loop(6)+'<path d="M14 46c0-19 6-33 18-33s18 14 18 33z" fill="var(--gold)"/><rect x="10" y="44" width="44" height="7" rx="3.5" fill="var(--gold)"/><rect x="10" y="47" width="44" height="4" rx="2" fill="#000" opacity=".18"/><circle cx="32" cy="55" r="5" fill="var(--berry)"/><path d="M22 30c1-6 4-10 8-11" stroke="#fff" stroke-width="2.5" fill="none" opacity=".5" stroke-linecap="round"/>',
+    loop(6)+'<rect x="26" y="9" width="12" height="8" rx="2" fill="var(--gold)"/><circle cx="32" cy="37" r="19" fill="var(--berry)"/><path d="M14 34c11 6 25 6 36 0" stroke="var(--gold)" stroke-width="3" fill="none"/><ellipse cx="24" cy="29" rx="4" ry="6" fill="#fff" opacity=".4"/>',
+    loop(3)+'<polygon points="32,6 50,30 42,30 56,50 8,50 22,30 14,30" fill="var(--pine)"/><rect x="28" y="50" width="8" height="8" fill="#7A5236"/><circle cx="26" cy="36" r="2.5" fill="var(--gold)"/><circle cx="38" cy="42" r="2.5" fill="var(--berry)"/><circle cx="33" cy="24" r="2.5" fill="var(--berry)"/>',
+    loop(6)+'<g stroke="#6B9AC4" stroke-width="4" stroke-linecap="round"><path d="M32 10v48M11 22l42 24M11 46l42-24"/><path d="M26 14l6 5 6-5M26 54l6-5 6 5"/></g><circle cx="32" cy="34" r="4" fill="#6B9AC4"/>']},
+  easter:{names:['egg','chick','flower','carrot'],tops:[0.81,0.56,0.75,0.75],parts:[
+    loop(6)+'<path d="M32 10c9 0 17 14 17 26a17 17 0 0 1-34 0c0-12 8-26 17-26z" fill="var(--berry)"/><path d="M16 34l5-4 5 4 6-4 6 4 5-4 5 4" stroke="#fff" stroke-width="2.5" fill="none" stroke-linejoin="round"/><circle cx="26" cy="44" r="2" fill="#fff"/><circle cx="38" cy="44" r="2" fill="#fff"/>',
+    loop(17)+'<circle cx="32" cy="38" r="17" fill="#EAC34E"/><path d="M36 40c6 0 9 4 8 8-5 0-8-3-8-8z" fill="#D9A93A"/><circle cx="26" cy="33" r="2.2" fill="#3B2A10"/><path d="M16 36l-7 3 7 3z" fill="#E07B39"/>',
+    loop(9)+'<g fill="var(--pine)"><circle cx="32" cy="23" r="8"/><circle cx="42.5" cy="30.6" r="8"/><circle cx="38.5" cy="43" r="8"/><circle cx="25.5" cy="43" r="8"/><circle cx="21.5" cy="30.6" r="8"/></g><circle cx="32" cy="34" r="6" fill="#EAC34E"/>',
+    loop(6)+'<path d="M32 18c-6-6-8-9-6-12 3 2 5 6 6 12zM32 18c6-6 8-9 6-12-3 2-5 6-6 12zM32 18v-9" stroke="#5E9E4A" stroke-width="3" fill="#5E9E4A" stroke-linejoin="round"/><path d="M22 18h20L33 60h-2z" fill="#E07B39" stroke="#E07B39" stroke-width="2" stroke-linejoin="round"/><path d="M26 28h5M30 38h4M28 48h4" stroke="#B85A22" stroke-width="2" stroke-linecap="round"/>']}
+};
+Object.values(SHAPE_SETS).forEach(set=>{set.draw=(i,cx,cy,s)=>`<g transform="translate(${+(cx-s/2).toFixed(2)},${+(cy-s/2).toFixed(2)}) scale(${+(s/64).toFixed(4)})">${set.parts[i]}</g>`;});
+function setShapeSkin(set){SHAPE_SKIN=set||null;SHAPE_NAMES.splice(0,4,...(set?set.names:DEFAULT_SHAPE_NAMES));}
+
+function sceneSVG(sc){
+  const W=360,H=112,G=96,col=k=>({a:'var(--berry)',b:'var(--pine)',c:'var(--gold)',m:'var(--muted)'}[k]||'var(--berry)');
+  const rng=mulberry32(hashStr(JSON.stringify(sc)));let out='';
+  for(let i=0;i<16;i++){const x=rint(rng,6,354),y=rint(rng,6,G-28),k=['a','b','c'][i%3];
+    if(sc.particles==='snow')out+=`<circle cx="${x}" cy="${y}" r="${rint(rng,1,3)}" fill="var(--line)"/>`;
+    else if(sc.particles==='hearts')out+=`<path transform="translate(${x},${y}) scale(.55)" d="M0 8c-6-4-8-7-8-10a4 4 0 0 1 8-1.5A4 4 0 0 1 8-2c0 3-2 6-8 10z" fill="${col(k)}" opacity=".3"/>`;
+    else if(sc.particles==='sparkle')out+=`<path transform="translate(${x},${y})" d="M0-5L1.3-1.3 5 0 1.3 1.3 0 5-1.3 1.3-5 0-1.3-1.3z" fill="var(--gold)" opacity=".75"/>`;
+    else if(sc.particles==='petals')out+=`<circle cx="${x}" cy="${y}" r="2.6" fill="${col(k)}" opacity=".3"/>`;}
+  if(sc.ground==='snow')out+=`<path d="M0 ${G} Q60 ${G-9} 120 ${G} T240 ${G} T360 ${G} V${H} H0Z" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>`;
+  else if(sc.ground==='grass'){out+=`<path d="M0 ${G} Q90 ${G-8} 180 ${G} T360 ${G} V${H} H0Z" fill="color-mix(in srgb,var(--pine) 22%,var(--panel))" stroke="var(--pine)" stroke-width="1.5"/>`;
+    for(let x=8;x<360;x+=14)out+=`<path d="M${x} ${G+2}l-3 -8M${x+4} ${G+2}l2 -9" stroke="var(--pine)" stroke-width="1.4" opacity=".55"/>`;}
+  else if(sc.ground==='shelf')out+=`<rect x="10" y="${G}" width="340" height="7" rx="3" fill="var(--line)"/>`;
+  else if(sc.ground==='slope')out+=`<path d="M0 ${H} V30 L360 ${G} V${H}Z" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>`;
+  if(sc.string)out+=`<path d="M0 12 Q180 34 360 12" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`;
+  if(sc.hops)out+=`<path d="M30 ${G-4} Q75 30 120 ${G-4} Q165 30 210 ${G-4} Q240 50 262 ${G-14}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 6"/>`;
+  for(const it of sc.items){
+    const [ic,x,size,ck,rot,y]=it;
+    if(ic==='ball'){out+=`<circle cx="${x}" cy="${G-size+1}" r="${size}" fill="var(--panel)" stroke="var(--muted)" stroke-width="2"/>`;continue;}
+    const s=size/64,yy=y??(G-size+4);
+    out+=`<g transform="translate(${x-size/2},${yy}) scale(${s.toFixed(3)})${rot?` rotate(${rot} 32 32)`:''}" fill="none" stroke="${col(ck)}" stroke-width="${(2.5/s).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round">${ICONS[ic]}</g>`;
+  }
+  return `<svg class="scene" viewBox="0 0 ${W} ${H}" aria-hidden="true">${out}</svg>`;
+}
+function bowSVG(themeId){
+  if(themeId==='stpatricks')return `<svg class="bow-svg" viewBox="0 0 140 76" aria-hidden="true"><g fill="#8CCB8F" stroke="var(--gold)" stroke-width="3"><circle cx="70" cy="22" r="17"/><circle cx="51" cy="44" r="17"/><circle cx="89" cy="44" r="17"/></g><path d="M70 50c2 10 6 18 12 24" stroke="var(--gold)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`;
+  const knot=themeId==='valentines'?`<path d="M70 58c-9-6-12-10-12-14a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 4-3 8-12 14z" fill="var(--berry)" stroke="#fff" stroke-width="2"/>`:`<circle cx="70" cy="46" r="9" fill="var(--gold)" stroke="#000" stroke-opacity=".2" stroke-width="2"/>`;
+  return `<svg class="bow-svg" viewBox="0 0 140 76" aria-hidden="true"><g fill="var(--gold)" stroke="#000" stroke-opacity=".2" stroke-width="2"><path d="M66 52L52 76l9-4 5 6z"/><path d="M74 52l14 24-9-4-5 6z"/><path d="M70 46C44 8 6 14 16 38c7 16 34 14 54 8z"/><path d="M70 46C96 8 134 14 124 38c-7 16-34 14-54 8z"/></g><path d="M30 30c8-6 20-4 30 8M110 30c-8-6-20-4-30 8" stroke="#fff" stroke-opacity=".45" stroke-width="3" fill="none" stroke-linecap="round"/>${knot}</svg>`;
+}
+function wreathSVG(themeId){
+  if(themeId==='stpatricks'){
+    let coins='';[[70,74],[92,66],[114,64],[136,72],[82,84],[104,80],[126,84],[94,52],[118,52],[106,40]].forEach(([x,y])=>{coins+=`<ellipse cx="${x}" cy="${y}" rx="13" ry="9" fill="#E9BC4F" stroke="#9A7417" stroke-width="2.5"/>`;});
+    return `<svg class="wreath-svg" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-width="8" opacity=".6"><path d="M6 120A80 80 0 0 1 96 40" stroke="#D9675B"/><path d="M14 122A72 72 0 0 1 96 50" stroke="#E7B24C"/><path d="M22 124A64 64 0 0 1 96 60" stroke="#6FA968"/><path d="M30 126A56 56 0 0 1 96 70" stroke="#6E8FC9"/></g>${coins}<path d="M44 94h112c8 52-18 92-56 92S36 146 44 94z" fill="#3A332E"/><rect x="36" y="86" width="128" height="16" rx="8" fill="#4B433D"/><path d="M62 112c-4 16 0 34 10 44" stroke="#fff" stroke-opacity=".15" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`;
+  }
+  let s='',n=themeId==='valentines'?20:40;
+  for(let k=0;k<n;k++){const a=k*360/n,rad=a*Math.PI/180,x=100+78*Math.cos(rad),y=100+78*Math.sin(rad);
+    if(themeId==='valentines'){s+=`<path transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${(a+90).toFixed(0)}) scale(1.35)" d="M0 8c-7-5-9-8-9-11a4.5 4.5 0 0 1 9-1.5A4.5 4.5 0 0 1 9-3c0 3-2 6-9 11z" fill="${k%2?'var(--pine)':'var(--berry)'}"/>`;}
+    else s+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="15" ry="6.5" transform="rotate(${(a+(k%2?55:-55)).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="var(--pine)" opacity="${k%2?1:.75}"/>`;}
+  if(themeId!=='valentines')for(let k=0;k<8;k++){const a=(k*45+20)*Math.PI/180,x=100+80*Math.cos(a),y=100+80*Math.sin(a);
+    s+=`<circle cx="${(x-4).toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="var(--berry)"/><circle cx="${(x+4).toFixed(1)}" cy="${(y+2).toFixed(1)}" r="5" fill="var(--berry)"/><circle cx="${x.toFixed(1)}" cy="${(y-5).toFixed(1)}" r="4" fill="var(--gold)"/>`;}
+  const bow=themeId==='valentines'
+    ?`<g transform="translate(100,18) scale(.55)"><path d="M0 0C-26-38-64-32-54-8c7 16 34 14 54 8zM0 0C26-38 64-32 54-8c-7 16-34 14-54 8z" fill="var(--berry)"/><circle r="9" fill="var(--gold)"/></g>`
+    :`<g transform="translate(100,178)"><path d="M-4 4L-18 22l9-3 4 6zM4 4l14 18-9-3-4 6z" fill="var(--berry)"/><path d="M0 0C-26-30-60-24-50-4c7 12 30 10 50 4zM0 0C26-30 60-24 50-4c-7 12-30 10-50 4z" fill="var(--berry)"/><circle r="8" fill="var(--berry)" stroke="#000" stroke-opacity=".2" stroke-width="2"/></g>`;
+  return `<svg class="wreath-svg" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="60" fill="var(--panel)"/>${s}${bow}</svg>`;
+}
+function mysteryArt(themeId){
+  if(themeId==='valentines')return `<svg class="mystery-art" viewBox="0 0 240 140" aria-hidden="true"><path transform="translate(120,72)" d="M0 62C-58 24-74 -4-74-26a37 37 0 0 1 74-12 37 37 0 0 1 74 12c0 22-16 50-74 88z" fill="var(--berry)"/><path transform="translate(120,74) scale(.8)" d="M0 62C-58 24-74 -4-74-26a37 37 0 0 1 74-12 37 37 0 0 1 74 12c0 22-16 50-74 88z" fill="var(--paper)"/>${[[92,52],[148,52],[106,80],[134,80],[120,104]].map(([x,y],i)=>i===2?`<circle cx="${x}" cy="${y}" r="13" fill="var(--gold)"/><text x="${x}" y="${y+7}" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" font-family="Poppins,system-ui,sans-serif">?</text>`:`<circle cx="${x}" cy="${y}" r="13" fill="#6B3E26"/><path d="M${x-6} ${y-3}c3-4 9-4 12 0" stroke="#C99467" stroke-width="2" fill="none"/>`).join('')}</svg>`;
+  if(themeId==='stpatricks')return `<svg class="mystery-art" viewBox="0 0 240 140" aria-hidden="true"><ellipse cx="112" cy="116" rx="84" ry="14" fill="var(--berry)"/><path d="M62 112V30c0-8 100-8 100 0v82z" fill="var(--berry)"/><rect x="62" y="80" width="100" height="16" fill="var(--pine)"/><rect x="98" y="74" width="28" height="28" rx="3" fill="none" stroke="var(--gold)" stroke-width="5"/><text x="112" y="62" text-anchor="middle" font-size="36" font-weight="800" fill="var(--gold)" font-family="Poppins,system-ui,sans-serif">?</text><g fill="#E9BC4F" stroke="#9A7417" stroke-width="2"><ellipse cx="196" cy="122" rx="14" ry="6"/><ellipse cx="200" cy="114" rx="14" ry="6"/><ellipse cx="194" cy="106" rx="14" ry="6"/></g><g fill="#8CCB8F"><circle cx="40" cy="104" r="8"/><circle cx="31" cy="116" r="8"/><circle cx="49" cy="116" r="8"/></g></svg>`;
+  const orn=[[104,52,'var(--berry)'],[132,44,'var(--gold)'],[120,72,'var(--berry)'],[94,86,'var(--gold)'],[146,84,'var(--berry)']].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="5" fill="${c}"/>`).join('');
+  return `<svg class="mystery-art" viewBox="0 0 240 140" aria-hidden="true"><polygon points="120,14 158,58 144,58 172,96 68,96 96,58 82,58" fill="var(--pine)"/>${orn}<path transform="translate(120,14)" d="M0-11L3-3.5 11-3.4 4.6 1.6 7 9.6 0 4.8-7 9.6-4.6 1.6-11-3.4-3-3.5z" fill="var(--gold)"/><rect x="113" y="96" width="14" height="12" fill="#7A5236"/><rect x="40" y="104" width="44" height="30" rx="3" fill="var(--berry)"/><path d="M62 104v30M40 118h44" stroke="var(--gold)" stroke-width="4"/><rect x="152" y="108" width="44" height="26" rx="3" fill="var(--gold)"/><path d="M174 108v26M152 120h44" stroke="var(--berry)" stroke-width="4"/><rect x="94" y="104" width="52" height="32" rx="4" fill="var(--paper)" stroke="var(--berry)" stroke-width="3"/><text x="120" y="129" text-anchor="middle" font-size="24" font-weight="800" fill="var(--berry)" font-family="Poppins,system-ui,sans-serif">?</text><path d="M20 136h200" stroke="var(--line)" stroke-width="2"/></svg>`;
+}
+function steamSVG(){
+  return `<svg class="steam-svg" viewBox="0 0 200 80" aria-hidden="true"><g fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" opacity=".55"><path d="M70 50c-8-10 8-16 0-26s6-14 0-22"/><path d="M100 46c-8-10 8-16 0-26s6-14 0-18"/><path d="M130 50c-8-10 8-16 0-26s6-14 0-22"/></g><g fill="#fff" stroke="#E0D3C8" stroke-width="2"><rect x="62" y="62" width="20" height="16" rx="5" transform="rotate(-12 72 70)"/><rect x="92" y="60" width="20" height="16" rx="5" transform="rotate(8 102 68)"/><rect x="120" y="63" width="20" height="16" rx="5" transform="rotate(-4 130 71)"/></g></svg>`;
+}
+const DOOR_SKINS={
+  christmas:{
+    1:{skin:'present'},2:{skin:'wreath'},
+    3:{skin:'tags',scene:{particles:'snow',ground:'snow',items:[['gift',62,54,'a',-6],['tag',132,42,'c',10,24],['star',190,40,'c',0,14],['tag',246,42,'b',-8,30],['gift',306,62,'b',4]]}},
+    4:{skin:'baubles'},5:{skin:'tree'},
+    6:{skin:'card',scene:{particles:'snow',ground:'snow',items:[['gift',56,50,'a',-4],['gift',104,36,'b',8],['elf',180,82,'b',0],['gift',258,58,'c',0],['gift',310,40,'a',-8]]}},
+    7:{skin:'mobile',shapes:'christmas'},
+    8:{skin:'card',scene:{particles:'snow',items:[['snowflake',40,18,'b',0,40],['snowflake',92,26,'a',10,36],['snowflake',156,36,'b',0,30],['snowflake',232,48,'a',8,24],['snowflake',314,62,'b',0,18]]}},
+    9:{skin:'cookie'},
+    10:{skin:'card',scene:{particles:'snow',string:true,items:[['stocking',60,46,'a',-6,14],['stocking',135,46,'b',5,18],['stocking',210,46,'a',-4,19],['stocking',286,46,'b',6,15]]}},
+    11:{skin:'mug'},
+    12:{skin:'card',scene:{particles:'snow',ground:'snow',string:true,items:[['tag',62,44,'a',-12,12],['tag',138,40,'b',9,16],['tag',214,44,'c',-6,16],['gift',300,58,'a',0]]}},
+    13:{skin:'card',scene:{particles:'snow',ground:'slope',items:[['candycane',56,40,'a',0,5],['sled',130,46,'b',10,20],['candycane',196,40,'a',0,31],['candycane',314,40,'a',0,53]]}},
+    14:{skin:'card',scene:{particles:'snow',ground:'snow',items:[['snowman',80,84,'b',0],['ball',176,7],['ball',214,11],['ball',262,16],['ball',326,23]]}},
+    15:{skin:'card',scene:{particles:'snow',ground:'snow',items:[['sign',70,78,'a',0],['house',168,66,'b',0],['gift',240,46,'c',0],['tree',306,74,'b',0]]}}
+  },
+  valentines:{
+    1:{skin:'present'},
+    2:{skin:'card',scene:{particles:'hearts',items:[['envelope',66,50,'a',-10,28],['heart',134,26,'b',0,18],['envelope',196,58,'b',8,24],['heart',256,22,'a',0,52],['envelope',312,44,'a',-6,36]]}},
+    3:{skin:'tags',scene:{particles:'hearts',items:[['candyheart',74,52,'a',-12],['candyheart',146,44,'b',10],['candyheart',218,56,'a',-4],['candyheart',292,46,'b',12]]}},
+    4:{skin:'wreath'},5:{skin:'tree'},
+    6:{skin:'card',scene:{particles:'hearts',items:[['arrowheart',90,68,'a',0,16],['heart',190,28,'b',0,44],['heart',242,34,'a',0,30],['heart',304,42,'b',0,14]]}},
+    7:{skin:'cookie'},
+    8:{skin:'card',scene:{particles:'hearts',ground:'shelf',items:[['cupcake',66,54,'a',0],['chocbox',146,58,'b',0],['tag',222,40,'c',10,24],['cupcake',298,48,'b',0]]}},
+    9:{skin:'card',scene:{particles:'hearts',items:[['balloon',66,60,'a',-8,10],['balloon',122,52,'b',6,22],['bear',210,66,'a',0],['balloon',292,58,'b',-4,12]]}}
+  },
+  stpatricks:{
+    1:{skin:'wreath'},2:{skin:'present'},
+    3:{skin:'tags',scene:{particles:'sparkle',ground:'grass',items:[['fourleaf',76,52,'b',-8],['shamrock',156,62,'a',0],['coins',246,52,'c',0],['shamrock',314,38,'b',10]]}},
+    4:{skin:'card',scene:{particles:'sparkle',ground:'grass',items:[['rainbow',150,130,'a',0,-14],['potgold',296,60,'c',0]]}},
+    5:{skin:'tree'},6:{skin:'baubles'},
+    7:{skin:'card',scene:{particles:'sparkle',ground:'grass',items:[['coins',72,34,'c'],['coins',140,46,'c'],['coins',222,60,'c'],['coins',312,76,'c']]}},
+    8:{skin:'card',scene:{particles:'sparkle',ground:'grass',items:[['map',110,84,'c',-6,6],['potgold',232,58,'c',0],['shamrock',306,44,'a',8]]}}
+  },
+  easter:{
+    1:{skin:'card',scene:{particles:'petals',ground:'grass',items:[['egg',58,44,'a',-10],['egg',118,36,'b',8],['egg',186,50,'c',-4],['egg',252,38,'a',10],['egg',310,46,'b',-6]]}},
+    2:{skin:'card',scene:{particles:'petals',ground:'grass',hops:true,items:[['egg',56,26,'b',0],['egg',150,24,'c',0],['bunny',296,66,'a',0]]}},
+    3:{skin:'mobile',shapes:'easter',scene:{particles:'petals',ground:'grass',items:[['egg',110,30,'a',-8],['basket',180,68,'b',0],['egg',252,28,'c',8]]}},
+    4:{skin:'tags',scene:{particles:'petals',ground:'grass',items:[['chick',76,56,'c',0],['egg',156,40,'a',-8],['chick',236,50,'c',0],['egg',308,36,'b',8]]}},
+    5:{skin:'card',scene:{particles:'petals',ground:'grass',items:[['lily',48,54,'a'],['lily',104,44,'b'],['butterfly',170,34,'c',10,16],['lily',236,58,'a'],['lily',302,46,'b']]}},
+    6:{skin:'card',scene:{particles:'petals',ground:'grass',items:[['butterfly',66,46,'a',-10,18],['butterfly',168,60,'b',6,6],['butterfly',266,42,'c',-6,30],['lily',328,44,'a']]}}
+  }
+};
+function applySkin(holder,game){
+  const sk=game.skin,t=game.theme;if(!sk)return null;
+  holder.classList.add('skin','skin-'+sk.skin,'theme-'+t.id);
+  if(sk.scene)holder.prepend(h('div',{class:'scene-wrap',html:sceneSVG(sk.scene)}));
+  const deco=()=>{
+    const each=(sel,fn)=>holder.querySelectorAll(sel).forEach(el=>{if(el.dataset.sk)return;el.dataset.sk='1';fn(el);});
+    if(sk.skin==='present')each('.magic',m=>m.insertAdjacentHTML('afterbegin',bowSVG(t.id)));
+    if(sk.skin==='wreath')each('.target',m=>m.insertAdjacentHTML('afterbegin',wreathSVG(t.id)));
+    if(sk.skin==='tree')each('.cluebox',m=>m.insertAdjacentHTML('beforebegin',mysteryArt(t.id)));
+    if(sk.skin==='cookie')each('.diamond svg',m=>m.insertAdjacentHTML('beforeend','<polygon class="icing" points="150,30 270,150 150,270 30,150"/>'));
+    if(sk.skin==='mug')each('.crunch',m=>m.insertAdjacentHTML('afterbegin',steamSVG()));
+  };
+  deco();const ob=new MutationObserver(deco);ob.observe(holder,{childList:true,subtree:true});return ob;
 }
 
 // ---------- hub ----------
@@ -2098,7 +2331,10 @@ function mountTeacher(root){
       trkReport({...base,...rec},extra).then(()=>{if(lbPosted&&mine.load)mine.load(true);});
     };
     const pending=f=>{pendingFn=f;pendCtx=base;pendDoor=door?{theme:game.theme.id,n:door.n,lv:lv+1}:null;};
+    setShapeSkin(door&&game.skin&&game.skin.shapes?SHAPE_SETS[game.skin.shapes]:null);
+    VOC=VOCABS[door?game.theme.id:'christmas']||VOCABS.christmas;
     handle=game.mount(holder,mulberry32(seed),lv,{mode:rmode,dateKey,report,pending,noLeaderboard})||{};
+    if(door){const ob=applySkin(holder,game);if(ob){const prev=handle.cleanup;handle.cleanup=()=>{ob.disconnect();if(prev)prev();};}}
     if(TRK.on&&TRK.student&&lbOn)lbHandle=mountLeaderboard($('lb'),base)||{};
   }
   function route(){
