@@ -9,24 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F6EDE7; --grid:#EEE2D8; --ink:#4A2A10; --muted:#7A5A43;
-  --panel:#FFFBF7; --line:#DFCDBD; --olive:#5E6B1E;
-  --tile:#F4DDB0; --tile-edge:#D2B07C; --made:#D3DFB4; --made-edge:#9DB074; --tile-ink:#4A2A10;
-  --pick:#6E7D22; --ok:#5E6B1E; --warn:#A6372A;
-  --s0:#D6A355; --s1:#C27A5B; --s2:#8FA27A; --s3:#A78BB4;
+  --paper:#F7F1EA; --grid:#EEE6DD; --ink:#3D3648; --muted:#766C80;
+  --panel:#FFFCF8; --line:#DDD3DB; --olive:#6E7C58; --hfill:#B4C29C; --hstroke:#6E7C58;
+  --tile:#E7DDF0; --tile-edge:#C3B2D6; --made:#DCE6CF; --made-edge:#A9BC94; --tile-ink:#3D3648;
+  --pick:#5A7FA6; --ok:#5F7D4F; --warn:#A8505E;
+  --s0:#D7B66A; --s1:#C98C95; --s2:#93A87F; --s3:#A792C0;
   --berry:#A23E3E; --pine:#4F6B3D; --gold:#C99A3E;
   color-scheme:light; box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-    --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
+    --paper:#221E28; --grid:#2A2631; --ink:#EEE7F3; --muted:#B6ACC0; --hfill:#C9D5B3; --hstroke:#5C6948;
+    --panel:#2C2834; --line:#463F51; --olive:#BCCAA0; --pick:#9DBADB; --ok:#A9C79A; --warn:#E89CA8; color-scheme:dark; --s0:#E2C680; --s1:#DFA5AD; --s2:#B0C59C; --s3:#C2AEDC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#271E18; --grid:#30251E; --ink:#F3E6D8; --muted:#C2AA94;
-  --panel:#33281F; --line:#4E3E31; --olive:#BCCB6E; --pick:#BCCB6E; --ok:#BCCB6E; --warn:#F08A7A; color-scheme:dark; --s0:#E2B76E; --s1:#D9967A; --s2:#A9BC93; --s3:#BFA6CC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
+  --paper:#221E28; --grid:#2A2631; --ink:#EEE7F3; --muted:#B6ACC0; --hfill:#C9D5B3; --hstroke:#5C6948;
+  --panel:#2C2834; --line:#463F51; --olive:#BCCAA0; --pick:#9DBADB; --ok:#A9C79A; --warn:#E89CA8; color-scheme:dark; --s0:#E2C680; --s1:#DFA5AD; --s2:#B0C59C; --s3:#C2AEDC; --berry:#E58A85; --pine:#A3C08A; --gold:#E2B76E;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -431,6 +431,10 @@ textarea.field{resize:vertical;line-height:1.5}
 #toast{background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:420px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 #toast.warn{background:var(--warn);color:#fff}
 
+/* outlined sage headings, like the banner lettering */
+h1,.lb h2,.picker h2,.panel h2{color:var(--hfill);-webkit-text-stroke:var(--hsw,1.7px) var(--hstroke);paint-order:stroke fill;text-shadow:0 2px 0 color-mix(in srgb,var(--hstroke) 25%,transparent)}
+.lb h2,.picker h2,.panel h2{--hsw:1.2px}
+h1.xmas-title{-webkit-text-stroke:0;text-shadow:none}
 @media (prefers-reduced-motion: reduce){.target.hit{animation:none}.tile{transition:none}.dot.cur{transform:none}}
 </style>
 </head>
