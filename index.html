@@ -6,7 +6,7 @@
 <title>Math Warm-Ups</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Lora:ital,wght@0,600;1,500;1,600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F7F1EA; --grid:#EEE6DD; --ink:#3D3648; --muted:#766C80;
@@ -435,6 +435,39 @@ textarea.field{resize:vertical;line-height:1.5}
 h1,.lb h2,.picker h2,.panel h2{color:var(--hfill);-webkit-text-stroke:var(--hsw,2.8px) var(--hstroke);paint-order:stroke fill;text-shadow:0 2px 0 color-mix(in srgb,var(--hstroke) 25%,transparent)}
 .lb h2,.picker h2,.panel h2{--hsw:2px}
 h1.xmas-title{-webkit-text-stroke:0;text-shadow:none}
+/* ===== sticky-note notebook look ===== */
+:root{--ol:#5B5168;--sh:#CFC2DD;--gl:rgba(118,142,178,.16);--gl2:rgba(118,142,178,.07)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ol:#8D82A0;--sh:#15121A;--gl:rgba(170,180,210,.09);--gl2:rgba(170,180,210,.04)}}
+:root[data-theme="dark"]{--ol:#8D82A0;--sh:#15121A;--gl:rgba(170,180,210,.09);--gl2:rgba(170,180,210,.04)}
+body{background-image:linear-gradient(var(--gl) 1px,transparent 1px),linear-gradient(90deg,var(--gl) 1px,transparent 1px),linear-gradient(var(--gl2) 1px,transparent 1px),linear-gradient(90deg,var(--gl2) 1px,transparent 1px);background-size:112px 112px,112px 112px,28px 28px,28px 28px}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ok)}
+.date{font-family:"Lora",Georgia,serif;font-style:italic;font-weight:500;font-size:17px}
+.prompt{font-family:"Lora",Georgia,serif;font-style:italic;font-weight:500;font-size:18px;color:var(--ink);opacity:.86}
+/* game tiles as taped sticky notes */
+.tabs{gap:16px 12px;margin-top:22px;padding-top:6px}
+.tab{position:relative;border-color:var(--ol);box-shadow:4px 4px 0 color-mix(in srgb,var(--bd) 80%,var(--ol) 20%)}
+.tab::before{content:"";position:absolute;top:-8px;left:50%;width:44px;height:14px;margin-left:-22px;background:repeating-linear-gradient(90deg,var(--tape,rgba(201,140,149,.75)) 0 6px,color-mix(in srgb,var(--tape,rgba(201,140,149,.75)) 55%,#fff) 6px 12px);opacity:.9}
+.tab:nth-child(odd){transform:rotate(-1.4deg)}
+.tab:nth-child(even){transform:rotate(1.1deg)}
+.tab:hover{transform:rotate(0) translateY(-2px)}
+.tab[aria-current="page"]{transform:rotate(0) translateY(-3px);border-color:var(--ol);box-shadow:6px 6px 0 color-mix(in srgb,var(--fg) 45%,transparent)}
+.tab.g1{--tape:rgba(215,182,106,.8)}.tab.g2{--tape:rgba(201,140,149,.75)}.tab.g3{--tape:rgba(167,146,192,.8)}.tab.g4{--tape:rgba(147,168,127,.8)}
+.tab.g5{--tape:rgba(110,165,205,.7)}.tab.g6{--tape:rgba(215,182,106,.8)}.tab.g7{--tape:rgba(147,168,127,.8)}.tab.g8{--tape:rgba(167,146,192,.8)}
+.tab.xmas{transform:rotate(-.6deg)}
+/* paper cards with tape */
+.geo-card,.cluebox,.work,.panel,.picker,.lb{position:relative;background:var(--panel);border:2px solid var(--ol);border-radius:16px;box-shadow:6px 6px 0 var(--sh)}
+.geo-card::before,.cluebox::before,.work::before,.panel::before,.picker::before,.lb::before{content:"";position:absolute;top:-11px;left:50%;width:96px;height:22px;margin-left:-48px;transform:rotate(-2deg);background:repeating-linear-gradient(90deg,rgba(147,168,127,.75) 0 8px,rgba(198,212,180,.75) 8px 16px)}
+.lb::before,.work::before{background:repeating-linear-gradient(90deg,rgba(167,146,192,.75) 0 8px,rgba(206,192,224,.75) 8px 16px);transform:rotate(2deg)}
+.picker::before{background:repeating-linear-gradient(90deg,rgba(201,140,149,.75) 0 8px,rgba(232,196,201,.75) 8px 16px)}
+.geo-card{margin-top:22px}
+.cluebox,.work{margin-top:24px}
+/* number tiles and buttons */
+.tile{border:2px solid var(--ol)}
+.btn{border:2px solid var(--ol);border-radius:999px;padding:10px 20px;box-shadow:0 3px 0 var(--sh)}
+.btn.primary{border-color:var(--ink);box-shadow:0 4px 0 color-mix(in srgb,var(--ink) 45%,transparent)}
+.seg{border-color:var(--ol);box-shadow:3px 3px 0 var(--sh)}
+.ans{border-color:var(--ol)}
+.op{border-color:var(--ol);box-shadow:3px 3px 0 var(--sh)}
 @media (prefers-reduced-motion: reduce){.target.hit{animation:none}.tile{transition:none}.dot.cur{transform:none}}
 </style>
 </head>
