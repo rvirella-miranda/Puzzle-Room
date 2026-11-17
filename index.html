@@ -2292,14 +2292,14 @@ function chaseExpr(rng,m,x,avoid){for(let t=0;t<200;t++){const p=rint(rng,2,7);i
 function chaseProblem(rng,level,chs){
   const conv=level===2&&rng()<0.6;
   let keys=Object.keys(CHASE).filter(k=>chs.includes(CHASE[k].ch)&&(!conv||CHASE[k].conv));if(!keys.length)keys=['vert'];
-  const key=pick(rng,keys),R=CHASE[key],pr=pick(rng,R.pairs),theta=rint(rng,38,76);
+  const key=pick(rng,keys),REL=CHASE[key],pr=pick(rng,REL.pairs),theta=rint(rng,38,76);
   const meas=q=>(q==='UL'||q==='LR')?theta:180-theta;
   const m1=meas(pr[1]),m2=meas(pr[3]),x=rint(rng,6,18);
   const e1=chaseExpr(rng,m1,x);const labels={T:{},B:{}};
   labels[pr[0]][pr[1]]=e1.html;
-  labels[pr[2]][pr[3]]=level===0?`${m2}°`:chaseExpr(rng,m2,x,R.eq?e1.p:0).html;
+  labels[pr[2]][pr[3]]=level===0?`${m2}°`:chaseExpr(rng,m2,x,REL.eq?e1.p:0).html;
   const reasons=shuffle(rng,Object.values(CHASE).flatMap(c=>conv?[c.conv,c.name].filter(Boolean):[c.name]));
-  const answer=conv?R.conv:R.name;
+  const answer=conv?REL.conv:REL.name;
   let inp,sel;
   return{view(){
       inp=ansInput('x');sel=h('select',{class:'field geo-sel','aria-label':'Reason'},h('option',{value:''},'Choose the reason…'),...reasons.map(r=>h('option',{value:r},r)));
@@ -2311,10 +2311,10 @@ function chaseProblem(rng,level,chs){
       const xr=rEq(g,R(x)),rr=sel.value===answer;
       if(xr&&rr){sel.disabled=true;return{ok:true,msg:'Correct!'};}
       if(xr)return{ok:false,msg:'Your x is right! Take another look at the reason.'};
-      if(rr)return{ok:false,msg:R.eq?'Right reason! These angles are congruent, so set the expressions equal.':'Right reason! These angles are supplementary, so they add to 180.'};
+      if(rr)return{ok:false,msg:REL.eq?'Right reason! These angles are congruent, so set the expressions equal.':'Right reason! These angles are supplementary, so they add to 180.'};
       return{ok:false,msg:'Not quite. Decide first whether the angles are congruent or supplementary.'};},
     reveal(){inp.value=String(x);sel.value=answer;sel.disabled=true;},
-    after(){return geoNote(`<strong>x = ${x}.</strong> The angles are ${R.eq?'congruent':'supplementary'} by the ${answer}${R.eq?'':` (they add to 180°)`}.`);}};
+    after(){return geoNote(`<strong>x = ${x}.</strong> The angles are ${REL.eq?'congruent':'supplementary'} by the ${answer}${REL.eq?'':` (they add to 180°)`}.`);}};
 }
 // ---- Converse, Inverse, Contrapositive ----
 function converseProblem(rng,level,chs){
