@@ -211,6 +211,7 @@ sup{font-size:.6em;line-height:0}
 .lb h2{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-weight:400;color:var(--olive);font-size:24px;letter-spacing:.01em;margin:0;padding-top:.1em}
 .lb-sub{margin:2px 0 0}
 .lb-tabs{display:flex;width:100%;margin-bottom:12px}
+.wkline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:12px}
 .lb-tabs button{flex:1}
 .lb-rows{list-style:none;margin:10px 0 0;padding:0}
 .lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font-size:16px}
@@ -2554,6 +2555,12 @@ function mountTeacher(root){
     let roster=[];try{roster=await trkLoadRoster();}catch(e){}
     let rows=[];
     const date=h('input',{class:'field',type:'date','aria-label':'Date'});date.value=dayKey(new Date());
+    const wkStatus=h('span',{class:'muted small'},'');
+    const syncWeek=async quiet=>{wkStatus.textContent='Updating weekly leaderboards…';
+      try{const r=await rebuildWeek();if(!r){wkStatus.textContent='';return;}
+        wkStatus.textContent=`Weekly leaderboards are up to date: ${r.puzzles} finished puzzle${r.puzzles===1?'':'s'} from ${r.students} student${r.students===1?'':'s'} this week.`;}
+      catch(e){wkStatus.textContent=denied(e)?'Couldn’t update the weekly leaderboards. Check that the weekly section is in your database rules.':(quiet?'':'Couldn’t update the weekly leaderboards. Check your connection.');}};
+    const wkLine=h('div',{class:'wkline'},h('button',{class:'btn',type:'button',onclick:()=>syncWeek(false)},'🔄 Update weekly leaderboards'),wkStatus);
     const cls=h('select',{class:'field','aria-label':'Class'},h('option',{value:''},'All classes'),...roster.map(r=>h('option',{value:r.period},r.period)));
     const gm=h('select',{class:'field','aria-label':'Game'},h('option',{value:''},'All games'),...GAMES.map(g=>h('option',{value:g.id},g.name)),...Object.values(THEMES).flatMap(t=>t.doors.map(d=>h('option',{value:`${t.id}-${d.n}`},`${t.short} ${d.n}: ${d.title}`))));
     const st=h('p',{class:'status'});const out=h('div',{});
@@ -2598,10 +2605,38 @@ function mountTeacher(root){
         h('button',{class:'btn',type:'button',onclick:()=>editAdvent()},'🎄 Holiday calendar'),
         h('button',{class:'btn',type:'button',onclick:()=>editGeo()},'📐 Geometry settings'),
         h('button',{class:'btn',type:'button',onclick:()=>{teachMem=null;store.set('wu-teacher',null);signIn();}},'Sign out')),
-      h('p',{class:'muted small'},'Today’s records refresh on their own every 20 seconds.'),st,out));
+      h('p',{class:'muted small'},'Today’s records refresh on their own every 20 seconds.'),wkLine,st,out));
     load();
+    syncWeek(true);
     clearInterval(timer);
     timer=setInterval(()=>{if(document.hidden||!out.isConnected)return;if(date.value===dayKey(new Date()))load(true);},20000);
+  }
+  async function rebuildWeek(){
+    const tok=await teacherToken();if(!tok)return null;
+    const wk=weekKey(new Date()),k=wk.split('-').map(Number),start=new Date(k[0],k[1]-1,k[2]),now=new Date();
+    const best={},done={};
+    for(let d=0;d<7;d++){
+      const day=new Date(start);day.setDate(start.getDate()+d);if(day>now)break;
+      const data=(await trkFetch(`/submissions/${dayKey(day)}.json?auth=${encodeURIComponent(tok)}`))||{};
+      const recs=Object.values(data).filter(r=>r&&r.name&&r.period&&r.game).sort((a,b)=>(a.ts||0)-(b.ts||0));
+      const firstSeen=new Set();
+      for(const r of recs){
+        const fin=r.result==='solved'||r.result==='set';
+        const shown=typeof r.shown==='number'?r.shown:(+(/(\d+) answers? shown/.exec(r.detail||'')||[0,0])[1]);
+        const clean=fin&&!shown&&r.lb!==false&&!/viewed a solution/.test(r.detail||'');
+        const sid=studentKey(r),cor=typeof r.correct==='number'?r.correct:1,tot=typeof r.total==='number'&&r.total>0?r.total:1;
+        const sv=Math.max(1,Math.round(r.lbSecs||r.secs||1));
+        if(clean&&tot<=50)(done[sid]=done[sid]||{})['s'+(r.ts||Date.now())]={n:r.name,p:r.period,c:Math.min(cor,tot),t:tot,s:sv,g:r.game};
+        const fk=sid+'|'+r.game+'|'+r.level;
+        if((r.mode==='today'||r.mode==='advent')&&(fin||r.result==='revealed')&&!firstSeen.has(fk)){
+          firstSeen.add(fk);
+          if(clean){const pk=`${r.game}-L${r.level}`,acc=Math.round(1000*Math.min(cor,tot)/tot),cur=(best[pk]=best[pk]||{})[sid];
+            if(!cur||acc>cur.acc||(acc===cur.acc&&sv<cur.secs))best[pk][sid]={name:r.name,period:r.period,secs:sv,correct:Math.min(cor,tot),total:tot,acc};}
+        }
+      }
+    }
+    await trkFetch(`/weekly/${wk}.json?auth=${encodeURIComponent(tok)}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({best,done})});
+    return{students:Object.keys(done).length,puzzles:Object.values(done).reduce((s,o)=>s+Object.keys(o).length,0)};
   }
   async function editAdvent(){
     const st=h('p',{class:'status'}),list=h('div',{class:'adv-rows'}),statusLine=h('p',{class:'tsum'});
