@@ -210,6 +210,8 @@ sup{font-size:.6em;line-height:0}
 .lb-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
 .lb h2{font-family:"Luckiest Guy","Poppins",system-ui,sans-serif;font-weight:400;color:var(--olive);font-size:24px;letter-spacing:.01em;margin:0;padding-top:.1em}
 .lb-sub{margin:2px 0 0}
+.lb-tabs{display:flex;width:100%;margin-bottom:12px}
+.lb-tabs button{flex:1}
 .lb-rows{list-style:none;margin:10px 0 0;padding:0}
 .lb-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font-size:16px}
 .lb-row:nth-child(odd){background:var(--paper)}
@@ -850,7 +852,7 @@ const fmtT=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 
 // ---------- generic round engine ----------
 function mountRound(root,problems,intro,ctx){
-  let i=0;const res=[];let t0=Date.now(),finished=false;
+  let i=0;const res=[];const shownSet=new Set();let t0=Date.now(),finished=false;
   if(ctx&&ctx.pending)ctx.pending(()=>{const answered=res.filter(Boolean).length;if(finished||!answered)return null;const ok=res.filter(x=>x==='ok').length;return{result:'partial',score:`${ok}/${problems.length} (unfinished)`,detail:`Stopped after ${answered} of ${problems.length}`,secs:Math.round((Date.now()-t0)/1000)};});
   const prompt=h('p',{class:'prompt',html:intro});
   const dots=h('div',{class:'dots'});
@@ -860,7 +862,7 @@ function mountRound(root,problems,intro,ctx){
   const checkB=h('button',{class:'btn primary',type:'button',onclick:()=>check()},'Check');
   const showB=h('button',{class:'btn',type:'button',onclick:()=>reveal()},'Show answer');
   const nextB=h('button',{class:'btn primary',type:'button',onclick:()=>next()},'Next');
-  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;t0=Date.now();finished=false;load();}},'Do this set again');
+  const againB=h('button',{class:'btn primary',type:'button',onclick:()=>{i=0;res.length=0;shownSet.clear();t0=Date.now();finished=false;load();}},'Do this set again');
   const controls=h('div',{class:'controls'},checkB,showB,nextB,againB);
   root.append(prompt,dots,stage,status,extra,controls);
   stage.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});
@@ -896,13 +898,13 @@ function mountRound(root,problems,intro,ctx){
     else if(r.final){res[i]='miss';finish('miss',r.msg||'Not quite.');}
     else setS(r.msg||'Not quite. Check your work and try again.','warn');
   }
-  function reveal(){problems[i].reveal();res[i]='miss';finish('miss','Here’s the answer. Compare it with your work.');}
+  function reveal(){problems[i].reveal();res[i]='miss';shownSet.add(i);finish('miss','Here’s the answer. Compare it with your work.');}
   function next(){
     i++;
     if(i<problems.length){load();return;}
     const ok=res.filter(x=>x==='ok').length;
-    const shownN=res.filter(x=>x==='miss').length;
-    finished=true;if(ctx&&ctx.report)ctx.report({result:'set',lb:true,correct:ok,total:problems.length,score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
+    const shownN=shownSet.size;
+    finished=true;if(ctx&&ctx.report)ctx.report({result:'set',lb:true,shown:shownN,correct:ok,total:problems.length,score:`${ok}/${problems.length}`,detail:shownN?`${shownN} answer${shownN===1?'':'s'} shown`:'',secs:Math.round((Date.now()-t0)/1000)});
     stage.replaceChildren(h('div',{class:'summary'},h('p',{class:'big'},`${ok} of ${problems.length}`),h('p',{},'solved without showing the answer')));
     setS('','');extra.replaceChildren();dots.replaceChildren(...problems.map((_,k)=>h('span',{class:'dot '+(res[k]||'')})));
     checkB.hidden=showB.hidden=nextB.hidden=true;againB.hidden=false;
@@ -2455,35 +2457,54 @@ function renderPicker(root,onDone){
 }
 
 // ---------- leaderboard ----------
+function weekKey(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return dayKey(x);}
+function weekLabel(){const k=weekKey(new Date()).split('-').map(Number);return new Date(k[0],k[1]-1,k[2]).toLocaleDateString(undefined,{month:'short',day:'numeric'});}
 function mountLeaderboard(el,base){
-  const day=dayKey(new Date()),pk=`${base.game}-L${base.level}`;
-  let scope='class',rows=[],loaded=false;
-  const list=h('div',{});const note=h('p',{class:'muted small lb-note'});
+  const day=dayKey(new Date()),wk=weekKey(new Date()),pk=`${base.game}-L${base.level}`;
+  let scope='class',tab=base.mode==='practice'?'most':'today';const data={today:null,best:null,most:null};
+  const list=h('div',{}),note=h('p',{class:'muted small lb-note'}),title=h('h2',{}),sub=h('p',{class:'muted small lb-sub'});
   const seg=h('div',{class:'seg small',role:'group','aria-label':'Leaderboard scope'});
   [['class','My class'],['all','All classes']].forEach(([k,lab])=>seg.append(h('button',{type:'button','data-s':k,onclick:()=>{scope=k;draw();}},lab)));
-  el.replaceChildren(h('div',{class:'lb'},h('div',{class:'lb-head'},h('h2',{},'Today’s Fastest'),seg),
-    h('p',{class:'muted small lb-sub'},`${base.gameName}, Level ${base.level}`),list,note));
-  const sorted=()=>{const me=TRK.student;return rows.filter(x=>scope==='all'||x.period===me.period)
-    .sort((a,b)=>((b.correct||0)/(b.total||1))-((a.correct||0)/(a.total||1))||a.secs-b.secs);};
+  const tabs=h('div',{class:'seg small lb-tabs',role:'group','aria-label':'Leaderboard view'});
+  [['today','Today'],['best','Week’s Best'],['most','Most Puzzles']].forEach(([k,lab])=>tabs.append(h('button',{type:'button','data-t':k,onclick:()=>{if(tab===k)return;tab=k;draw();load();}},lab)));
+  el.replaceChildren(h('div',{class:'lb'},tabs,h('div',{class:'lb-head'},title,seg),sub,list,note));
+  const acc=x=>(x.correct||0)/(x.total||1);
+  const isMe=x=>TRK.student&&x.name===TRK.student.name&&x.period===TRK.student.period;
+  function sorted(){const me=TRK.student,src=(data[tab]||[]).filter(x=>scope==='all'||x.period===me.period);
+    return tab==='most'?src.sort((a,b)=>b.count-a.count||b.acc-a.acc||a.avg-b.avg):src.sort((a,b)=>acc(b)-acc(a)||a.secs-b.secs);}
   function draw(announce){
     seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===scope)));
-    if(!loaded)return;
-    const me=TRK.student,r=sorted();
-    const myIdx=r.findIndex(x=>x.name===me.name&&x.period===me.period);
-    if(!r.length){list.replaceChildren(h('p',{class:'muted lb-empty'},'No finishers yet. Be the first!'));}
+    tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===tab)));
+    title.textContent={today:'Today’s Fastest',best:'Best This Week',most:'Most Puzzles'}[tab];
+    sub.textContent=tab==='most'?`All games, week of ${weekLabel()}`:`${base.gameName}, Level ${base.level}${tab==='best'?`, week of ${weekLabel()}`:''}`;
+    if(!data[tab]){list.replaceChildren(h('p',{class:'muted lb-empty'},'Loading…'));note.textContent='';return;}
+    const r=sorted(),myIdx=r.findIndex(isMe),medal=['🥇','🥈','🥉'];
+    if(!r.length)list.replaceChildren(h('p',{class:'muted lb-empty'},tab==='most'?'No puzzles finished yet this week. Be the first!':'No finishers yet. Be the first!'));
     else list.replaceChildren(h('ol',{class:'lb-rows'},...r.slice(0,10).map((x,i)=>h('li',{class:'lb-row'+(i===myIdx?' me':'')},
-      h('span',{class:'lb-rank'},['🥇','🥈','🥉'][i]||String(i+1)),
+      h('span',{class:'lb-rank'},medal[i]||String(i+1)),
       h('span',{class:'lb-name'},x.name+(scope==='all'?` (${x.period})`:'')),
-      x.total?h('span',{class:'lb-score'},`${x.correct}/${x.total}`):null,
-      h('span',{class:'lb-time'},fmtT(x.secs))))));
-    note.textContent=myIdx>=10?`You’re #${myIdx+1} with ${fmtT(r[myIdx].secs)}. Only your first finish counts.`:'Only your first finish of today’s puzzle counts.';
-    if(announce&&myIdx>=0)toast(myIdx<3?`${['🥇','🥈','🥉'][myIdx]} You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`:`You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`);
+      tab==='most'?h('span',{class:'lb-score'},`${x.count} done · ${Math.round(x.acc*100)}%`):(x.total?h('span',{class:'lb-score'},`${x.correct}/${x.total}`):null),
+      h('span',{class:'lb-time'},tab==='most'?`${fmtT(x.avg)} avg`:fmtT(x.secs))))));
+    const you=myIdx>=10?`You’re #${myIdx+1}. `:'';
+    note.textContent=you+({today:'Only your first finish of today’s puzzle counts.',
+      best:'Your best first finish of each day’s puzzle this week, with no answers viewed. Ranked by accuracy, then time.',
+      most:'Puzzles finished this week without viewing answers, including Practice. Ranked by number finished, then accuracy, then speed.'})[tab];
+    if(announce&&tab==='today'&&myIdx>=0)toast(myIdx<3?`${medal[myIdx]} You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`:`You’re #${myIdx+1} ${scope==='all'?'overall':'in your class'} today!`);
   }
   async function load(announce){
-    try{const d=await trkFetch(`/leaderboard/${day}/${pk}.json`);rows=Object.values(d||{}).filter(x=>x&&typeof x.secs==='number');loaded=true;draw(announce);}
-    catch(e){if(!loaded)list.replaceChildren(h('p',{class:'muted lb-empty'},'The leaderboard isn’t available right now.'));}
+    const t=tab;
+    try{
+      if(t==='today'){const d=await trkFetch(`/leaderboard/${day}/${pk}.json`);data.today=Object.values(d||{}).filter(x=>x&&typeof x.secs==='number');}
+      else if(t==='best'){const d=await trkFetch(`/weekly/${wk}/best/${pk}.json`);data.best=Object.values(d||{}).filter(x=>x&&typeof x.secs==='number');}
+      else{const d=(await trkFetch(`/weekly/${wk}/done.json`))||{};const agg=[];
+        for(const sid in d){const e=Object.values(d[sid]||{}).filter(x=>x&&typeof x.t==='number');if(!e.length)continue;
+          const c=e.reduce((s,x)=>s+(x.c||0),0),tt=e.reduce((s,x)=>s+(x.t||0),0),sec=e.reduce((s,x)=>s+(x.s||0),0);
+          agg.push({name:e[0].n,period:e[0].p,count:e.length,acc:tt?c/tt:0,avg:Math.round(sec/e.length)});}
+        data.most=agg;}
+      if(tab===t)draw(announce);
+    }catch(e){if(tab===t&&!data[t])list.replaceChildren(h('p',{class:'muted lb-empty'},'The leaderboard isn’t available right now.'));}
   }
-  list.replaceChildren(h('p',{class:'muted lb-empty'},'Loading…'));draw();load();
+  draw();load();
   const timer=setInterval(()=>{if(!document.hidden&&el.isConnected)load();},30000);
   return{load,cleanup:()=>clearInterval(timer)};
 }
@@ -2878,6 +2899,11 @@ function mountTeacher(root){
     const report=rec=>{
       if(door&&(rec.result==='solved'||rec.result==='set'))ADV.markDone(door.n);
       const extra=[];let lbPosted=false;
+      if(TRK.student&&(rec.result==='solved'||rec.result==='set')&&!(rec.shown>0)&&rec.lb!==false){
+        const st=TRK.student,sid=studentKey(st),wk=weekKey(new Date()),cor=rec.total?rec.correct:1,tot=rec.total||1,sv=Math.max(1,rec.lbSecs||rec.secs||1);
+        extra.push({_path:`/weekly/${wk}/done/${sid}/${Date.now().toString(36)}${Math.random().toString(36).slice(2,6)}`,_body:{n:st.name,p:st.period,c:cor,t:tot,s:sv,g:base.game}});
+        if(lbOn&&rec.lb&&!store.get(lbKey))extra.push({_path:`/weekly/${wk}/best/${base.game}-L${base.level}/${sid}`,_body:{name:st.name,period:st.period,secs:sv,correct:cor,total:tot,acc:Math.round(1000*cor/tot)}});
+      }
       if(door&&TRK.student){const pw=progressWrite(game.theme.id,door.n,lv+1,rec);if(pw){extra.push(pw);setLevelLabels(door);}}
       if(lbOn&&rec.lb&&TRK.student&&!store.get(lbKey)){
         const st=TRK.student,sid=studentKey(st);
@@ -2887,14 +2913,14 @@ function mountTeacher(root){
       }
       if(rec.result==='revealed'||rec.lb)noLeaderboard();
       const mine=lbHandle;
-      trkReport({...base,...rec},extra).then(()=>{if(lbPosted&&mine.load)mine.load(true);});
+      trkReport({...base,...rec},extra).then(()=>{if(mine.load)mine.load(lbPosted);});
     };
     const pending=f=>{pendingFn=f;pendCtx=base;pendDoor=door?{theme:game.theme.id,n:door.n,lv:lv+1}:null;};
     setShapeSkin(door&&game.skin&&game.skin.shapes?SHAPE_SETS[game.skin.shapes]:null);
     VOC=VOCABS[door?game.theme.id:'christmas']||VOCABS.christmas;
     handle=game.mount(holder,mulberry32(seed),lv,{mode:rmode,dateKey,report,pending,noLeaderboard})||{};
     if(door){const ob=applySkin(holder,game);if(ob){const prev=handle.cleanup;handle.cleanup=()=>{ob.disconnect();if(prev)prev();};}}
-    if(TRK.on&&TRK.student&&lbOn)lbHandle=mountLeaderboard($('lb'),base)||{};
+    if(TRK.on&&TRK.student)lbHandle=mountLeaderboard($('lb'),base)||{};
   }
   function route(){
     const id=location.hash.slice(1);
