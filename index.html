@@ -1980,149 +1980,181 @@ function applySkin(holder,game){
 }
 
 // ===================== GEOMETRY: QUESTION BANK =====================
-const GEO_CHAPTERS=['Tools of Geometry','Reasoning and Proof','Parallel and Perpendicular Lines','Congruent Triangles','Relationships Within Triangles','Polygons and Quadrilaterals','Similarity','Right Triangles and Trigonometry','Transformations','Area','Surface Area and Volume','Circles'];
+const GEO_CHAPTERS=['Introduction to Geometry','Basic Concepts and Proofs','Congruent Triangles','Lines in the Plane','Parallel Lines and Related Figures','Lines and Planes in Space','Polygons','Similar Polygons','The Pythagorean Theorem','Circles','Area','Surface Area and Volume','Coordinate Geometry Extended','Locus and Constructions','Inequalities','Enrichment Topics'];
 const A='Always',S='Sometimes',N='Never';
 const GEO_ASN=[
- // ch1
- {ch:1,lv:1,a:A,s:'Two points determine exactly one line.',e:'Through any two points there is exactly one line. This is a postulate.'},
+ // Lines & Angles
+ {ch:3,lv:1,a:A,s:'Two points determine exactly one line.',e:'Postulate 5: Two points determine a line (or ray or segment).'},
  {ch:1,lv:1,a:S,s:'Three points are collinear.',e:'Three points can lie on one line, but they don’t have to. Picture the corners of a triangle.'},
- {ch:1,lv:2,a:A,s:'Three points are coplanar.',e:'Any three points lie in at least one plane. If they’re noncollinear, that plane is unique.'},
- {ch:1,lv:2,a:S,s:'Four points are coplanar.',e:'Four corners of a sheet of paper are coplanar, but three corners of a box and one on the opposite face are not.'},
- {ch:1,lv:1,a:N,s:'Two distinct lines intersect in more than one point.',e:'If two distinct lines intersect, they intersect in exactly one point.'},
- {ch:1,lv:2,a:S,s:'Two distinct planes intersect in a line.',e:'Intersecting planes meet in a line, but parallel planes never meet.'},
- {ch:1,lv:1,a:A,s:'The supplement of an acute angle is obtuse.',e:'If x < 90, then 180 − x > 90.'},
- {ch:1,lv:1,a:N,s:'Vertical angles are adjacent angles.',e:'Vertical angles share a vertex but no sides, so they are never adjacent.'},
- {ch:1,lv:1,a:N,s:'The two angles in a linear pair are complementary.',e:'A linear pair is supplementary (sum 180°), not complementary (sum 90°).'},
- {ch:1,lv:1,a:S,s:'Two adjacent angles form a linear pair.',e:'Adjacent angles form a linear pair only when their outer sides are opposite rays.'},
- {ch:1,lv:2,a:A,s:'The complement of an angle is an acute angle.',e:'Only acute angles have complements, and 90 − x is between 0 and 90 when x is.'},
- {ch:1,lv:2,a:S,s:'If two angles are supplementary, then one is acute and the other is obtuse.',e:'Two right angles are supplementary, and neither is acute or obtuse.'},
- {ch:1,lv:2,a:S,s:'An angle is congruent to its supplement.',e:'Only a right angle is congruent to its supplement (90 + 90 = 180).'},
- // ch2
- {ch:2,lv:1,a:S,s:'A conjecture made using inductive reasoning is true.',e:'Patterns can suggest a conjecture, but they don’t prove it. Some conjectures turn out false.'},
- {ch:2,lv:1,a:A,s:'One counterexample is enough to show that a conjecture is false.',e:'A single case where the conjecture fails disproves it.'},
- {ch:2,lv:2,a:S,s:'The converse of a true conditional is true.',e:'“If a figure is a square, then it is a rectangle” is true, but its converse is false. Some converses are true, though.'},
- {ch:2,lv:2,a:A,s:'The contrapositive of a true conditional is true.',e:'A conditional and its contrapositive are logically equivalent, so they always have the same truth value.'},
- {ch:2,lv:3,a:S,s:'The inverse of a true conditional is true.',e:'The inverse has the same truth value as the converse, which may or may not be true.'},
- {ch:2,lv:2,a:A,s:'A good definition can be written as a true biconditional.',e:'A good definition is reversible, so both the conditional and its converse are true.'},
- {ch:2,lv:1,a:A,s:'Vertical angles are congruent.',e:'This is the Vertical Angles Theorem.'},
- {ch:2,lv:1,a:S,s:'Two congruent angles are vertical angles.',e:'Vertical angles are congruent, but congruent angles can be anywhere, like two 40° angles in different triangles.'},
- {ch:2,lv:2,a:A,s:'Two angles that are complementary to the same angle are congruent.',e:'This is the Congruent Complements Theorem.'},
- {ch:2,lv:2,a:A,s:'If two angles are congruent and supplementary, then each is a right angle.',e:'If x + x = 180, then x = 90.'},
- {ch:2,lv:3,a:N,s:'A conditional statement is false when its hypothesis is false.',e:'A conditional is false only when the hypothesis is true and the conclusion is false.'},
- // ch3
- {ch:3,lv:1,a:A,s:'When two parallel lines are cut by a transversal, corresponding angles are congruent.',e:'This is the Corresponding Angles Theorem.'},
- {ch:3,lv:2,a:S,s:'When two parallel lines are cut by a transversal, same-side interior angles are congruent.',e:'Same-side interior angles are supplementary. They’re congruent only when the transversal is perpendicular (90° + 90°).'},
- {ch:3,lv:2,a:S,s:'When two parallel lines are cut by a transversal, alternate interior angles are supplementary.',e:'Alternate interior angles are congruent, so they’re supplementary only when each is 90°.'},
- {ch:3,lv:2,a:S,s:'Two lines that do not intersect are parallel.',e:'Coplanar lines that don’t intersect are parallel, but skew lines don’t intersect and aren’t parallel.'},
- {ch:3,lv:1,a:N,s:'Skew lines are coplanar.',e:'Skew lines are, by definition, noncoplanar.'},
- {ch:3,lv:2,a:A,s:'In a plane, two lines perpendicular to the same line are parallel to each other.',e:'This is a theorem about lines in a plane.'},
- {ch:3,lv:3,a:S,s:'Two lines perpendicular to the same line are parallel to each other.',e:'In space, two lines can both be perpendicular to one line without being parallel (think of the edges at a corner of a box).'},
- {ch:3,lv:1,a:N,s:'A triangle has two obtuse angles.',e:'Two obtuse angles would already add to more than 180°.'},
- {ch:3,lv:1,a:N,s:'A triangle has two right angles.',e:'Two right angles add to 180°, leaving 0° for the third angle.'},
- {ch:3,lv:1,a:A,s:'The acute angles of a right triangle are complementary.',e:'The angles add to 180°, and the right angle uses 90°.'},
- {ch:3,lv:2,a:A,s:'An exterior angle of a triangle is greater than each of its remote interior angles.',e:'The exterior angle equals the sum of the two remote interior angles, and each of them is positive.'},
- {ch:3,lv:2,a:S,s:'An exterior angle of a triangle is obtuse.',e:'An exterior angle is obtuse when the adjacent interior angle is acute, but it can be acute or right too.'},
- {ch:3,lv:1,a:A,s:'Two nonvertical parallel lines have equal slopes.',e:'Nonvertical lines are parallel if and only if their slopes are equal.'},
- {ch:3,lv:2,a:A,s:'Two lines whose slopes have a product of −1 are perpendicular.',e:'Two nonvertical lines are perpendicular if and only if the product of their slopes is −1.'},
- // ch4
- {ch:4,lv:1,a:A,s:'Two triangles with three pairs of congruent sides are congruent.',e:'This is SSS.'},
- {ch:4,lv:1,a:S,s:'Two triangles with three pairs of congruent angles are congruent.',e:'Matching angles only guarantee the same shape, not the same size. AAA is not a congruence shortcut.'},
- {ch:4,lv:3,a:S,s:'Two triangles are congruent if two sides and a nonincluded angle of one are congruent to the corresponding parts of the other.',e:'SSA is not a congruence shortcut. Sometimes two different triangles fit the same SSA information.'},
- {ch:4,lv:2,a:S,s:'Two right triangles with congruent hypotenuses are congruent.',e:'You also need a pair of congruent legs (HL). Hypotenuses alone aren’t enough.'},
- {ch:4,lv:2,a:A,s:'Two right triangles with congruent hypotenuses and one pair of congruent legs are congruent.',e:'This is the Hypotenuse-Leg (HL) Theorem.'},
- {ch:4,lv:1,a:A,s:'The base angles of an isosceles triangle are congruent.',e:'This is the Isosceles Triangle Theorem.'},
- {ch:4,lv:1,a:S,s:'An isosceles triangle is equilateral.',e:'An isosceles triangle needs at least two congruent sides. Only some have all three.'},
- {ch:4,lv:1,a:A,s:'An equilateral triangle is isosceles.',e:'An equilateral triangle has at least two congruent sides.'},
- {ch:4,lv:1,a:N,s:'An equilateral triangle is a right triangle.',e:'Each angle of an equilateral triangle measures 60°.'},
- {ch:4,lv:2,a:A,s:'The bisector of the vertex angle of an isosceles triangle is the perpendicular bisector of the base.',e:'This is a theorem in the isosceles and equilateral triangles lesson.'},
- {ch:4,lv:1,a:A,s:'Corresponding parts of congruent triangles are congruent.',e:'This is CPCTC.'},
- {ch:4,lv:2,a:N,s:'An acute triangle is congruent to an obtuse triangle.',e:'Congruent triangles have congruent angles, so one can’t have an obtuse angle unless the other does.'},
- {ch:4,lv:3,a:A,s:'Two triangles are congruent if two angles and a side of one are congruent to two angles and the corresponding side of the other.',e:'If the side is included, use ASA. If it’s not included, use AAS. Either way, the triangles are congruent.'},
- // ch5
- {ch:5,lv:1,a:A,s:'A midsegment of a triangle is parallel to the third side.',e:'This is part of the Triangle Midsegment Theorem.'},
- {ch:5,lv:1,a:N,s:'A midsegment of a triangle is twice as long as the third side.',e:'A midsegment is half as long as the third side.'},
- {ch:5,lv:1,a:N,s:'A triangle can have side lengths 3, 4, and 8.',e:'3 + 4 = 7, which is less than 8, so the Triangle Inequality Theorem fails.'},
- {ch:5,lv:2,a:A,s:'In a triangle, the longest side is opposite the largest angle.',e:'This is a theorem about inequalities in one triangle.'},
- {ch:5,lv:2,a:A,s:'A point on the perpendicular bisector of a segment is equidistant from the segment’s endpoints.',e:'This is the Perpendicular Bisector Theorem.'},
- {ch:5,lv:2,a:A,s:'The centroid of a triangle lies inside the triangle.',e:'The medians always meet inside the triangle.'},
- {ch:5,lv:2,a:A,s:'The incenter of a triangle lies inside the triangle.',e:'The angle bisectors always meet inside the triangle.'},
- {ch:5,lv:2,a:S,s:'The circumcenter of a triangle lies inside the triangle.',e:'It’s inside for acute triangles, on the hypotenuse for right triangles, and outside for obtuse triangles.'},
- {ch:5,lv:3,a:S,s:'The orthocenter of a triangle lies outside the triangle.',e:'It’s outside only for obtuse triangles. For a right triangle it’s at the right-angle vertex.'},
- {ch:5,lv:2,a:S,s:'A median of a triangle is also an altitude.',e:'In an isosceles triangle, the median to the base is also an altitude, but that isn’t true in general.'},
- {ch:5,lv:3,a:A,s:'The centroid is two-thirds of the way from each vertex to the midpoint of the opposite side.',e:'This is the Concurrency of Medians Theorem.'},
- {ch:5,lv:3,a:S,s:'The circumcenter of a triangle is equidistant from the three sides.',e:'The incenter is equidistant from the sides. The circumcenter is equidistant from the vertices. They’re the same point only in an equilateral triangle.'},
- // ch6
- {ch:6,lv:1,a:A,s:'A square is a rhombus.',e:'A square has four congruent sides.'},
- {ch:6,lv:1,a:S,s:'A rhombus is a square.',e:'A rhombus is a square only if it also has four right angles.'},
- {ch:6,lv:1,a:A,s:'A rectangle is a parallelogram.',e:'Both pairs of opposite sides of a rectangle are parallel.'},
- {ch:6,lv:2,a:N,s:'A trapezoid is a parallelogram.',e:'In your book, a trapezoid has exactly one pair of parallel sides, and a parallelogram has two.'},
- {ch:6,lv:1,a:A,s:'The diagonals of a parallelogram bisect each other.',e:'This is a theorem about parallelograms.'},
- {ch:6,lv:2,a:S,s:'The diagonals of a parallelogram are congruent.',e:'They’re congruent only when the parallelogram is a rectangle.'},
- {ch:6,lv:2,a:A,s:'The diagonals of a rhombus are perpendicular.',e:'This is a theorem about rhombuses.'},
- {ch:6,lv:2,a:S,s:'The diagonals of a rectangle are perpendicular.',e:'Only when the rectangle is a square.'},
- {ch:6,lv:1,a:A,s:'Consecutive angles of a parallelogram are supplementary.',e:'They are same-side interior angles formed by parallel sides.'},
- {ch:6,lv:1,a:A,s:'The sum of the interior angle measures of a hexagon is 720°.',e:'(6 − 2) · 180 = 720.'},
- {ch:6,lv:2,a:A,s:'The sum of the exterior angle measures of a convex polygon, one angle at each vertex, is 360°.',e:'This is the Polygon Exterior Angle-Sum Theorem.'},
- {ch:6,lv:3,a:N,s:'A regular polygon has interior angles that each measure 100°.',e:'Each exterior angle would be 80°, and 360 ÷ 80 = 4.5 isn’t a whole number of sides.'},
- {ch:6,lv:2,a:A,s:'The base angles of an isosceles trapezoid are congruent.',e:'This is a theorem about isosceles trapezoids.'},
- {ch:6,lv:3,a:S,s:'A quadrilateral with perpendicular diagonals is a rhombus.',e:'A kite also has perpendicular diagonals. A parallelogram with perpendicular diagonals is a rhombus.'},
- {ch:6,lv:3,a:A,s:'A parallelogram with congruent diagonals is a rectangle.',e:'This is a theorem for proving a parallelogram is a rectangle.'},
- {ch:6,lv:3,a:N,s:'A kite has two pairs of congruent opposite sides.',e:'A kite has two pairs of congruent consecutive sides and no congruent opposite sides.'},
- // ch7
- {ch:7,lv:1,a:A,s:'Two congruent triangles are similar.',e:'Congruent figures are similar with a scale factor of 1.'},
- {ch:7,lv:1,a:S,s:'Two similar triangles are congruent.',e:'Only when the scale factor is 1.'},
- {ch:7,lv:1,a:A,s:'Two equilateral triangles are similar.',e:'All their angles are 60°, so they’re similar by AA.'},
- {ch:7,lv:1,a:A,s:'Two squares are similar.',e:'All angles are right angles and all sides are in the same ratio.'},
- {ch:7,lv:2,a:S,s:'Two isosceles triangles are similar.',e:'A 40°-70°-70° triangle isn’t similar to a 100°-40°-40° triangle.'},
- {ch:7,lv:2,a:S,s:'Two right triangles are similar.',e:'Right triangles share one angle, but the acute angles may differ.'},
- {ch:7,lv:2,a:S,s:'Two rectangles are similar.',e:'A 1 × 2 rectangle isn’t similar to a 1 × 3 rectangle.'},
- {ch:7,lv:2,a:A,s:'Two isosceles right triangles are similar.',e:'Every isosceles right triangle has angles of 45°, 45°, and 90°.'},
- // ch8
- {ch:8,lv:1,a:A,s:'The hypotenuse is the longest side of a right triangle.',e:'It’s opposite the largest angle, the right angle.'},
- {ch:8,lv:1,a:A,s:'A triangle with side lengths 5, 12, and 13 is a right triangle.',e:'5² + 12² = 25 + 144 = 169 = 13².'},
- {ch:8,lv:2,a:N,s:'The sine of an acute angle of a right triangle is greater than 1.',e:'Sine is opposite ÷ hypotenuse, and the hypotenuse is the longest side.'},
- {ch:8,lv:2,a:A,s:'If A and B are the acute angles of a right triangle, then sin A = cos B.',e:'The side opposite A is adjacent to B.'},
- // ch9
- {ch:9,lv:1,a:A,s:'A rotation is a rigid motion.',e:'Rotations preserve distance and angle measure.'},
- {ch:9,lv:1,a:N,s:'A translation changes the size of a figure.',e:'Translations are rigid motions, so size and shape stay the same.'},
- {ch:9,lv:2,a:N,s:'A reflection preserves orientation.',e:'A reflection reverses orientation, like a mirror image.'},
- {ch:9,lv:3,a:A,s:'The composition of two reflections across parallel lines is a translation.',e:'This is a theorem about compositions of reflections.'},
- {ch:9,lv:3,a:A,s:'The composition of two reflections across intersecting lines is a rotation.',e:'The center is the intersection point, and the angle is twice the angle between the lines.'},
- // ch10
- {ch:10,lv:3,a:N,s:'If two similar figures have a scale factor of 2 : 1, then their areas have a ratio of 2 : 1.',e:'Areas scale by the square of the scale factor, so the ratio is 4 : 1.'},
- {ch:10,lv:1,a:S,s:'Two rectangles with the same area are congruent.',e:'A 2 × 6 rectangle and a 3 × 4 rectangle both have area 12.'},
- // ch12
- {ch:12,lv:1,a:A,s:'A tangent to a circle is perpendicular to the radius at the point of tangency.',e:'This is a theorem about tangent lines.'},
- {ch:12,lv:1,a:A,s:'A diameter is the longest chord of a circle.',e:'A diameter is a chord through the center, and no chord is longer.'},
- {ch:12,lv:1,a:S,s:'A chord of a circle is a diameter.',e:'Only chords through the center are diameters.'},
- {ch:12,lv:1,a:A,s:'The measure of an inscribed angle is half the measure of its intercepted arc.',e:'This is the Inscribed Angle Theorem.'},
- {ch:12,lv:2,a:A,s:'An angle inscribed in a semicircle is a right angle.',e:'It intercepts a 180° arc, and half of 180° is 90°.'},
- {ch:12,lv:2,a:A,s:'Opposite angles of a quadrilateral inscribed in a circle are supplementary.',e:'Their intercepted arcs make up the whole circle (360°), and half of that is 180°.'}
+ {ch:1,lv:1,a:N,s:'Two distinct lines intersect in more than one point.',e:'Two distinct lines that intersect meet in exactly one point.'},
+ {ch:4,lv:1,a:A,s:'A line segment is the shortest path between two points.',e:'Postulate 7: A line segment is the shortest path between two points.'},
+ {ch:2,lv:1,a:A,s:'The supplement of an acute angle is obtuse.',e:'If x < 90, then 180 − x > 90.'},
+ {ch:2,lv:1,a:N,s:'Vertical angles are adjacent angles.',e:'Vertical angles share a vertex but no sides, so they are never adjacent.'},
+ {ch:2,lv:1,a:N,s:'Two angles that form a straight angle are complementary.',e:'Two angles that form a straight angle are supplementary (sum 180°), not complementary (sum 90°).'},
+ {ch:2,lv:1,a:S,s:'Two adjacent angles are supplementary.',e:'Adjacent angles are supplementary only when their outer sides form a straight angle.'},
+ {ch:2,lv:1,a:A,s:'Vertical angles are congruent.',e:'Theorem 18: Vertical angles are congruent.'},
+ {ch:2,lv:1,a:S,s:'Two congruent angles are vertical angles.',e:'Vertical angles are congruent (Theorem 18), but congruent angles can be anywhere, like two 40° angles in different triangles.'},
+ {ch:1,lv:1,a:A,s:'Two right angles are congruent.',e:'Theorem 1: If two angles are right angles, then they are congruent.'},
+ {ch:2,lv:2,a:A,s:'The complement of an angle is an acute angle.',e:'Only acute angles have complements, and 90 − x is between 0 and 90 when x is.'},
+ {ch:2,lv:2,a:S,s:'If two angles are supplementary, then one is acute and the other is obtuse.',e:'Two right angles are supplementary, and neither is acute or obtuse.'},
+ {ch:2,lv:2,a:S,s:'An angle is congruent to its supplement.',e:'Only a right angle is congruent to its supplement (90 + 90 = 180).'},
+ {ch:2,lv:2,a:A,s:'Two angles that are complementary to the same angle are congruent.',e:'Theorem 6: If angles are complementary to the same angle, then they are congruent.'},
+ {ch:2,lv:2,a:A,s:'Two angles that are supplementary to congruent angles are congruent.',e:'Theorem 5: If angles are supplementary to congruent angles, then they are congruent.'},
+ {ch:4,lv:2,a:A,s:'If two angles are both supplementary and congruent, then they are right angles.',e:'Theorem 23. If x + x = 180, then x = 90.'},
+ {ch:4,lv:2,a:A,s:'A point on the perpendicular bisector of a segment is equidistant from the endpoints of the segment.',e:'Theorem 25: If a point is on the perpendicular bisector of a segment, then it is equidistant from the endpoints of that segment.'},
+ // Lines & Planes in Space
+ {ch:6,lv:1,a:A,s:'Three noncollinear points determine a plane.',e:'Postulate 9: Three noncollinear points determine a plane.'},
+ {ch:6,lv:1,a:A,s:'Two intersecting lines determine a plane.',e:'Theorem 46: Two intersecting lines determine a plane.'},
+ {ch:6,lv:1,a:N,s:'Skew lines are coplanar.',e:'Skew lines are, by definition, noncoplanar.'},
+ {ch:6,lv:2,a:A,s:'Three points are coplanar.',e:'Any three points lie in at least one plane. If they’re noncollinear, that plane is unique (Postulate 9).'},
+ {ch:6,lv:2,a:S,s:'Four points are coplanar.',e:'Four corners of a sheet of paper are coplanar, but three corners of a box and one on the opposite face are not.'},
+ {ch:6,lv:2,a:S,s:'Two distinct planes intersect in a line.',e:'If two planes intersect, their intersection is exactly one line (Postulate 11). But parallel planes never intersect.'},
+ {ch:6,lv:2,a:A,s:'If a line intersects a plane that does not contain it, the intersection is exactly one point.',e:'Postulate 10.'},
+ {ch:6,lv:2,a:S,s:'Two lines that do not intersect are parallel.',e:'Coplanar lines that don’t intersect are parallel, but skew lines don’t intersect and aren’t parallel.'},
+ {ch:6,lv:3,a:S,s:'Two lines perpendicular to the same line are parallel to each other.',e:'Theorem 36 says this works for coplanar lines. In space, two lines can both be perpendicular to one line without being parallel, like edges at the corner of a box.'},
+ {ch:6,lv:3,a:A,s:'If a plane intersects two parallel planes, the lines of intersection are parallel.',e:'Theorem 49.'},
+ // Logic & Algebra
+ {ch:1,lv:1,a:S,s:'A conjecture made using inductive reasoning is true.',e:'Patterns can suggest a conjecture, but they don’t prove it. Some conjectures turn out false.'},
+ {ch:1,lv:1,a:A,s:'One counterexample is enough to show that a conjecture is false.',e:'A single case where the conjecture fails disproves it.'},
+ {ch:15,lv:1,a:A,s:'If a > b and b > c, then a > c.',e:'Postulate 24: Transitive Property of Inequality.'},
+ {ch:15,lv:1,a:A,s:'If a > b, then a + 5 > b + 5.',e:'Postulate 25: Addition Property of Inequality.'},
+ {ch:1,lv:2,a:S,s:'The converse of a true conditional is true.',e:'“If a figure is a square, then it is a rectangle” is true, but its converse is false. Some converses are true, though.'},
+ {ch:1,lv:2,a:A,s:'The contrapositive of a true conditional is true.',e:'Theorem 3: If a conditional statement is true, then its contrapositive is also true.'},
+ {ch:1,lv:2,a:A,s:'A good definition can be written as a true biconditional.',e:'A good definition is reversible, so both the conditional and its converse are true.'},
+ {ch:15,lv:2,a:N,s:'If x < y, then −2x < −2y.',e:'Postulate 27: Negative Multiplication Property of Inequality. Multiplying by a negative number flips the order, so −2x > −2y.'},
+ {ch:15,lv:2,a:N,s:'For two real numbers x and y, more than one of these can be true: x < y, x = y, x > y.',e:'Postulate 23: Law of Trichotomy. Exactly one of them is true.'},
+ {ch:1,lv:3,a:S,s:'The inverse of a true conditional is true.',e:'The inverse has the same truth value as the converse, which may or may not be true.'},
+ {ch:1,lv:3,a:N,s:'A conditional statement is false when its hypothesis is false.',e:'A conditional is false only when the hypothesis is true and the conclusion is false.'},
+ // Parallel Lines
+ {ch:5,lv:1,a:A,s:'When two parallel lines are cut by a transversal, corresponding angles are congruent.',e:'Theorem 40: ∥ lines ⇒ corr. ∠s ≅.'},
+ {ch:5,lv:2,a:S,s:'When two parallel lines are cut by a transversal, same-side interior angles are congruent.',e:'Theorem 41 says they are supplementary. They’re congruent only when the transversal is perpendicular (90° + 90°).'},
+ {ch:5,lv:2,a:S,s:'When two parallel lines are cut by a transversal, alternate interior angles are supplementary.',e:'Theorem 37 says they are congruent, so they’re supplementary only when each is 90°.'},
+ {ch:5,lv:2,a:A,s:'If two coplanar lines are perpendicular to a third line, they are parallel.',e:'Theorem 36.'},
+ {ch:5,lv:2,a:N,s:'Through a point not on a line, there is more than one line parallel to the given line.',e:'Postulate 8 (Parallel Postulate): there is exactly one.'},
+ {ch:5,lv:2,a:A,s:'If two lines are parallel to a third line, they are parallel to each other.',e:'Theorem 44: Transitive Property of Parallel Lines.'},
+ {ch:5,lv:2,a:A,s:'If two lines are cut by a transversal so that alternate exterior angles are congruent, the lines are parallel.',e:'Theorem 32: Alt. ext. ∠s ≅ ⇒ ∥ lines.'},
+ {ch:5,lv:3,a:A,s:'In a plane, a line perpendicular to one of two parallel lines is perpendicular to the other.',e:'Theorem 43.'},
+ // Triangles
+ {ch:7,lv:1,a:N,s:'A triangle has two obtuse angles.',e:'Two obtuse angles would already add to more than 180° (Theorem 50: Triangle Angle Sum).'},
+ {ch:7,lv:1,a:N,s:'A triangle has two right angles.',e:'Two right angles add to 180°, leaving 0° for the third angle (Theorem 50).'},
+ {ch:7,lv:1,a:A,s:'The acute angles of a right triangle are complementary.',e:'The angles add to 180° (Theorem 50), and the right angle uses 90°.'},
+ {ch:3,lv:1,a:A,s:'Two triangles with three pairs of congruent sides are congruent.',e:'Postulate 2: SSS.'},
+ {ch:3,lv:1,a:S,s:'Two triangles with three pairs of congruent angles are congruent.',e:'Postulate 12 (AAA) only makes the triangles similar: same shape, any size.'},
+ {ch:3,lv:1,a:A,s:'If two sides of a triangle are congruent, the angles opposite those sides are congruent.',e:'Theorem 20: If △, then △.'},
+ {ch:3,lv:1,a:S,s:'An isosceles triangle is equilateral.',e:'An isosceles triangle needs at least two congruent sides. Only some have all three.'},
+ {ch:3,lv:1,a:A,s:'An equilateral triangle is isosceles.',e:'An equilateral triangle has at least two congruent sides.'},
+ {ch:7,lv:1,a:N,s:'An equilateral triangle is a right triangle.',e:'Each angle of an equilateral triangle measures 60°.'},
+ {ch:3,lv:1,a:A,s:'Corresponding parts of congruent triangles are congruent.',e:'This is CPCTC.'},
+ {ch:7,lv:1,a:A,s:'A segment joining the midpoints of two sides of a triangle is parallel to the third side.',e:'Theorem 52: Midline Theorem.'},
+ {ch:7,lv:1,a:N,s:'A segment joining the midpoints of two sides of a triangle is twice as long as the third side.',e:'Theorem 52 (Midline Theorem): it is half as long as the third side.'},
+ {ch:15,lv:1,a:N,s:'A triangle can have side lengths 3, 4, and 8.',e:'Postulate 28 (Triangle Inequality): 3 + 4 = 7, which is not greater than 8.'},
+ {ch:3,lv:2,a:A,s:'If two angles of a triangle are congruent, the sides opposite those angles are congruent.',e:'Theorem 21: If △, then △.'},
+ {ch:5,lv:2,a:A,s:'An exterior angle of a triangle is greater than each of its remote interior angles.',e:'Theorem 30: Exterior Angle Inequality.'},
+ {ch:7,lv:2,a:A,s:'An exterior angle of a triangle equals the sum of its remote interior angles.',e:'Theorem 51: Exterior Angle Theorem.'},
+ {ch:7,lv:2,a:S,s:'An exterior angle of a triangle is obtuse.',e:'An exterior angle is obtuse when the adjacent interior angle is acute, but it can be acute or right too.'},
+ {ch:3,lv:2,a:S,s:'Two right triangles with congruent hypotenuses are congruent.',e:'You also need a pair of congruent legs (Postulate 6: HL). Hypotenuses alone aren’t enough.'},
+ {ch:3,lv:2,a:A,s:'Two right triangles with congruent hypotenuses and one pair of congruent legs are congruent.',e:'Postulate 6: HL.'},
+ {ch:7,lv:2,a:A,s:'If two angles of one triangle are congruent to two angles of another triangle, then the third angles are congruent.',e:'Theorem 53: No-Choice Theorem.'},
+ {ch:3,lv:2,a:N,s:'An acute triangle is congruent to an obtuse triangle.',e:'Congruent triangles have congruent angles, so one can’t have an obtuse angle unless the other does.'},
+ {ch:15,lv:2,a:A,s:'In a triangle, the longer side is opposite the larger angle.',e:'Theorem 133: If two angles of a triangle are not congruent, the longer side is opposite the larger angle.'},
+ {ch:3,lv:3,a:S,s:'Two triangles are congruent if two sides and a nonincluded angle of one are congruent to the corresponding parts of the other.',e:'SSA is not on the list of congruence postulates and theorems. Sometimes two different triangles fit the same SSA information.'},
+ {ch:7,lv:3,a:A,s:'Two triangles are congruent if two angles and a side of one are congruent to two angles and the corresponding side of the other.',e:'If the side is included, use ASA (Postulate 4). If it’s not included, use AAS (Theorem 54).'},
+ {ch:15,lv:3,a:A,s:'If two sides of one triangle are congruent to two sides of another, and the included angle of the first is larger, then the third side of the first is longer.',e:'Theorem 134: SAS ≠.'},
+ // Triangle Centers & More
+ {ch:14,lv:2,a:A,s:'The centroid of a triangle lies inside the triangle.',e:'The medians always meet inside the triangle (Theorem 131).'},
+ {ch:14,lv:2,a:A,s:'The incenter of a triangle lies inside the triangle.',e:'The angle bisectors always meet inside the triangle (Theorem 129).'},
+ {ch:14,lv:2,a:S,s:'The circumcenter of a triangle lies inside the triangle.',e:'It’s inside for acute triangles, on the hypotenuse for right triangles, and outside for obtuse triangles.'},
+ {ch:14,lv:2,a:A,s:'The circumcenter of a triangle is equidistant from the vertices.',e:'Theorem 128: Circumcenter.'},
+ {ch:3,lv:2,a:S,s:'A median of a triangle is also an altitude.',e:'In an isosceles triangle, the median to the base is also an altitude, but that isn’t true in general.'},
+ {ch:14,lv:3,a:S,s:'The orthocenter of a triangle lies outside the triangle.',e:'It’s outside only for obtuse triangles (Theorem 130). For a right triangle it’s at the right-angle vertex.'},
+ {ch:14,lv:3,a:A,s:'The centroid is two thirds of the way from each vertex to the midpoint of the opposite side.',e:'Theorem 131: Centroid.'},
+ {ch:14,lv:3,a:S,s:'The circumcenter of a triangle is equidistant from the three sides.',e:'The incenter is equidistant from the sides (Theorem 129). The circumcenter is equidistant from the vertices (Theorem 128). They’re the same point only in an equilateral triangle.'},
+ // Polygons
+ {ch:5,lv:1,a:A,s:'A square is a rhombus.',e:'A square has four congruent sides.'},
+ {ch:5,lv:1,a:S,s:'A rhombus is a square.',e:'A rhombus is a square only if it also has four right angles.'},
+ {ch:5,lv:1,a:A,s:'A rectangle is a parallelogram.',e:'Both pairs of opposite sides of a rectangle are parallel.'},
+ {ch:5,lv:1,a:A,s:'The diagonals of a parallelogram bisect each other.',e:'This is a property of every parallelogram.'},
+ {ch:5,lv:1,a:A,s:'Consecutive angles of a parallelogram are supplementary.',e:'They are same-side interior angles formed by parallel sides (Theorem 41).'},
+ {ch:7,lv:1,a:A,s:'The sum of the interior angle measures of a hexagon is 720°.',e:'Theorem 55: (6 − 2) · 180 = 720.'},
+ {ch:5,lv:2,a:N,s:'A trapezoid is a parallelogram.',e:'A trapezoid has exactly one pair of parallel sides, and a parallelogram has two.'},
+ {ch:5,lv:2,a:S,s:'The diagonals of a parallelogram are congruent.',e:'They’re congruent only when the parallelogram is a rectangle.'},
+ {ch:5,lv:2,a:A,s:'The diagonals of a rhombus are perpendicular.',e:'This is a property of every rhombus.'},
+ {ch:5,lv:2,a:S,s:'The diagonals of a rectangle are perpendicular.',e:'Only when the rectangle is a square.'},
+ {ch:7,lv:2,a:A,s:'The sum of the exterior angle measures of a polygon, one angle at each vertex, is 360°.',e:'Theorem 56.'},
+ {ch:7,lv:2,a:A,s:'A hexagon has 9 diagonals.',e:'Theorem 57: d = n(n − 3) ÷ 2 = 6 · 3 ÷ 2 = 9.'},
+ {ch:5,lv:2,a:A,s:'The base angles of an isosceles trapezoid are congruent.',e:'This is a property of every isosceles trapezoid.'},
+ {ch:7,lv:3,a:N,s:'An equiangular polygon has exterior angles that each measure 80°.',e:'Theorem 58: E = 360 ÷ n. Then n = 360 ÷ 80 = 4.5, which isn’t a whole number of sides.'},
+ {ch:5,lv:3,a:S,s:'A quadrilateral with perpendicular diagonals is a rhombus.',e:'A kite also has perpendicular diagonals. A parallelogram with perpendicular diagonals is a rhombus.'},
+ {ch:5,lv:3,a:A,s:'A parallelogram with congruent diagonals is a rectangle.',e:'A parallelogram with congruent diagonals must have four right angles.'},
+ {ch:5,lv:3,a:N,s:'A kite has two pairs of congruent opposite sides.',e:'A kite has two pairs of congruent consecutive sides and no congruent opposite sides.'},
+ // Similarity
+ {ch:8,lv:1,a:A,s:'Two congruent triangles are similar.',e:'Congruent figures are similar with a ratio of 1 : 1.'},
+ {ch:8,lv:1,a:S,s:'Two similar triangles are congruent.',e:'Only when the ratio of corresponding sides is 1 : 1.'},
+ {ch:8,lv:1,a:A,s:'Two equilateral triangles are similar.',e:'All their angles are 60°, so they’re similar by AA (Theorem 62).'},
+ {ch:8,lv:1,a:A,s:'Two squares are similar.',e:'All angles are right angles and all sides are in the same ratio.'},
+ {ch:8,lv:2,a:S,s:'Two isosceles triangles are similar.',e:'A 40°-70°-70° triangle isn’t similar to a 100°-40°-40° triangle.'},
+ {ch:8,lv:2,a:S,s:'Two right triangles are similar.',e:'Right triangles share one angle, but the acute angles may differ.'},
+ {ch:8,lv:2,a:S,s:'Two rectangles are similar.',e:'A 1 × 2 rectangle isn’t similar to a 1 × 3 rectangle.'},
+ {ch:8,lv:2,a:A,s:'Two isosceles right triangles are similar.',e:'Every isosceles right triangle has angles of 45°, 45°, and 90°, so they’re similar by AA (Theorem 62).'},
+ {ch:8,lv:2,a:A,s:'The ratio of the perimeters of two similar polygons equals the ratio of any pair of corresponding sides.',e:'Theorem 61.'},
+ // Right Triangles
+ {ch:9,lv:1,a:A,s:'The hypotenuse is the longest side of a right triangle.',e:'It’s opposite the largest angle, the right angle (Theorem 133).'},
+ {ch:9,lv:1,a:A,s:'A triangle with side lengths 5, 12, and 13 is a right triangle.',e:'Theorem 70: 5² + 12² = 25 + 144 = 169 = 13².'},
+ {ch:9,lv:2,a:A,s:'In a 30°-60°-90° triangle, the hypotenuse is twice as long as the shorter leg.',e:'Theorem 72: the sides are x, x√3, and 2x.'},
+ {ch:9,lv:2,a:N,s:'In a 45°-45°-90° triangle, the hypotenuse is twice as long as a leg.',e:'Theorem 73: the hypotenuse is x√2, not 2x.'},
+ {ch:9,lv:3,a:A,s:'The altitude to the hypotenuse of a right triangle forms two triangles that are similar to the original triangle.',e:'Theorem 68.'},
+ // Coordinates
+ {ch:4,lv:1,a:A,s:'The midpoint of the segment from (2, 4) to (8, 10) is (5, 7).',e:'Theorem 22 (Midpoint Formula): ((2 + 8) ÷ 2, (4 + 10) ÷ 2) = (5, 7).'},
+ {ch:13,lv:1,a:N,s:'The equation of a vertical line has the form y = b.',e:'Theorem 125: a vertical line has the form x = a. Theorem 124: y = b is a horizontal line.'},
+ {ch:4,lv:1,a:A,s:'Two nonvertical parallel lines have equal slopes.',e:'Theorem 26.'},
+ {ch:4,lv:2,a:A,s:'If one line has slope 2/3 and another has slope −3/2, the lines are perpendicular.',e:'Theorem 29: the slopes are opposite reciprocals.'},
+ {ch:9,lv:2,a:A,s:'The distance between (1, 2) and (4, 6) is 5.',e:'Theorem 71 (Distance Formula): √(3² + 4²) = √25 = 5.'},
+ // Area
+ {ch:11,lv:1,a:A,s:'If two closed figures are congruent, their areas are equal.',e:'Postulate 18.'},
+ {ch:11,lv:1,a:S,s:'Two rectangles with the same area are congruent.',e:'A 2 × 6 rectangle and a 3 × 4 rectangle both have area 12.'},
+ {ch:11,lv:2,a:A,s:'A median of a triangle divides the triangle into two triangles with equal areas.',e:'Theorem 110.'},
+ {ch:11,lv:2,a:A,s:'The area of a trapezoid is the product of its median and its height.',e:'Theorem 104.'},
+ {ch:11,lv:3,a:N,s:'If the ratio of corresponding sides of two similar figures is 2 : 1, their areas have a ratio of 2 : 1.',e:'Theorem 109 (Similar-Figures Theorem): the area ratio is the square, 4 : 1.'},
+ // Circles
+ {ch:3,lv:1,a:A,s:'All radii of a circle are congruent.',e:'Theorem 19.'},
+ {ch:10,lv:1,a:A,s:'A tangent line is perpendicular to the radius drawn to the point of contact.',e:'Postulate 13.'},
+ {ch:10,lv:1,a:A,s:'A diameter is the longest chord of a circle.',e:'A diameter is a chord through the center, and no chord is longer.'},
+ {ch:10,lv:1,a:S,s:'A chord of a circle is a diameter.',e:'Only chords through the center are diameters.'},
+ {ch:10,lv:1,a:A,s:'The measure of an inscribed angle is one-half the measure of its intercepted arc.',e:'Theorem 86.'},
+ {ch:10,lv:2,a:A,s:'An angle inscribed in a semicircle is a right angle.',e:'Theorem 91.'},
+ {ch:10,lv:2,a:A,s:'If a quadrilateral is inscribed in a circle, its opposite angles are supplementary.',e:'Theorem 93.'},
+ {ch:10,lv:2,a:A,s:'Two tangent segments drawn to a circle from the same external point are congruent.',e:'Theorem 85: Two-Tangent Theorem.'},
+ {ch:10,lv:3,a:A,s:'A parallelogram inscribed in a circle is a rectangle.',e:'Theorem 94.'},
+ // Solids
+ {ch:12,lv:1,a:A,s:'The volume of any prism equals its height times the area of its base.',e:'Theorem 116: V = B·h.'},
+ {ch:12,lv:2,a:A,s:'A cone has one third the volume of a cylinder with the same base and height.',e:'Theorem 117 gives V = B·h for the cylinder, and Theorem 120 gives V = ⅓·B·h for the cone.'},
+ {ch:12,lv:2,a:A,s:'The lateral area of a cylinder equals the circumference of its base times its height.',e:'Theorem 113: L = C·h.'},
+ {ch:12,lv:3,a:N,s:'Doubling the radius of a sphere doubles its volume.',e:'Theorem 122: V = ⁴⁄₃πr³, so doubling r multiplies the volume by 2³ = 8.'}
 ];
 const GEO_COND=[
  {ch:2,o:'If two angles are vertical angles, then they are congruent.',c:'If two angles are congruent, then they are vertical angles.',i:'If two angles are not vertical angles, then they are not congruent.',p:'If two angles are not congruent, then they are not vertical angles.',ct:false,e:'Two 40° angles in different places are congruent but not vertical.'},
- {ch:2,o:'If a figure is a square, then it is a rectangle.',c:'If a figure is a rectangle, then it is a square.',i:'If a figure is not a square, then it is not a rectangle.',p:'If a figure is not a rectangle, then it is not a square.',ct:false,e:'A 2 × 5 rectangle is not a square.'},
- {ch:2,o:'If an angle measures 90°, then it is a right angle.',c:'If an angle is a right angle, then it measures 90°.',i:'If an angle does not measure 90°, then it is not a right angle.',p:'If an angle is not a right angle, then it does not measure 90°.',ct:true,e:'This is the definition of a right angle, so it works both ways.'},
- {ch:2,o:'If a triangle is equilateral, then it is isosceles.',c:'If a triangle is isosceles, then it is equilateral.',i:'If a triangle is not equilateral, then it is not isosceles.',p:'If a triangle is not isosceles, then it is not equilateral.',ct:false,e:'A triangle with sides 5, 5, and 8 is isosceles but not equilateral.'},
- {ch:2,o:'If two angles form a linear pair, then they are supplementary.',c:'If two angles are supplementary, then they form a linear pair.',i:'If two angles do not form a linear pair, then they are not supplementary.',p:'If two angles are not supplementary, then they do not form a linear pair.',ct:false,e:'Two 90° angles in different places are supplementary but don’t form a linear pair.'},
- {ch:2,o:'If two angles are right angles, then they are congruent.',c:'If two angles are congruent, then they are right angles.',i:'If two angles are not right angles, then they are not congruent.',p:'If two angles are not congruent, then they are not right angles.',ct:false,e:'Two 30° angles are congruent but not right angles.'},
- {ch:2,o:'If x = 5, then x² = 25.',c:'If x² = 25, then x = 5.',i:'If x ≠ 5, then x² ≠ 25.',p:'If x² ≠ 25, then x ≠ 5.',ct:false,e:'x = −5 also makes x² = 25.'},
+ {ch:5,o:'If a figure is a square, then it is a rectangle.',c:'If a figure is a rectangle, then it is a square.',i:'If a figure is not a square, then it is not a rectangle.',p:'If a figure is not a rectangle, then it is not a square.',ct:false,e:'A 2 × 5 rectangle is not a square.'},
+ {ch:1,o:'If an angle measures 90°, then it is a right angle.',c:'If an angle is a right angle, then it measures 90°.',i:'If an angle does not measure 90°, then it is not a right angle.',p:'If an angle is not a right angle, then it does not measure 90°.',ct:true,e:'This is the definition of a right angle, so it works both ways.'},
+ {ch:3,o:'If a triangle is equilateral, then it is isosceles.',c:'If a triangle is isosceles, then it is equilateral.',i:'If a triangle is not equilateral, then it is not isosceles.',p:'If a triangle is not isosceles, then it is not equilateral.',ct:false,e:'A triangle with sides 5, 5, and 8 is isosceles but not equilateral.'},
+ {ch:2,o:'If two angles form a straight angle, then they are supplementary.',c:'If two angles are supplementary, then they form a straight angle.',i:'If two angles do not form a straight angle, then they are not supplementary.',p:'If two angles are not supplementary, then they do not form a straight angle.',ct:false,e:'Two 90° angles in different places are supplementary but don’t form a straight angle.'},
+ {ch:1,o:'If two angles are right angles, then they are congruent.',c:'If two angles are congruent, then they are right angles.',i:'If two angles are not right angles, then they are not congruent.',p:'If two angles are not congruent, then they are not right angles.',ct:false,e:'The original is Theorem 1. But two 30° angles are congruent and not right angles.'},
+ {ch:1,o:'If x = 5, then x² = 25.',c:'If x² = 25, then x = 5.',i:'If x ≠ 5, then x² ≠ 25.',p:'If x² ≠ 25, then x ≠ 5.',ct:false,e:'x = −5 also makes x² = 25.'},
  {ch:2,o:'If two angles are complementary, then the sum of their measures is 90°.',c:'If the sum of the measures of two angles is 90°, then they are complementary.',i:'If two angles are not complementary, then the sum of their measures is not 90°.',p:'If the sum of the measures of two angles is not 90°, then they are not complementary.',ct:true,e:'This is the definition of complementary angles.'},
- {ch:3,o:'If two parallel lines are cut by a transversal, then alternate interior angles are congruent.',c:'If two lines are cut by a transversal so that alternate interior angles are congruent, then the lines are parallel.',i:'If two lines cut by a transversal are not parallel, then alternate interior angles are not congruent.',p:'If two lines are cut by a transversal so that alternate interior angles are not congruent, then the lines are not parallel.',ct:true,e:'The converse is the Converse of the Alternate Interior Angles Theorem.'},
- {ch:3,o:'If two coplanar lines are parallel, then they do not intersect.',c:'If two coplanar lines do not intersect, then they are parallel.',i:'If two coplanar lines are not parallel, then they intersect.',p:'If two coplanar lines intersect, then they are not parallel.',ct:true,e:'This matches the definition of parallel lines.'},
- {ch:4,o:'If a triangle has two congruent sides, then it has two congruent angles.',c:'If a triangle has two congruent angles, then it has two congruent sides.',i:'If a triangle does not have two congruent sides, then it does not have two congruent angles.',p:'If a triangle does not have two congruent angles, then it does not have two congruent sides.',ct:true,e:'The converse is the Converse of the Isosceles Triangle Theorem.'},
- {ch:6,o:'If a quadrilateral is a rhombus, then its diagonals are perpendicular.',c:'If the diagonals of a quadrilateral are perpendicular, then it is a rhombus.',i:'If a quadrilateral is not a rhombus, then its diagonals are not perpendicular.',p:'If the diagonals of a quadrilateral are not perpendicular, then it is not a rhombus.',ct:false,e:'A kite has perpendicular diagonals but usually isn’t a rhombus.'},
- {ch:6,o:'If a quadrilateral is a rectangle, then its diagonals are congruent.',c:'If the diagonals of a quadrilateral are congruent, then it is a rectangle.',i:'If a quadrilateral is not a rectangle, then its diagonals are not congruent.',p:'If the diagonals of a quadrilateral are not congruent, then it is not a rectangle.',ct:false,e:'An isosceles trapezoid has congruent diagonals but isn’t a rectangle.'},
- {ch:6,o:'If a quadrilateral is a parallelogram, then both pairs of opposite sides are congruent.',c:'If both pairs of opposite sides of a quadrilateral are congruent, then it is a parallelogram.',i:'If a quadrilateral is not a parallelogram, then its opposite sides are not both congruent.',p:'If the opposite sides of a quadrilateral are not both congruent, then it is not a parallelogram.',ct:true,e:'The converse is a theorem for proving a quadrilateral is a parallelogram.'}
+ {ch:5,o:'If two parallel lines are cut by a transversal, then alternate interior angles are congruent.',c:'If two lines are cut by a transversal so that alternate interior angles are congruent, then the lines are parallel.',i:'If two lines cut by a transversal are not parallel, then alternate interior angles are not congruent.',p:'If two lines are cut by a transversal so that alternate interior angles are not congruent, then the lines are not parallel.',ct:true,e:'The original is Theorem 37 and the converse is Theorem 31.'},
+ {ch:5,o:'If two coplanar lines are parallel, then they do not intersect.',c:'If two coplanar lines do not intersect, then they are parallel.',i:'If two coplanar lines are not parallel, then they intersect.',p:'If two coplanar lines intersect, then they are not parallel.',ct:true,e:'This matches the definition of parallel lines.'},
+ {ch:3,o:'If two sides of a triangle are congruent, then the angles opposite them are congruent.',c:'If two angles of a triangle are congruent, then the sides opposite them are congruent.',i:'If two sides of a triangle are not congruent, then the angles opposite them are not congruent.',p:'If two angles of a triangle are not congruent, then the sides opposite them are not congruent.',ct:true,e:'The original is Theorem 20 and the converse is Theorem 21.'},
+ {ch:5,o:'If a quadrilateral is a rhombus, then its diagonals are perpendicular.',c:'If the diagonals of a quadrilateral are perpendicular, then it is a rhombus.',i:'If a quadrilateral is not a rhombus, then its diagonals are not perpendicular.',p:'If the diagonals of a quadrilateral are not perpendicular, then it is not a rhombus.',ct:false,e:'A kite has perpendicular diagonals but usually isn’t a rhombus.'},
+ {ch:5,o:'If a quadrilateral is a rectangle, then its diagonals are congruent.',c:'If the diagonals of a quadrilateral are congruent, then it is a rectangle.',i:'If a quadrilateral is not a rectangle, then its diagonals are not congruent.',p:'If the diagonals of a quadrilateral are not congruent, then it is not a rectangle.',ct:false,e:'An isosceles trapezoid has congruent diagonals but isn’t a rectangle.'},
+ {ch:10,o:'If a line is tangent to a circle, then it is perpendicular to the radius drawn to the point of contact.',c:'If a line is perpendicular to a radius at its outer endpoint, then it is tangent to the circle.',i:'If a line is not tangent to a circle, then it is not perpendicular to the radius drawn to the point of contact.',p:'If a line is not perpendicular to the radius drawn to the point of contact, then it is not tangent to the circle.',ct:true,e:'The original is Postulate 13 and the converse is Postulate 14.'}
 ];
-
 // ===================== GEOMETRY: PROOFS =====================
-const GEO_REASONS=['Given','Definition of midpoint','Definition of angle bisector','Definition of perpendicular lines','Definition of perpendicular bisector',
+const GEO_REASONS=['Given','Definition of midpoint','Definition of angle bisector','Definition of perpendicular','Definition of perpendicular bisector',
  'Definition of right triangle','Definition of supplementary angles','Definition of congruent angles','Definition of parallelogram',
- 'Reflexive Property of Congruence','Reflexive Property of Equality','Transitive Property of Congruence','Substitution Property','Addition Property of Equality','Subtraction Property of Equality',
- 'Segment Addition Postulate','Angle Addition Postulate','Vertical Angles Theorem','Congruent Supplements Theorem','Congruent Complements Theorem','All right angles are congruent',
- 'Angles that form a linear pair are supplementary','Corresponding Angles Theorem','Alternate Interior Angles Theorem','Same-Side Interior Angles Postulate',
- 'SSS','SAS','ASA','AAS','HL','CPCTC','Isosceles Triangle Theorem','Triangle Angle-Sum Theorem'];
+ 'Reflexive Property','Transitive Property','Addition Property','Subtraction Property','Substitution',
+ 'Vertical angles are congruent.','If angles are supplementary to the same angle, then they are congruent.','If angles are complementary to the same angle, then they are congruent.',
+ 'If two angles are right angles, then they are congruent.','Angles that form a straight angle are supplementary.',
+ '∥ lines ⇒ corr. ∠s ≅','∥ lines ⇒ alt. int. ∠s ≅','∥ lines ⇒ alt. ext. ∠s ≅',
+ 'SSS','SAS','ASA','AAS','HL','CPCTC','If △, then △','Triangle Angle Sum','No-Choice Theorem'];
 // {XY} = segment XY (drawn with a bar)
 const segHTML=t=>t.replace(/\{([A-Z]+)\}/g,'<span class="ov">$1</span>');
 const segText=t=>t.replace(/\{([A-Z]+)\}/g,(_,s)=>[...s].map(c=>c+'\u0305').join(''));
@@ -2149,43 +2181,43 @@ function parDiagram(labels,showParallel,numbers){
 }
 const NUMS={T:{UL:'1',UR:'2',LL:'3',LR:'4'},B:{UL:'5',UR:'6',LL:'7',LR:'8'}};
 const GEO_PROOFS=[
- {ch:2,title:'Vertical angles',svg:()=>gsvg(gseg([40,40],[260,140])+gseg([40,140],[260,40])+`<text x="112" y="96" class="gnum">1</text><text x="182" y="96" class="gnum">2</text><text x="146" y="66" class="gnum">3</text>`),
+ {ch:[2],title:'Vertical angles',svg:()=>gsvg(gseg([40,40],[260,140])+gseg([40,140],[260,40])+`<text x="112" y="96" class="gnum">1</text><text x="182" y="96" class="gnum">2</text><text x="146" y="66" class="gnum">3</text>`),
   given:'∠1 and ∠2 are vertical angles.',prove:'∠1 ≅ ∠2',
-  steps:[['∠1 and ∠2 are vertical angles.','Given'],['∠1 and ∠3 are supplementary. ∠2 and ∠3 are supplementary.','Angles that form a linear pair are supplementary'],['∠1 ≅ ∠2','Congruent Supplements Theorem']]},
- {ch:2,title:'Segment proof',svg:()=>gsvg(gseg([30,90],[270,90])+gpt(40,90,'A',-5,22)+gpt(110,90,'B',-5,22)+gpt(190,90,'C',-5,22)+gpt(260,90,'D',-5,22)+gtick([40,90],[110,90],1)+gtick([190,90],[260,90],1),130),
-  given:'AB = CD',prove:'AC = BD',
-  steps:[['AB = CD','Given'],['BC = BC','Reflexive Property of Equality'],['AB + BC = BC + CD','Addition Property of Equality'],['AB + BC = AC and BC + CD = BD','Segment Addition Postulate'],['AC = BD','Substitution Property']]},
- {ch:3,title:'Alternate exterior angles',svg:()=>parDiagram(NUMS,true,true),
+  steps:[['∠1 and ∠2 are vertical angles.','Given'],['∠1 and ∠3 are supplementary. ∠2 and ∠3 are supplementary.','Angles that form a straight angle are supplementary.'],['∠1 ≅ ∠2','If angles are supplementary to the same angle, then they are congruent.']]},
+ {ch:[2],title:'Addition Property',svg:()=>gsvg(gseg([30,90],[270,90])+gpt(40,90,'A',-5,22)+gpt(110,90,'B',-5,22)+gpt(190,90,'C',-5,22)+gpt(260,90,'D',-5,22)+gtick([40,90],[110,90],1)+gtick([190,90],[260,90],1),130),
+  given:'{AB} ≅ {CD}',prove:'{AC} ≅ {BD}',
+  steps:[['{AB} ≅ {CD}','Given'],['{BC} ≅ {BC}','Reflexive Property'],['{AC} ≅ {BD}','Addition Property']]},
+ {ch:[5],title:'Alternate exterior angles',svg:()=>parDiagram(NUMS,true,true),
   given:'a ∥ b',prove:'∠1 ≅ ∠8',
-  steps:[['a ∥ b','Given'],['∠1 ≅ ∠5','Corresponding Angles Theorem'],['∠5 ≅ ∠8','Vertical Angles Theorem'],['∠1 ≅ ∠8','Transitive Property of Congruence']]},
- {ch:3,title:'Same-side interior angles',svg:()=>parDiagram(NUMS,true,true),
+  steps:[['a ∥ b','Given'],['∠1 ≅ ∠5','∥ lines ⇒ corr. ∠s ≅'],['∠5 ≅ ∠8','Vertical angles are congruent.'],['∠1 ≅ ∠8','Transitive Property']]},
+ {ch:[5],title:'Same-side interior angles',svg:()=>parDiagram(NUMS,true,true),
   given:'a ∥ b',prove:'∠3 and ∠5 are supplementary.',
-  steps:[['a ∥ b','Given'],['∠1 ≅ ∠5','Corresponding Angles Theorem'],['m∠1 = m∠5','Definition of congruent angles'],['∠1 and ∠3 are supplementary.','Angles that form a linear pair are supplementary'],['m∠1 + m∠3 = 180','Definition of supplementary angles'],['m∠5 + m∠3 = 180','Substitution Property'],['∠3 and ∠5 are supplementary.','Definition of supplementary angles']]},
- {ch:4,title:'Isosceles triangle with a midpoint',svg:()=>gsvg(gseg([150,25],[50,160])+gseg([150,25],[250,160])+gseg([50,160],[250,160])+gseg([150,25],[150,160])+gpt(150,25,'B',-5,-8)+gpt(50,160,'A',-16,8)+gpt(250,160,'C',6,8)+gpt(150,160,'D',-5,18)+gtick([150,25],[50,160],1)+gtick([150,25],[250,160],1),185),
+  steps:[['a ∥ b','Given'],['∠1 ≅ ∠5','∥ lines ⇒ corr. ∠s ≅'],['m∠1 = m∠5','Definition of congruent angles'],['∠1 and ∠3 are supplementary.','Angles that form a straight angle are supplementary.'],['m∠1 + m∠3 = 180','Definition of supplementary angles'],['m∠5 + m∠3 = 180','Substitution'],['∠3 and ∠5 are supplementary.','Definition of supplementary angles']]},
+ {ch:[3],title:'Isosceles triangle with a midpoint',svg:()=>gsvg(gseg([150,25],[50,160])+gseg([150,25],[250,160])+gseg([50,160],[250,160])+gseg([150,25],[150,160])+gpt(150,25,'B',-5,-8)+gpt(50,160,'A',-16,8)+gpt(250,160,'C',6,8)+gpt(150,160,'D',-5,18)+gtick([150,25],[50,160],1)+gtick([150,25],[250,160],1),185),
   given:'{AB} ≅ {CB}, D is the midpoint of {AC}.',prove:'△ABD ≅ △CBD',
-  steps:[['{AB} ≅ {CB}','Given'],['D is the midpoint of {AC}.','Given'],['{AD} ≅ {CD}','Definition of midpoint'],['{BD} ≅ {BD}','Reflexive Property of Congruence'],['△ABD ≅ △CBD','SSS']]},
- {ch:4,title:'Crossing segments',svg:()=>gsvg(gseg([60,30],[240,150])+gseg([60,150],[240,30])+gseg([60,30],[60,150])+gseg([240,30],[240,150])+gpt(60,30,'A',-16,0)+gpt(240,150,'D',8,6)+gpt(60,150,'B',-16,8)+gpt(240,30,'C',8,0)+gpt(150,90,'E',-5,-10),180),
+  steps:[['{AB} ≅ {CB}','Given'],['D is the midpoint of {AC}.','Given'],['{AD} ≅ {CD}','Definition of midpoint'],['{BD} ≅ {BD}','Reflexive Property'],['△ABD ≅ △CBD','SSS']]},
+ {ch:[3],title:'Crossing segments',svg:()=>gsvg(gseg([60,30],[240,150])+gseg([60,150],[240,30])+gseg([60,30],[60,150])+gseg([240,30],[240,150])+gpt(60,30,'A',-16,0)+gpt(240,150,'D',8,6)+gpt(60,150,'B',-16,8)+gpt(240,30,'C',8,0)+gpt(150,90,'E',-5,-10),180),
   given:'E is the midpoint of {AD} and of {BC}.',prove:'△ABE ≅ △DCE',
-  steps:[['E is the midpoint of {AD} and of {BC}.','Given'],['{AE} ≅ {DE} and {BE} ≅ {CE}','Definition of midpoint'],['∠AEB ≅ ∠DEC','Vertical Angles Theorem'],['△ABE ≅ △DCE','SAS']]},
- {ch:4,title:'Parallel sides and a diagonal',svg:()=>gsvg(gseg([50,150],[200,150])+gseg([200,150],[260,40])+gseg([260,40],[110,40])+gseg([110,40],[50,150])+gseg([50,150],[260,40])+garrow([110,150],[140,150])+garrow([170,40],[200,40])+gpt(50,150,'A',-14,10)+gpt(200,150,'B',4,16)+gpt(260,40,'C',6,-4)+gpt(110,40,'D',-14,-4),175),
+  steps:[['E is the midpoint of {AD} and of {BC}.','Given'],['{AE} ≅ {DE} and {BE} ≅ {CE}','Definition of midpoint'],['∠AEB ≅ ∠DEC','Vertical angles are congruent.'],['△ABE ≅ △DCE','SAS']]},
+ {ch:[3,5],title:'Parallel sides and a diagonal',svg:()=>gsvg(gseg([50,150],[200,150])+gseg([200,150],[260,40])+gseg([260,40],[110,40])+gseg([110,40],[50,150])+gseg([50,150],[260,40])+garrow([110,150],[140,150])+garrow([170,40],[200,40])+gpt(50,150,'A',-14,10)+gpt(200,150,'B',4,16)+gpt(260,40,'C',6,-4)+gpt(110,40,'D',-14,-4),175),
   given:'{AB} ∥ {DC}, {AB} ≅ {DC}',prove:'{BC} ≅ {DA}',
-  steps:[['{AB} ∥ {DC}','Given'],['∠BAC ≅ ∠DCA','Alternate Interior Angles Theorem'],['{AB} ≅ {DC}','Given'],['{AC} ≅ {CA}','Reflexive Property of Congruence'],['△ABC ≅ △CDA','SAS'],['{BC} ≅ {DA}','CPCTC']]},
- {ch:4,title:'Angle bisector in a kite shape',svg:()=>gsvg(gseg([40,90],[160,30])+gseg([160,30],[270,90])+gseg([270,90],[160,150])+gseg([160,150],[40,90])+gseg([40,90],[270,90])+gpt(40,90,'A',-16,5)+gpt(160,30,'B',-4,-8)+gpt(270,90,'C',8,5)+gpt(160,150,'D',-4,18),175),
+  steps:[['{AB} ∥ {DC}','Given'],['∠BAC ≅ ∠DCA','∥ lines ⇒ alt. int. ∠s ≅'],['{AB} ≅ {DC}','Given'],['{AC} ≅ {CA}','Reflexive Property'],['△ABC ≅ △CDA','SAS'],['{BC} ≅ {DA}','CPCTC']]},
+ {ch:[7],title:'Angle bisector in a kite shape',svg:()=>gsvg(gseg([40,90],[160,30])+gseg([160,30],[270,90])+gseg([270,90],[160,150])+gseg([160,150],[40,90])+gseg([40,90],[270,90])+gpt(40,90,'A',-16,5)+gpt(160,30,'B',-4,-8)+gpt(270,90,'C',8,5)+gpt(160,150,'D',-4,18),175),
   given:'∠B ≅ ∠D, {AC} bisects ∠BAD.',prove:'{AB} ≅ {AD}',
-  steps:[['∠B ≅ ∠D','Given'],['{AC} bisects ∠BAD.','Given'],['∠BAC ≅ ∠DAC','Definition of angle bisector'],['{AC} ≅ {AC}','Reflexive Property of Congruence'],['△ABC ≅ △ADC','AAS'],['{AB} ≅ {AD}','CPCTC']]},
- {ch:4,title:'Right triangles',svg:()=>gsvg(gseg([150,25],[50,160])+gseg([150,25],[250,160])+gseg([50,160],[250,160])+gseg([150,25],[150,160])+gbox([150,160],[150,25],[250,160])+gpt(150,25,'B',-5,-8)+gpt(50,160,'A',-16,8)+gpt(250,160,'C',6,8)+gpt(150,160,'D',-5,18),185),
+  steps:[['∠B ≅ ∠D','Given'],['{AC} bisects ∠BAD.','Given'],['∠BAC ≅ ∠DAC','Definition of angle bisector'],['{AC} ≅ {AC}','Reflexive Property'],['△ABC ≅ △ADC','AAS'],['{AB} ≅ {AD}','CPCTC']]},
+ {ch:[3],title:'Right triangles',svg:()=>gsvg(gseg([150,25],[50,160])+gseg([150,25],[250,160])+gseg([50,160],[250,160])+gseg([150,25],[150,160])+gbox([150,160],[150,25],[250,160])+gpt(150,25,'B',-5,-8)+gpt(50,160,'A',-16,8)+gpt(250,160,'C',6,8)+gpt(150,160,'D',-5,18),185),
   given:'{BD} ⊥ {AC}, {AB} ≅ {CB}',prove:'△ABD ≅ △CBD',
-  steps:[['{BD} ⊥ {AC}','Given'],['∠ADB and ∠CDB are right angles.','Definition of perpendicular lines'],['△ABD and △CBD are right triangles.','Definition of right triangle'],['{AB} ≅ {CB}','Given'],['{BD} ≅ {BD}','Reflexive Property of Congruence'],['△ABD ≅ △CBD','HL']]},
- {ch:5,title:'Perpendicular Bisector Theorem',svg:()=>gsvg(`<line x1="150" y1="15" x2="150" y2="168" class="gln"/>`+gseg([60,140],[240,140])+gseg([150,40],[60,140])+gseg([150,40],[240,140])+gbox([150,140],[150,40],[240,140])+gpt(60,140,'A',-16,8)+gpt(240,140,'B',6,8)+gpt(150,140,'M',6,18)+gpt(150,40,'P',8,-4)+`<text x="156" y="24" class="glab">ℓ</text>`,180),
+  steps:[['{BD} ⊥ {AC}','Given'],['∠ADB and ∠CDB are right angles.','Definition of perpendicular'],['△ABD and △CBD are right triangles.','Definition of right triangle'],['{AB} ≅ {CB}','Given'],['{BD} ≅ {BD}','Reflexive Property'],['△ABD ≅ △CBD','HL']]},
+ {ch:[3,4],title:'Perpendicular bisector (Theorem 25)',svg:()=>gsvg(`<line x1="150" y1="15" x2="150" y2="168" class="gln"/>`+gseg([60,140],[240,140])+gseg([150,40],[60,140])+gseg([150,40],[240,140])+gbox([150,140],[150,40],[240,140])+gpt(60,140,'A',-16,8)+gpt(240,140,'B',6,8)+gpt(150,140,'M',6,18)+gpt(150,40,'P',8,-4)+`<text x="156" y="24" class="glab">ℓ</text>`,180),
   given:'Line ℓ is the perpendicular bisector of {AB} at M. P is on ℓ.',prove:'{PA} ≅ {PB}',
-  steps:[['ℓ is the perpendicular bisector of {AB}.','Given'],['{AM} ≅ {BM}','Definition of perpendicular bisector'],['∠PMA and ∠PMB are right angles.','Definition of perpendicular lines'],['∠PMA ≅ ∠PMB','All right angles are congruent'],['{PM} ≅ {PM}','Reflexive Property of Congruence'],['△PMA ≅ △PMB','SAS'],['{PA} ≅ {PB}','CPCTC']]},
- {ch:6,title:'Opposite angles of a parallelogram',svg:()=>gsvg(gseg([50,150],[210,150])+gseg([210,150],[260,40])+gseg([260,40],[100,40])+gseg([100,40],[50,150])+gseg([210,150],[100,40])+gpt(50,150,'A',-14,10)+gpt(210,150,'B',4,16)+gpt(260,40,'C',6,-4)+gpt(100,40,'D',-14,-4),175),
+  steps:[['ℓ is the perpendicular bisector of {AB}.','Given'],['{AM} ≅ {BM}','Definition of perpendicular bisector'],['∠PMA and ∠PMB are right angles.','Definition of perpendicular'],['∠PMA ≅ ∠PMB','If two angles are right angles, then they are congruent.'],['{PM} ≅ {PM}','Reflexive Property'],['△PMA ≅ △PMB','SAS'],['{PA} ≅ {PB}','CPCTC']]},
+ {ch:[3,5],title:'Opposite angles of a parallelogram',svg:()=>gsvg(gseg([50,150],[210,150])+gseg([210,150],[260,40])+gseg([260,40],[100,40])+gseg([100,40],[50,150])+gseg([210,150],[100,40])+gpt(50,150,'A',-14,10)+gpt(210,150,'B',4,16)+gpt(260,40,'C',6,-4)+gpt(100,40,'D',-14,-4),175),
   given:'ABCD is a parallelogram.',prove:'∠A ≅ ∠C',
-  steps:[['ABCD is a parallelogram.','Given'],['{AB} ∥ {DC} and {AD} ∥ {BC}','Definition of parallelogram'],['∠ABD ≅ ∠CDB and ∠ADB ≅ ∠CBD','Alternate Interior Angles Theorem'],['{BD} ≅ {DB}','Reflexive Property of Congruence'],['△ABD ≅ △CDB','ASA'],['∠A ≅ ∠C','CPCTC']]}
+  steps:[['ABCD is a parallelogram.','Given'],['{AB} ∥ {DC} and {AD} ∥ {BC}','Definition of parallelogram'],['∠ABD ≅ ∠CDB and ∠ADB ≅ ∠CBD','∥ lines ⇒ alt. int. ∠s ≅'],['{BD} ≅ {DB}','Reflexive Property'],['△ABD ≅ △CDB','ASA'],['∠A ≅ ∠C','CPCTC']]}
 ];
 
 // ===================== GEOMETRY: PUZZLES =====================
-function geoChapters(){const g=ADV.geo;return (g&&Array.isArray(g.chapters)&&g.chapters.length)?g.chapters.map(Number):[1,2,3,4];}
+function geoChapters(){const g=ADV.geo;return (g&&Array.isArray(g.chapters)&&g.chapters.length)?g.chapters.map(Number):[1,2,3];}
 function optButtons(labels,stacked){
   let sel=null;const btns=labels.map(l=>h('button',{type:'button',class:'opt'+(stacked?' wide':''),onclick:()=>{if(btns[0].disabled)return;sel=l;btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===l)));}},l));
   btns.forEach((b,i)=>b.dataset.v=labels[i]);
@@ -2212,42 +2244,43 @@ function pickASN(rng,level,chs,n){
 }
 // ---- Name That Congruence ----
 const CONG_OPTS=['SSS','SAS','ASA','AAS','HL','Not enough information'];
-function genCongruence(rng,level){
+function genCongruence(rng,level,aasOK){
   const layouts=level===0?['sep']:level===1?['sep','sep','shared']:['shared','bowtie','sep'];
   const layout=pick(rng,layouts);
   let T1,T2,shared=null,cases,M;
   if(layout==='bowtie'){
     const O=[0,0],P0=[-rint(rng,95,130),-rint(rng,40,70)],P1=[-rint(rng,70,115),rint(rng,40,75)];
     T1=[O,P0,P1];T2=T1.map(([x,y])=>[-x,-y]);
-    cases={SAS:{s:{'01':1,'02':2},a:{},ans:'SAS',e:'The marked sides surround the vertical angles, and vertical angles are congruent. That’s SAS.'},
-      ASA:{s:{'01':1},a:{1:1},ans:'ASA',e:'The vertical angles at the middle are congruent, and the marked side is between the two angles. That’s ASA.'},
-      AAS:{s:{'12':1},a:{1:1},ans:'AAS',e:'The vertical angles are congruent, so two angles match, and the marked side is not between them. That’s AAS.'},
+    cases={SAS:{s:{'01':1,'02':2},a:{},ans:'SAS',e:'The marked sides surround the vertical angles, and vertical angles are congruent (Theorem 18). That’s SAS (Postulate 3).'},
+      ASA:{s:{'01':1},a:{1:1},ans:'ASA',e:'The vertical angles at the middle are congruent (Theorem 18), and the marked side is between the two angles. That’s ASA (Postulate 4).'},
+      AAS:{s:{'12':1},a:{1:1},ans:'AAS',e:'The vertical angles are congruent, so two angles match, and the marked side is not between them. That’s AAS (Theorem 54).'},
       SSA:{s:{'01':1,'12':2},a:{},ans:'Not enough information',e:'The vertical angles give a third pair, but that angle isn’t between the two marked sides. That’s SSA, which doesn’t prove congruence.'}};
   }else{
     const w=rint(rng,110,140),hgt=rint(rng,70,100),hl=level>0&&rng()<0.3,u=hl?0:rint(rng,25,85);
     T1=[[0,0],[w,0],[u,-hgt]];
     if(layout==='shared'){T2=[T1[0],T1[1],[u,hgt]];shared='01';
-      cases={SSS:{s:{'12':1,'20':2},a:{},ans:'SSS',e:'The shared side is congruent to itself (Reflexive Property), which gives the third pair of sides. That’s SSS.'},
-        SAS:{s:{'20':1},a:{0:1},ans:'SAS',e:'With the shared side (Reflexive Property), you have two sides and the angle between them. That’s SAS.'},
-        ASA:{s:{},a:{0:1,1:2},ans:'ASA',e:'The shared side is between the two marked angles. That’s ASA.'},
-        AAS:{s:{},a:{0:1,2:2},ans:'AAS',e:'The shared side is not between the two marked angles. That’s AAS.'},
+      cases={SSS:{s:{'12':1,'20':2},a:{},ans:'SSS',e:'The shared side is congruent to itself (Reflexive Property), which gives the third pair of sides. That’s SSS (Postulate 2).'},
+        SAS:{s:{'20':1},a:{0:1},ans:'SAS',e:'With the shared side (Reflexive Property), you have two sides and the angle between them. That’s SAS (Postulate 3).'},
+        ASA:{s:{},a:{0:1,1:2},ans:'ASA',e:'The shared side is between the two marked angles. That’s ASA (Postulate 4).'},
+        AAS:{s:{},a:{0:1,2:2},ans:'AAS',e:'The shared side is not between the two marked angles. That’s AAS (Theorem 54).'},
         SSA:{s:{'12':1},a:{0:1},ans:'Not enough information',e:'With the shared side you have two sides, but the marked angle isn’t between them. That’s SSA, which doesn’t prove congruence.'}};
     }else{
       const ang=(rint(rng,-22,22))*Math.PI/180;
       T2=T1.map(([x,y])=>{const X=-x,Y=y;return[X*Math.cos(ang)-Y*Math.sin(ang),X*Math.sin(ang)+Y*Math.cos(ang)];});
       const maxX1=Math.max(...T1.map(p=>p[0])),minX2=Math.min(...T2.map(p=>p[0]));T2=T2.map(([x,y])=>[x+maxX1-minX2+60,y]);
-      cases={SSS:{s:{'01':1,'12':2,'20':3},a:{},ans:'SSS',e:'All three pairs of sides are congruent. That’s SSS.'},
-        SAS:{s:{'01':1,'20':2},a:{0:1},ans:'SAS',e:'Two pairs of sides and the angle between them are congruent. That’s SAS.'},
-        ASA:{s:{'01':1},a:{0:1,1:2},ans:'ASA',e:'Two pairs of angles and the side between them are congruent. That’s ASA.'},
-        AAS:{s:{'12':1},a:{0:1,1:2},ans:'AAS',e:'Two pairs of angles and a side that is not between them are congruent. That’s AAS.'},
+      cases={SSS:{s:{'01':1,'12':2,'20':3},a:{},ans:'SSS',e:'All three pairs of sides are congruent. That’s SSS (Postulate 2).'},
+        SAS:{s:{'01':1,'20':2},a:{0:1},ans:'SAS',e:'Two pairs of sides and the angle between them are congruent. That’s SAS (Postulate 3).'},
+        ASA:{s:{'01':1},a:{0:1,1:2},ans:'ASA',e:'Two pairs of angles and the side between them are congruent. That’s ASA (Postulate 4).'},
+        AAS:{s:{'12':1},a:{0:1,1:2},ans:'AAS',e:'Two pairs of angles and a side that is not between them are congruent. That’s AAS (Theorem 54).'},
         SS:{s:{'01':1,'20':2},a:{},ans:'Not enough information',e:'Only two pairs of parts are marked. You need three.'}};
       if(level>0){cases.SSA={s:{'01':1,'12':2},a:{0:1},ans:'Not enough information',e:'The marked angle isn’t between the two marked sides. That’s SSA, which doesn’t prove congruence.'};
-        cases.AAA={s:{},a:{0:1,1:2,2:3},ans:'Not enough information',e:'Three pairs of congruent angles only show the triangles have the same shape. AAA isn’t a congruence shortcut.'};}
-      if(hl){cases={HL:{s:{'12':1,'01':2},a:{},right:true,ans:'HL',e:'Both are right triangles with congruent hypotenuses and one pair of congruent legs. That’s HL.'},
-        HL2:{s:{'12':1},a:{},right:true,ans:'Not enough information',e:'Congruent hypotenuses alone aren’t enough. HL also needs a pair of congruent legs.'},
-        LL:{s:{'01':1,'20':2},a:{},right:true,ans:'SAS',e:'The two legs and the right angle between them are congruent. That’s SAS.'}};}
+        cases.AAA={s:{},a:{0:1,1:2,2:3},ans:'Not enough information',e:'Three pairs of congruent angles only prove the triangles are similar (Postulate 12: AAA). They could be different sizes.'};}
+      if(hl){cases={HL:{s:{'12':1,'01':2},a:{},right:true,ans:'HL',e:'Both are right triangles with congruent hypotenuses and one pair of congruent legs. That’s HL (Postulate 6).'},
+        HL2:{s:{'12':1},a:{},right:true,ans:'Not enough information',e:'Congruent hypotenuses alone aren’t enough. HL (Postulate 6) also needs a pair of congruent legs.'},
+        LL:{s:{'01':1,'20':2},a:{},right:true,ans:'SAS',e:'The two legs and the right angle between them are congruent (Theorem 1: right angles are congruent). That’s SAS (Postulate 3).'}};}
     }
   }
+  if(!aasOK)for(const k in cases)if(cases[k].ans==='AAS')delete cases[k];
   M=pick(rng,Object.values(cases));
   return{T1,T2,shared,M,layout};
 }
@@ -2274,27 +2307,29 @@ function congruenceSVG(G){
   else s+=lab(P1,['A','B','C'])+lab(P2,['D','E','F']);
   return `<svg class="gdiag wide" viewBox="0 0 ${W} ${H}" role="img" aria-label="Two triangles with congruence markings">${s}</svg>`;
 }
-function congruenceProblem(rng,level){
-  const G=genCongruence(rng,level);let o;
-  return{view(){o=optButtons(CONG_OPTS);return h('div',{class:'geo-card'},h('p',{class:'geo-kind'},'Name That Congruence'),
+function congruenceProblem(rng,level,aasOK){
+  const G=genCongruence(rng,level,aasOK);let o;
+  return{view(){o=optButtons(aasOK?CONG_OPTS:CONG_OPTS.filter(x=>x!=='AAS'));return h('div',{class:'geo-card'},h('p',{class:'geo-kind'},'Name That Congruence'),
       h('p',{class:'geo-q'},'Which shortcut proves these triangles congruent? Use only the markings and what the diagram shows for sure.'),h('div',{html:congruenceSVG(G)}),o.el);},
     check(){const v=o.get();if(!v)return{ok:false,msg:'Choose an answer.'};o.lock(G.M.ans);return v===G.M.ans?{ok:true,msg:'Correct!'}:{ok:false,final:true,msg:`Not quite. The answer is ${G.M.ans}.`};},
     reveal(){o.lock(G.M.ans);},after(){return geoNote(G.M.e);}};
 }
 // ---- Angle Chase ----
 const CHASE={
- corr:{pairs:[['T','UL','B','UL'],['T','UR','B','UR'],['T','LL','B','LL'],['T','LR','B','LR']],eq:true,name:'Corresponding Angles Theorem',conv:'Converse of the Corresponding Angles Theorem',ch:3},
- altInt:{pairs:[['T','LL','B','UR'],['T','LR','B','UL']],eq:true,name:'Alternate Interior Angles Theorem',conv:'Converse of the Alternate Interior Angles Theorem',ch:3},
- altExt:{pairs:[['T','UL','B','LR'],['T','UR','B','LL']],eq:true,name:'Alternate Exterior Angles Theorem',conv:'Converse of the Alternate Exterior Angles Theorem',ch:3},
- ssi:{pairs:[['T','LL','B','UL'],['T','LR','B','UR']],eq:false,name:'Same-Side Interior Angles Postulate',conv:'Converse of the Same-Side Interior Angles Postulate',ch:3},
- vert:{pairs:[['T','UL','T','LR'],['T','UR','T','LL'],['B','UL','B','LR'],['B','UR','B','LL']],eq:true,name:'Vertical Angles Theorem',ch:2},
- lin:{pairs:[['T','UL','T','UR'],['T','UR','T','LR'],['B','LR','B','LL'],['B','LL','B','UL']],eq:false,name:'Angles that form a linear pair are supplementary',ch:2}
+ corr:{pairs:[['T','UL','B','UL'],['T','UR','B','UR'],['T','LL','B','LL'],['T','LR','B','LR']],eq:true,name:'∥ lines ⇒ corr. ∠s ≅',num:'Theorem 40',conv:'Corr. ∠s ≅ ⇒ ∥ lines',convNum:'Theorem 33',ch:5},
+ altInt:{pairs:[['T','LL','B','UR'],['T','LR','B','UL']],eq:true,name:'∥ lines ⇒ alt. int. ∠s ≅',num:'Theorem 37',conv:'Alt. int. ∠s ≅ ⇒ ∥ lines',convNum:'Theorem 31',ch:5},
+ altExt:{pairs:[['T','UL','B','LR'],['T','UR','B','LL']],eq:true,name:'∥ lines ⇒ alt. ext. ∠s ≅',num:'Theorem 39',conv:'Alt. ext. ∠s ≅ ⇒ ∥ lines',convNum:'Theorem 32',ch:5},
+ ssi:{pairs:[['T','LL','B','UL'],['T','LR','B','UR']],eq:false,name:'∥ lines ⇒ same-side int. ∠s supplementary',num:'Theorem 41',conv:'Same-side int. ∠s supplementary ⇒ ∥ lines',convNum:'Theorem 34',ch:5},
+ vert:{pairs:[['T','UL','T','LR'],['T','UR','T','LL'],['B','UL','B','LR'],['B','UR','B','LL']],eq:true,name:'Vertical angles are congruent.',num:'Theorem 18',ch:2},
+ lin:{pairs:[['T','UL','T','UR'],['T','UR','T','LR'],['B','LR','B','LL'],['B','LL','B','UL']],eq:false,name:'Angles that form a straight angle are supplementary.',num:'',ch:2}
 };
 function chaseExpr(rng,m,x,avoid){for(let t=0;t<200;t++){const p=rint(rng,2,7);if(p===avoid)continue;const q=m-p*x;if(Math.abs(q)>70||q===0)continue;
   return{p,q,html:`(${p}<tspan font-style="italic">x</tspan> ${q<0?MINUS:'+'} ${Math.abs(q)})°`};}return{p:1,q:m-x,html:`(<tspan font-style="italic">x</tspan> ${m-x<0?MINUS:'+'} ${Math.abs(m-x)})°`};}
 function chaseProblem(rng,level,chs){
-  const conv=level===2&&rng()<0.6;
-  let keys=Object.keys(CHASE).filter(k=>chs.includes(CHASE[k].ch)&&(!conv||CHASE[k].conv));if(!keys.length)keys=['vert'];
+  let conv=level===2&&rng()<0.6;
+  let keys=Object.keys(CHASE).filter(k=>chs.includes(CHASE[k].ch)&&(!conv||CHASE[k].conv));
+  if(!keys.length){conv=false;keys=Object.keys(CHASE).filter(k=>chs.includes(CHASE[k].ch));}
+  if(!keys.length)keys=['vert'];
   const key=pick(rng,keys),REL=CHASE[key],pr=pick(rng,REL.pairs),theta=rint(rng,38,76);
   const meas=q=>(q==='UL'||q==='LR')?theta:180-theta;
   const m1=meas(pr[1]),m2=meas(pr[3]),x=rint(rng,6,18);
@@ -2317,7 +2352,7 @@ function chaseProblem(rng,level,chs){
       if(rr)return{ok:false,msg:REL.eq?'Right reason! These angles are congruent, so set the expressions equal.':'Right reason! These angles are supplementary, so they add to 180.'};
       return{ok:false,msg:'Not quite. Decide first whether the angles are congruent or supplementary.'};},
     reveal(){inp.value=String(x);sel.value=answer;sel.disabled=true;},
-    after(){return geoNote(`<strong>x = ${x}.</strong> The angles are ${REL.eq?'congruent':'supplementary'} by the ${answer}${REL.eq?'':` (they add to 180°)`}.`);}};
+    after(){const num=conv?REL.convNum:REL.num;return geoNote(`<strong>x = ${x}.</strong> The angles are ${REL.eq?'congruent':'supplementary (they add to 180°)'}: <em>${answer}</em>${num?` (${num})`:''}.`);}};
 }
 // ---- Converse, Inverse, Contrapositive ----
 function converseProblem(rng,level,chs){
@@ -2373,14 +2408,14 @@ function proofProblem(P,level,rng){
 function mountGeometry(root,rng,level,ctx){
   const chs=geoChapters(),probs=[];
   pickASN(rng,level,chs,5).forEach(it=>probs.push(asnProblem(it)));
-  const avail={congruence:chs.some(c=>c>=4),chase:chs.includes(3)||chs.includes(2),converse:chs.includes(2)};
+  const avail={congruence:chs.includes(3),chase:chs.includes(5)||chs.includes(2),converse:chs.includes(1)};
   const order=['congruence','chase','converse','congruence','chase'];
   let start=ctx.mode==='today'?(new Date().getDay()+6)%7%5:ri(rng,5);
   let rot=null;for(let k=0;k<5;k++){const t=order[(start+k)%5];if(avail[t]){rot=t;break;}}
-  if(rot==='congruence')probs.push(congruenceProblem(rng,level));
+  if(rot==='congruence')probs.push(congruenceProblem(rng,level,chs.includes(7)));
   if(rot==='chase')probs.push(chaseProblem(rng,level,chs));
   if(rot==='converse')probs.push(converseProblem(rng,level,chs));
-  const proofs=GEO_PROOFS.filter(p=>chs.includes(p.ch));
+  const proofs=GEO_PROOFS.filter(p=>p.ch.every(c=>chs.includes(c)));
   if(proofs.length)probs.push(proofProblem(pick(rng,proofs),level,rng));
   mountRound(root,probs,'Five Always, Sometimes, or Never questions, a challenge, and the Proof of the Day. Always/Sometimes/Never and multiple-choice questions give you one try.',ctx);
 }
@@ -2753,7 +2788,7 @@ function mountTeacher(root){
   async function editGeo(){
     box.replaceChildren(h('div',{class:'panel'},h('p',{class:'muted'},'Loading…')));
     await ADV.load();
-    const g={show:true,chapters:[1,2,3,4],...(ADV.geo||{})};
+    const g={show:true,chapters:[1,2,3],...(ADV.geo||{})};
     const showChk=h('input',{type:'checkbox'});showChk.checked=g.show!==false;
     const boxes=GEO_CHAPTERS.map((name,i)=>{const c=h('input',{type:'checkbox',value:String(i+1)});c.checked=(g.chapters||[]).map(Number).includes(i+1);return{c,el:h('label',{},c,`Ch. ${i+1}: ${name}`)};});
     const st=h('p',{class:'status'});
@@ -2768,7 +2803,7 @@ function mountTeacher(root){
       }catch(e){st.className='status warn';st.textContent=denied(e)?'Permission denied. Check your database rules.':'Couldn’t save. Check your connection and try again.';}
     };
     box.replaceChildren(h('div',{class:'panel'},h('h2',{},'📐 Geometry settings'),
-      h('p',{class:'muted'},'Questions only come from the chapters you check, using the chapter order of your Pearson Geometry course. Check chapters as the class finishes them.'),
+      h('p',{class:'muted'},'Questions only come from the chapters you check in Geometry for Enjoyment and Challenge, and they use the wording and numbering from your Geometry Theorems handout. Check each chapter as the class finishes it. For example, AAS questions start appearing once Chapter 7 is checked.'),
       h('label',{class:'chk'},showChk,h('span',{},h('strong',{},'Show the Geometry tab'),h('span',{class:'muted small'},' (turn off to hide it from students)'))),
       h('div',{class:'chk-grid'},...boxes.map(b=>b.el)),
       h('div',{class:'controls'},h('button',{class:'btn primary',type:'button',onclick:save},'Save geometry settings'),
